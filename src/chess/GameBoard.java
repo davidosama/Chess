@@ -8,6 +8,7 @@ package chess;
 import java.awt.BorderLayout;
 import java.awt.Container;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 /**
  *
@@ -20,7 +21,10 @@ public class GameBoard extends javax.swing.JFrame {
      * Creates new form GameBoard
      */
     public GameBoard() {
+//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//        this.setUndecorated(true);
         initComponents();
+        
         this.setLocationRelativeTo(null);
         BackGroundLbl.setIcon(z1);
         
@@ -39,13 +43,12 @@ public class GameBoard extends javax.swing.JFrame {
         BackGroundLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 720));
+        setPreferredSize(new java.awt.Dimension(705, 728));
         setResizable(false);
 
         jPanel1.setPreferredSize(new java.awt.Dimension(720, 750));
         jPanel1.setRequestFocusEnabled(false);
 
-        BackGroundLbl.setBounds(new java.awt.Rectangle(0, 0, 720, 750));
         BackGroundLbl.setPreferredSize(new java.awt.Dimension(720, 750));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
