@@ -21,6 +21,7 @@ public class GameBoard extends javax.swing.JFrame {
      */
     public GameBoard() {
         initComponents();
+        this.setLocationRelativeTo(null);
         BackGroundLbl.setIcon(z1);
         
     }
@@ -38,8 +39,14 @@ public class GameBoard extends javax.swing.JFrame {
         BackGroundLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(700, 720));
+        setResizable(false);
 
-        BackGroundLbl.setText("jLabel1");
+        jPanel1.setPreferredSize(new java.awt.Dimension(720, 750));
+        jPanel1.setRequestFocusEnabled(false);
+
+        BackGroundLbl.setBounds(new java.awt.Rectangle(0, 0, 720, 750));
+        BackGroundLbl.setPreferredSize(new java.awt.Dimension(720, 750));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
