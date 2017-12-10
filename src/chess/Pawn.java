@@ -10,12 +10,14 @@ public class Pawn extends Piece{
 
     @Override
     public void move(int x, int y) {
+        //check if it's the king at that position
         if (validateMove(x, y)){
             this.position.setLocation(x, y);
             if(y == 0 || y == 7){
                 switchPawn(x, y);
             }
         }
+        //add fucntion attack(abstract Piece) to check if the new position eats the opponent position
     }
 
     @Override
@@ -46,7 +48,7 @@ public class Pawn extends Piece{
                     return true;
                 }
             }
-            else if(true){//if there is a piece and it's the of the opposite color so it's attack that piece
+            else if(false){//if there is a piece and it's the of the opposite color so it's attack that piece
                 if( (x == this.position.getX()-1 || x == this.position.getX()+1) && y == this.position.getY()-1){
                     return true;
                 }  

@@ -1,5 +1,6 @@
 package chess;
 
+import java.awt.Point;
 import javax.swing.ImageIcon;
 
 public class Bishop extends Piece{
@@ -13,6 +14,7 @@ public class Bishop extends Piece{
         if (validateMove(x, y)){
             this.position.setLocation(x, y);
         }
+        //add fucntion attack(abstract Piece) to check if the new position eats the opponent position
     }
 
     @Override
@@ -26,7 +28,31 @@ public class Bishop extends Piece{
     }
     
     public boolean isPathClear(int x, int y){
-        //implement it
-        return false;
+        Point currentPosition = this.position;
+        int counter = (int) Math.abs(this.position.getX() - x);
+        if (counter == 1)
+            return true;
+        for(int i = 0; i < counter-1 ; i++){
+            if (x < this.position.getX() && y < this.position.getY()){//top-left
+                currentPosition.x--;
+                currentPosition.y--;
+            }
+            else if(x < this.position.getX() && y > this.position.getY()){//down-left
+                currentPosition.x--;
+                currentPosition.y++;
+            }
+            else if(x > this.position.getX() && y < this.position.getY()){//top-right
+                currentPosition.x++;
+                currentPosition.y--;
+            }
+            else if (x > this.position.getX() && y > this.position.getY()){//down-right
+                currentPosition.x++;
+                currentPosition.y++;
+            }
+            if(false){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }
+        }
+        return true;
     }
 }
