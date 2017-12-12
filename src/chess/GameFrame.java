@@ -34,53 +34,50 @@ public class GameFrame extends javax.swing.JFrame {
         CreditsBtn = new javax.swing.JButton();
         HowToPlayBtn = new javax.swing.JButton();
         ExitBtn = new javax.swing.JButton();
+        Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMaximumSize(new java.awt.Dimension(0, 0));
+        setMinimumSize(new java.awt.Dimension(619, 350));
+        setPreferredSize(new java.awt.Dimension(600, 435));
+        setResizable(false);
+        setSize(new java.awt.Dimension(600, 419));
+        getContentPane().setLayout(null);
 
+        NewGameBtn.setBackground(new java.awt.Color(153, 153, 153));
         NewGameBtn.setText("New Game");
         NewGameBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 NewGameBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(NewGameBtn);
+        NewGameBtn.setBounds(50, 110, 103, 26);
 
+        CreditsBtn.setBackground(new java.awt.Color(153, 153, 153));
         CreditsBtn.setText("Credits");
+        getContentPane().add(CreditsBtn);
+        CreditsBtn.setBounds(50, 160, 103, 26);
 
+        HowToPlayBtn.setBackground(new java.awt.Color(153, 153, 153));
         HowToPlayBtn.setText("How To Play");
+        getContentPane().add(HowToPlayBtn);
+        HowToPlayBtn.setBounds(50, 210, 103, 26);
 
+        ExitBtn.setBackground(new java.awt.Color(153, 153, 153));
         ExitBtn.setText("Exit");
         ExitBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 ExitBtnActionPerformed(evt);
             }
         });
+        getContentPane().add(ExitBtn);
+        ExitBtn.setBounds(50, 260, 103, 26);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(NewGameBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(CreditsBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(HowToPlayBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(ExitBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(242, 242, 242))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(68, 68, 68)
-                .addComponent(NewGameBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(38, 38, 38)
-                .addComponent(CreditsBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(40, 40, 40)
-                .addComponent(HowToPlayBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(68, 68, 68)
-                .addComponent(ExitBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(88, 88, 88))
-        );
+        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/chess-king.jpg"))); // NOI18N
+        Background.setName(""); // NOI18N
+        getContentPane().add(Background);
+        Background.setBounds(0, -20, 630, 450);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -132,6 +129,7 @@ public class GameFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Background;
     private javax.swing.JButton CreditsBtn;
     private javax.swing.JButton ExitBtn;
     private javax.swing.JButton HowToPlayBtn;

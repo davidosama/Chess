@@ -16,7 +16,9 @@ import javax.swing.JFrame;
  */
 public class GameBoard extends javax.swing.JFrame {
     ImageIcon z1 = new ImageIcon(getClass().getResource("imgs/background.png"));
-
+    PointMapper pm = new PointMapper();
+    int x =0;
+    int y = 0;
     /**
      * Creates new form GameBoard
      */
@@ -40,38 +42,70 @@ public class GameBoard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        tabyalbl = new javax.swing.JLabel();
+        TestMoveBtn = new javax.swing.JButton();
         BackGroundLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(705, 700));
+        setPreferredSize(new java.awt.Dimension(705, 725));
         setResizable(false);
 
-        jPanel1.setMinimumSize(new java.awt.Dimension(700, 700));
-        jPanel1.setPreferredSize(new java.awt.Dimension(700, 700));
+        jPanel1.setMinimumSize(new java.awt.Dimension(700, 725));
+        jPanel1.setPreferredSize(new java.awt.Dimension(720, 750));
         jPanel1.setRequestFocusEnabled(false);
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.setLayout(null);
 
-        jLabel2.setText("jLabel2");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 230, -1, -1));
+        tabyalbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/Chess_blt60.png"))); // NOI18N
+        jPanel1.add(tabyalbl);
+        tabyalbl.setBounds(20, 620, 60, 60);
+
+        TestMoveBtn.setText("move");
+        TestMoveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TestMoveBtnActionPerformed(evt);
+            }
+        });
+        jPanel1.add(TestMoveBtn);
+        TestMoveBtn.setBounds(620, 640, 65, 26);
 
         BackGroundLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/background.png"))); // NOI18N
-        BackGroundLbl.setPreferredSize(new java.awt.Dimension(710, 720));
-        jPanel1.add(BackGroundLbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 25, 700, 700));
+        BackGroundLbl.setPreferredSize(new java.awt.Dimension(720, 750));
+        jPanel1.add(BackGroundLbl);
+        BackGroundLbl.setBounds(0, 0, 720, 700);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 720, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 705, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 750, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void TestMoveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestMoveBtnActionPerformed
+        // TODO add your handling code here:
+        
+            if (x>7)
+            {
+                x=0 ;
+                y ++;
+            }
+            if( x <8 && y <8)
+            tabyalbl.setLocation(pm.GetPoint(y, x++));
+            else
+            {
+                x = 0;
+                y=0;
+                tabyalbl.setLocation(pm.GetPoint(y, x++));
+            }
+            
+        
+    }//GEN-LAST:event_TestMoveBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -112,7 +146,8 @@ public class GameBoard extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel BackGroundLbl;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton TestMoveBtn;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel tabyalbl;
     // End of variables declaration//GEN-END:variables
 }
