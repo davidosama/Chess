@@ -7,6 +7,10 @@ package chess;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -14,22 +18,25 @@ import javax.swing.JFrame;
  *
  * @author Kero
  */
-public class GameBoard extends javax.swing.JFrame {
-    ImageIcon z1 = new ImageIcon(getClass().getResource("imgs/background.png"));
-    PointMapper pm = new PointMapper();
+public class GameBoard extends javax.swing.JFrame implements MouseListener{
+    
+    
+    PointMapper pm;
     int x =0;
     int y = 0;
+    Tile [][] GameBoardTile;
     
     public GameBoard() {
-//            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//        this.setUndecorated(true);
         initComponents();
-        
         this.setLocationRelativeTo(null);
-        BackGroundLbl.setIcon(z1);
+        pm = new PointMapper();
+        GameBoardTile=pm.getBoardTilesArray();
+        this.addMouseListener(this);
+//        GameBoardTile[0][0].setPiece(piece);
+        
         
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -40,12 +47,26 @@ public class GameBoard extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        tabyalbl = new javax.swing.JLabel();
+        AskariWhite8 = new javax.swing.JLabel();
+        AskariWhite7 = new javax.swing.JLabel();
+        AskariWhite6 = new javax.swing.JLabel();
+        AskariWhite5 = new javax.swing.JLabel();
+        AskariWhite4 = new javax.swing.JLabel();
+        AskariWhite3 = new javax.swing.JLabel();
+        AskariWhite2 = new javax.swing.JLabel();
+        AskariWhite1 = new javax.swing.JLabel();
+        WhiteRook2Lbl = new javax.swing.JLabel();
+        WhiteKnight2Lbl = new javax.swing.JLabel();
+        WhiteBishop2Lbl = new javax.swing.JLabel();
+        WhiteKingLbl = new javax.swing.JLabel();
+        WhiteQueenLbl = new javax.swing.JLabel();
+        WhiteRook1Lbl = new javax.swing.JLabel();
+        WhiteKnight1Lbl = new javax.swing.JLabel();
+        WhiteBishop1Lbl = new javax.swing.JLabel();
         TestMoveBtn = new javax.swing.JButton();
         BackGroundLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(705, 725));
         setResizable(false);
 
         jPanel1.setMinimumSize(new java.awt.Dimension(700, 725));
@@ -53,9 +74,83 @@ public class GameBoard extends javax.swing.JFrame {
         jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(null);
 
-        tabyalbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/Chess_blt60.png"))); // NOI18N
-        jPanel1.add(tabyalbl);
-        tabyalbl.setBounds(20, 620, 60, 60);
+        AskariWhite8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/AskariWhite.png"))); // NOI18N
+        AskariWhite8.setText("jLabel1");
+        jPanel1.add(AskariWhite8);
+        AskariWhite8.setBounds(190, 540, 60, 60);
+
+        AskariWhite7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/AskariWhite.png"))); // NOI18N
+        AskariWhite7.setText("jLabel1");
+        jPanel1.add(AskariWhite7);
+        AskariWhite7.setBounds(270, 540, 60, 60);
+
+        AskariWhite6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/AskariWhite.png"))); // NOI18N
+        AskariWhite6.setText("jLabel1");
+        jPanel1.add(AskariWhite6);
+        AskariWhite6.setBounds(360, 540, 60, 60);
+
+        AskariWhite5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/AskariWhite.png"))); // NOI18N
+        AskariWhite5.setText("jLabel1");
+        jPanel1.add(AskariWhite5);
+        AskariWhite5.setBounds(450, 540, 60, 60);
+
+        AskariWhite4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/AskariWhite.png"))); // NOI18N
+        AskariWhite4.setText("jLabel1");
+        jPanel1.add(AskariWhite4);
+        AskariWhite4.setBounds(530, 540, 60, 60);
+
+        AskariWhite3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/AskariWhite.png"))); // NOI18N
+        AskariWhite3.setText("jLabel1");
+        jPanel1.add(AskariWhite3);
+        AskariWhite3.setBounds(620, 540, 60, 60);
+
+        AskariWhite2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/AskariWhite.png"))); // NOI18N
+        AskariWhite2.setText("jLabel1");
+        jPanel1.add(AskariWhite2);
+        AskariWhite2.setBounds(100, 540, 60, 60);
+
+        AskariWhite1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/AskariWhite.png"))); // NOI18N
+        AskariWhite1.setText("jLabel1");
+        jPanel1.add(AskariWhite1);
+        AskariWhite1.setBounds(20, 540, 60, 60);
+
+        WhiteRook2Lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/TabyaWhite.png"))); // NOI18N
+        WhiteRook2Lbl.setText("jLabel1");
+        jPanel1.add(WhiteRook2Lbl);
+        WhiteRook2Lbl.setBounds(620, 620, 60, 60);
+
+        WhiteKnight2Lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/HorseWhite.png"))); // NOI18N
+        WhiteKnight2Lbl.setText("jLabel2");
+        jPanel1.add(WhiteKnight2Lbl);
+        WhiteKnight2Lbl.setBounds(530, 620, 60, 60);
+
+        WhiteBishop2Lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/FeelWhite.png"))); // NOI18N
+        jPanel1.add(WhiteBishop2Lbl);
+        WhiteBishop2Lbl.setBounds(450, 620, 60, 60);
+
+        WhiteKingLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/KingWhite.png"))); // NOI18N
+        WhiteKingLbl.setText("jLabel3");
+        jPanel1.add(WhiteKingLbl);
+        WhiteKingLbl.setBounds(360, 620, 60, 60);
+
+        WhiteQueenLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/QueenWhite.png"))); // NOI18N
+        WhiteQueenLbl.setText("jLabel2");
+        jPanel1.add(WhiteQueenLbl);
+        WhiteQueenLbl.setBounds(280, 620, 60, 60);
+
+        WhiteRook1Lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/TabyaWhite.png"))); // NOI18N
+        WhiteRook1Lbl.setText("jLabel1");
+        jPanel1.add(WhiteRook1Lbl);
+        WhiteRook1Lbl.setBounds(20, 620, 60, 60);
+
+        WhiteKnight1Lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/HorseWhite.png"))); // NOI18N
+        WhiteKnight1Lbl.setText("jLabel2");
+        jPanel1.add(WhiteKnight1Lbl);
+        WhiteKnight1Lbl.setBounds(100, 620, 60, 60);
+
+        WhiteBishop1Lbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/FeelWhite.png"))); // NOI18N
+        jPanel1.add(WhiteBishop1Lbl);
+        WhiteBishop1Lbl.setBounds(190, 620, 60, 60);
 
         TestMoveBtn.setText("move");
         TestMoveBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -64,7 +159,7 @@ public class GameBoard extends javax.swing.JFrame {
             }
         });
         jPanel1.add(TestMoveBtn);
-        TestMoveBtn.setBounds(620, 640, 78, 29);
+        TestMoveBtn.setBounds(610, 30, 78, 29);
 
         BackGroundLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/background.png"))); // NOI18N
         BackGroundLbl.setPreferredSize(new java.awt.Dimension(720, 750));
@@ -79,7 +174,7 @@ public class GameBoard extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 728, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 702, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -94,12 +189,12 @@ public class GameBoard extends javax.swing.JFrame {
                 y ++;
             }
             if( x <8 && y <8)
-            tabyalbl.setLocation(pm.GetPoint(y, x++));
+            WhiteBishop1Lbl.setLocation(pm.GetPoint(y, x++));
             else
             {
                 x = 0;
                 y=0;
-                tabyalbl.setLocation(pm.GetPoint(y, x++));
+                WhiteBishop1Lbl.setLocation(pm.GetPoint(y, x++));
             }
             
         
@@ -143,9 +238,51 @@ public class GameBoard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel AskariWhite1;
+    private javax.swing.JLabel AskariWhite2;
+    private javax.swing.JLabel AskariWhite3;
+    private javax.swing.JLabel AskariWhite4;
+    private javax.swing.JLabel AskariWhite5;
+    private javax.swing.JLabel AskariWhite6;
+    private javax.swing.JLabel AskariWhite7;
+    private javax.swing.JLabel AskariWhite8;
     private javax.swing.JLabel BackGroundLbl;
     private javax.swing.JButton TestMoveBtn;
+    private javax.swing.JLabel WhiteBishop1Lbl;
+    private javax.swing.JLabel WhiteBishop2Lbl;
+    private javax.swing.JLabel WhiteKingLbl;
+    private javax.swing.JLabel WhiteKnight1Lbl;
+    private javax.swing.JLabel WhiteKnight2Lbl;
+    private javax.swing.JLabel WhiteQueenLbl;
+    private javax.swing.JLabel WhiteRook1Lbl;
+    private javax.swing.JLabel WhiteRook2Lbl;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel tabyalbl;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Point p = e.getPoint();
+        WhiteBishop1Lbl.setLocation(pm.getTileCoordinate(p.x, p.y));
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        System.out.println(e.getPoint().toString());
+        System.out.println(e.getX());
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+       
+    }
 }
