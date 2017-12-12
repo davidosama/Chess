@@ -12,10 +12,12 @@ import java.awt.Point;
  * @author Kero
  */
 public class PointMapper {
+    
     int ix;
     int iy;
     boolean first = true;
     Point points[][] = new Point[8][8];
+    
     public PointMapper() {
         iy = 50;
         ix = 50;

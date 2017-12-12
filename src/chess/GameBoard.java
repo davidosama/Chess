@@ -19,9 +19,7 @@ public class GameBoard extends javax.swing.JFrame {
     PointMapper pm = new PointMapper();
     int x =0;
     int y = 0;
-    /**
-     * Creates new form GameBoard
-     */
+    
     public GameBoard() {
 //            this.setExtendedState(JFrame.MAXIMIZED_BOTH);
 //        this.setUndecorated(true);
@@ -66,7 +64,7 @@ public class GameBoard extends javax.swing.JFrame {
             }
         });
         jPanel1.add(TestMoveBtn);
-        TestMoveBtn.setBounds(620, 640, 65, 26);
+        TestMoveBtn.setBounds(620, 640, 78, 29);
 
         BackGroundLbl.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/background.png"))); // NOI18N
         BackGroundLbl.setPreferredSize(new java.awt.Dimension(720, 750));
