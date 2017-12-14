@@ -72,16 +72,16 @@ public class PointMapper {
     
     //returns the coordinate of the Tile. Example [0,0] or [5,7] etc..
      public Point getTileCoordinate(int xPoint, int yPoint){
-        int x = getTileRange(xPoint);
+        int x = getTileRangeX(xPoint);
         System.out.println(x);
-        int y = getTileRange(yPoint);
+        int y = getTileRangeY(yPoint);
         System.out.println(y);
         return points[x][y];
         
     }
     
     
-    private int getTileRange(int XOrY){
+    private int getTileRangeX(int XOrY){
         if(XOrY>=0 && XOrY<91){
             return 0;
         }
@@ -104,6 +104,34 @@ public class PointMapper {
             return 6;
         }
         else if(XOrY>=613 && XOrY<700){
+            return 7;
+        }
+        System.out.println("Error in X Range");
+        return -1;
+    }
+    private int getTileRangeY(int XOrY){
+        if(XOrY>=35 && XOrY<120){
+            return 0;
+        }
+        else if (XOrY>=120 && XOrY <205){
+            return 1;
+        }
+        else if (XOrY>=205 && XOrY<291){
+            return 2;
+        }
+        else if(XOrY>=291 && XOrY<378){
+            return 3;
+        }
+        else if(XOrY>=378 && XOrY<462){
+            return 4;
+        }
+        else if(XOrY>=462 && XOrY<548){
+            return 5;
+        }
+        else if(XOrY>=548 && XOrY<635){
+            return 6;
+        }
+        else if(XOrY>=635 && XOrY<718){
             return 7;
         }
         System.out.println("Error in X Range");
