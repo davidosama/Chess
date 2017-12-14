@@ -17,6 +17,7 @@ public class Pawn extends Piece{
                 switchPawn(x, y);
             }
         }
+        System.out.println("test");
         //add fucntion attack(abstract Piece) to check if the new position eats the opponent position
     }
 
