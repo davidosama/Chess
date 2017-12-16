@@ -347,7 +347,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
         jPanel1.add(blackQueen.label);
         
         //white Queen
-        p=pm.points[3][0];
+        p=pm.points[4][0];
         whiteQueen=new Queen("White",p);
         whiteQueen.label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[3][0].piece=whiteQueen;
