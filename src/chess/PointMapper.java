@@ -50,24 +50,18 @@ public class PointMapper {
     }
     
     void initBoardTiles(){
-        
-        
-        int x=5;
-        int y=35;
-        //BoardTilesArray[0][0] = new Tile(new Point(0,0),new Point(90,0),new Point(0,120),new Point(90,120));
+        int x=0;
+        int y=0;
         for(int i =0;i<8;i++){
             for(int j=0;j<8;j++){
-           //     if(i==0 && j == 0) continue;
                 Tile TileTemp = new Tile(new Point(x,y),new Point(x+85,y),new Point(x,y+85),new Point(x+85,y+85));
                 TileTemp.setEmpty(true);
                 BoardTilesArray[i][j]=TileTemp;
                 x+=85;
             }
-            x=5;
+            x=0;
             y+=85;
         }
-        //BoardTilesArray[0][0] = new Tile(new Point(0,0),new Point(90,0),new Point(0,120),new Point(90,120));
-        System.out.println("finish");
     }
 
     
