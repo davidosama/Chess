@@ -12,15 +12,22 @@ public class Bishop extends Piece{
     @Override
     public void move(int x, int y) {
         if (validateMove(x, y)){
-            this.position.setLocation(x, y);
+            if (GameBoard.isKing(x, y)){
+                GameBoard.Checkmate(this.color);
+            }
+            else{
+               this.position.setLocation(x, y);
+                if(!GameBoard.isEmpty(x, y)){
+                    GameBoard.attack(x, y);
+                }
+            }
         }
-        //add fucntion attack(abstract Piece) to check if the new position eats the opponent position
     }
 
     @Override
     public boolean validateMove(int x, int y) {
         if (Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y)){
-            if(isPathClear(x, y)){
+            if(isPathClear(x, y) && (GameBoard.isEnemy(x, y, this.color) || GameBoard.isEmpty(x, y))){
                 return true;
             }
         }
@@ -49,7 +56,7 @@ public class Bishop extends Piece{
                 currentPosition.x++;
                 currentPosition.y++;
             }
-            if(false){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+            if(!GameBoard.isEmpty(x, y)){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
                 return false;
             }
         }

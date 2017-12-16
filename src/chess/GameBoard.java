@@ -56,6 +56,28 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
         
     }
     
+    public static boolean isKing (int x, int y){
+        //implement
+        return false;
+    }
+    
+    public static void Checkmate (String attackingColor){
+        //implement
+    }
+    
+    public static void attack (int x, int y){
+        //implement
+    }
+    
+    public static boolean isEnemy (int x, int y, String attackingColor){
+        //implement
+        return false;
+    }
+    
+    public static boolean isEmpty (int x, int y){
+        //implement
+        return false;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
