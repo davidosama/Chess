@@ -46,7 +46,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     
     
     boolean PlayerSelected=false;
-    PointMapper pm;
+    static PointMapper pm;
     int x =0;
     int y = 0;
     Tile [][] GameBoardTile;
@@ -104,7 +104,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        TestMoveBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -113,15 +112,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
         jPanel1.setPreferredSize(new java.awt.Dimension(720, 750));
         jPanel1.setRequestFocusEnabled(false);
         jPanel1.setLayout(null);
-
-        TestMoveBtn.setText("move");
-        TestMoveBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TestMoveBtnActionPerformed(evt);
-            }
-        });
-        jPanel1.add(TestMoveBtn);
-        TestMoveBtn.setBounds(440, 250, 78, 29);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,26 +126,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void TestMoveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestMoveBtnActionPerformed
-        // TODO add your handling code here:
-        
-//            if (x>7)
-//            {
-//                x=0 ;
-//                y ++;
-//            }
-//            if( x <8 && y <8)
-//            WhiteBishop1Lbl.setLocation(pm.GetPoint(y, x++));
-//            else
-//            {
-//                x = 0;
-//                y=0;
-//                WhiteBishop1Lbl.setLocation(pm.GetPoint(y, x++));
-//            }
-            
-        
-    }//GEN-LAST:event_TestMoveBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,7 +165,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton TestMoveBtn;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 
@@ -238,119 +207,135 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
         blackPawns=new ArrayList();
         for(int i =0;i<8;i++){
             
-            Point p = pm.points[i][6];
+            Point p = PointMapper.points[i][6];
             blackPawns.add(new Pawn("Black",p));
             blackPawns.get(i).label.setBounds(p.x, p.y, 60, 60);
             PointMapper.BoardTilesArray[i][6].piece=blackPawns.get(i);
+            PointMapper.BoardTilesArray[i][6].setEmpty(false);
             jPanel1.add(blackPawns.get(i).label);
 //            blackPawn.label.setVisible(true);
         }
         //white Pawns
         whitePawns=new ArrayList();
         for(int i =0;i<8;i++){
-            Point p = pm.points[i][1];
+            Point p = PointMapper.points[i][1];
             whitePawns.add(new Pawn("White",p));
             whitePawns.get(i).label.setBounds(p.x, p.y, 60, 60);
             PointMapper.BoardTilesArray[i][1].piece=whitePawns.get(i);
+            PointMapper.BoardTilesArray[i][1].setEmpty(false);
             jPanel1.add(whitePawns.get(i).label);
         }
         //black blackKnights
         blackKnights=new ArrayList(2);
-        Point p = pm.points[1][7];
+        Point p = PointMapper.points[1][7];
         blackKnights.add(new Knight("Black",p));
         blackKnights.get(0).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[1][7].piece=blackKnights.get(0);
+        PointMapper.BoardTilesArray[1][7].setEmpty(false);
         jPanel1.add(blackKnights.get(0).label);
         
-        p = pm.points[6][7];
+        p = PointMapper.points[6][7];
         blackKnights.add(new Knight("Black",p));
         blackKnights.get(1).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[6][7].piece=blackKnights.get(1);
+        PointMapper.BoardTilesArray[6][7].setEmpty(false);
         jPanel1.add(blackKnights.get(1).label);
         
         //white blackKnights
         whiteKnights=new ArrayList();
-        p = pm.points[1][0];
+        p = PointMapper.points[1][0];
         whiteKnights.add(new Knight("White",p));
         whiteKnights.get(0).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[1][0].piece=whiteKnights.get(0);
+        PointMapper.BoardTilesArray[1][0].setEmpty(false);
         jPanel1.add(whiteKnights.get(0).label);
         
-        p = pm.points[6][0];
+        p = PointMapper.points[6][0];
         whiteKnights.add(new Knight("White",p));
         whiteKnights.get(1).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[6][0].piece=whiteKnights.get(1);
+        PointMapper.BoardTilesArray[6][0].setEmpty(false);
         jPanel1.add(whiteKnights.get(1).label);
         
         //black Rooks
         blackRooks=new ArrayList();
-        p = pm.points[0][7];
+        p = PointMapper.points[0][7];
         blackRooks.add(new Rook("Black",p));
         blackRooks.get(0).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[0][7].piece=blackRooks.get(0);
+        PointMapper.BoardTilesArray[0][7].setEmpty(false);
         jPanel1.add(blackRooks.get(0).label);
         
-        p = pm.points[7][7];
+        p = PointMapper.points[7][7];
         blackRooks.add(new Rook("Black",p));
         blackRooks.get(1).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[7][7].piece=blackRooks.get(1);
+        PointMapper.BoardTilesArray[7][7].setEmpty(false);
         jPanel1.add(blackRooks.get(1).label);
         
         
         //white Rooks
         whiteRooks=new ArrayList();
-        p = pm.points[0][0];
+        p = PointMapper.points[0][0];
         whiteRooks.add(new Rook("White",p));
         whiteRooks.get(0).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[0][0].piece=whiteRooks.get(0);
+        PointMapper.BoardTilesArray[0][0].setEmpty(false);
         jPanel1.add(whiteRooks.get(0).label);
         
-        p = pm.points[7][0];
+        p = PointMapper.points[7][0];
         whiteRooks.add(new Rook("White",p));
         whiteRooks.get(1).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[7][0].piece=whiteRooks.get(1);
+        PointMapper.BoardTilesArray[7][0].setEmpty(false);
         jPanel1.add(whiteRooks.get(1).label);
         
         //black bishops
         blackBishops=new ArrayList();
-        p = pm.points[2][7];
+        p = PointMapper.points[2][7];
         blackBishops.add(new Bishop("Black",p));
         blackBishops.get(0).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[2][7].piece=blackBishops.get(0);
+        PointMapper.BoardTilesArray[2][7].setEmpty(false);
         jPanel1.add(blackBishops.get(0).label);
         
-        p = pm.points[5][7];
+        p = PointMapper.points[5][7];
         blackBishops.add(new Bishop("Black",p));
         blackBishops.get(1).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[5][7].piece=blackBishops.get(1);
+        PointMapper.BoardTilesArray[5][7].setEmpty(false);
         jPanel1.add(blackBishops.get(1).label);
         
         //white bishops
         whiteBishops=new ArrayList();
-        p = pm.points[2][0];
+        p = PointMapper.points[2][0];
         whiteBishops.add(new Bishop("White",p));
         whiteBishops.get(0).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[2][0].piece=whiteBishops.get(0);
+        PointMapper.BoardTilesArray[2][0].setEmpty(false);
         jPanel1.add(whiteBishops.get(0).label);
         
-        p = pm.points[5][0];
+        p = PointMapper.points[5][0];
         whiteBishops.add(new Bishop("White",p));
         whiteBishops.get(1).label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[5][0].piece=whiteBishops.get(1);
+        PointMapper.BoardTilesArray[5][0].setEmpty(false);
         jPanel1.add(whiteBishops.get(1).label);
         
         //black Queen
-        p=pm.points[4][7];
+        p=PointMapper.points[4][7];
         blackQueen=new Queen("Black",p);
         blackQueen.label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[4][7].piece=blackQueen;
+        PointMapper.BoardTilesArray[4][7].setEmpty(false);
         jPanel1.add(blackQueen.label);
         
         //white Queen
-        p=pm.points[4][0];
+        p=PointMapper.points[4][0];
         whiteQueen=new Queen("White",p);
         whiteQueen.label.setBounds(p.x,p.y,60,60);
         PointMapper.BoardTilesArray[3][0].piece=whiteQueen;
+        PointMapper.BoardTilesArray[3][0].setEmpty(false);
         jPanel1.add(whiteQueen.label);
         
         
@@ -370,6 +355,23 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g); //To change body of generated methods, choose Tools | Templates.
+        
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if(PointMapper.BoardTilesArray[i][j].isEmpty()==false)
+                {
+                    
+                }
+            }
+        }
+        
+        
+        
+        
+        
+        
+        
+        
         
     }
     
