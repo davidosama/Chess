@@ -27,7 +27,7 @@ public class Bishop extends Piece{
     @Override
     public boolean validateMove(int x, int y) {
         if (Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y)){
-            if(isPathClear(x, y)){
+            if(isPathClear(x, y) && (GameBoard.isEnemy(x, y, this.color) || GameBoard.isEmpty(x, y))){
                 return true;
             }
         }
