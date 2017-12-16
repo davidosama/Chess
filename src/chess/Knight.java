@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
  */
 public class Knight extends Piece {
 
-    public Knight(String color, Point position, ImageIcon img, String pieceType) {
+    public Knight(String color, Point position) {
         super(color,position);
     }
 
