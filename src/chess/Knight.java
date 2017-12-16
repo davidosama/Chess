@@ -14,15 +14,22 @@ import javax.swing.ImageIcon;
  */
 public class Knight extends Piece {
 
+
     public Knight(String color,Point position) {
         super(color, position);
     }
-
     @Override
     public void move(int x, int y) {
-        if(validateMove(x, y)){
-            this.position.setLocation(x, y);
-            //add fucntion attack(abstract Piece) to check if the new position eats the opponent position
+       if(validateMove(x, y)){
+            if (GameBoard.isKing(x, y)){
+                GameBoard.Checkmate(this.color);
+            }
+            else{
+               this.position.setLocation(x, y);
+                if(!GameBoard.isEmpty(x, y)){
+                    GameBoard.attack(x, y);
+                }
+            }
         }
     }        
     
@@ -31,8 +38,8 @@ public class Knight extends Piece {
     public boolean validateMove(int x, int y) {
     //    Point currentPosition = this.position;
         if((Math.abs(x-this.position.getX())==2 && Math.abs(y-this.position.getY())==1)||(Math.abs(x-this.position.getX())==1 && Math.abs(y-this.position.getY())==2)){
-            //check for the piece in that (x,y) white OR black OR empty
-            return true ;
+            if(GameBoard.isEmpty(x, y) || GameBoard.isEnemy(x, y, this.color))
+                return true ;
         }
 //            if(x>this.position.getX()){
 //                currentPosition.x+=2;
@@ -54,7 +61,7 @@ public class Knight extends Piece {
 //        }
 //        else if((Math.abs(x-this.position.getX())==1 && Math.abs(y-this.position.getY())==1)){}
         
-        else return false;
+        return false;
     }
 
 
