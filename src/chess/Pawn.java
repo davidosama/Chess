@@ -1,11 +1,12 @@
 package chess;
 
+import java.awt.Point;
 import javax.swing.ImageIcon;
 
 public class Pawn extends Piece{
 
-    public Pawn(String color, int positionX, int positionY, ImageIcon img, String pieceType) {
-        super(color, positionX, positionY, img, pieceType);
+    public Pawn(String color,Point position) {
+        super(color,position);
     }
 
     @Override

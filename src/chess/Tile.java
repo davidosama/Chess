@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public class Tile {
     
-    
+    private int x,y;
     private Point P1,P2,P3,P4;
     private Boolean Empty;
     Piece piece; 
@@ -42,6 +42,15 @@ public class Tile {
         this.Empty=e;
     }
     
+    void setXANDY(int x, int y){
+        this.x=x;
+        this.y=y;
+    }
+    
+    Point getXANDY(){
+        return new Point(x,y);
+    }
+    
     Boolean isOccupied(){
         if(!this.Empty){
             return true;
@@ -54,12 +63,8 @@ public class Tile {
         this.piece = piece;
     }
     
-   
-    
-    Piece getPieceName(){
+    Piece getPiece(){
         return this.piece;
-        
-        
     }
       
     

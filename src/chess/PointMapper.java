@@ -17,14 +17,11 @@ public class PointMapper {
     int iy;
     boolean first = true;
     Point points[][] = new Point[8][8];
-    private Tile[][] BoardTilesArray=new Tile[8][8];
+    public Tile[][] BoardTilesArray=new Tile[8][8];
     
-    //3ashan a3raf el label hayetresem fen
     public PointMapper() {
         initBoardTiles();
         LabelsPositions();
-       
-        
     }
 
     public Tile[][] getBoardTilesArray() {
@@ -32,7 +29,7 @@ public class PointMapper {
     }
     
     
-    
+    //3ashan a3raf el label hayetresem fen
     void LabelsPositions(){
         iy = 50;
         ix = 50;
@@ -49,6 +46,7 @@ public class PointMapper {
         }   
     }
     
+    //to initialize 64 empty tiles
     void initBoardTiles(){
         
         
@@ -60,6 +58,7 @@ public class PointMapper {
            //     if(i==0 && j == 0) continue;
                 Tile TileTemp = new Tile(new Point(x,y),new Point(x+85,y),new Point(x,y+85),new Point(x+85,y+85));
                 TileTemp.setEmpty(true);
+                TileTemp.setXANDY(i, j);
                 BoardTilesArray[i][j]=TileTemp;
                 x+=85;
             }
@@ -76,16 +75,20 @@ public class PointMapper {
         return points[x][y];
     }
     
-    //returns the coordinate of the Tile. Example [0,0] or [5,7] etc..
-     public Point getTileCoordinate(int xPoint, int yPoint){
-        int x = getTileRangeX(xPoint);
-        System.out.println(x);
-        int y = getTileRangeY(yPoint);
-        System.out.println(y);
-        return points[x][y];
-        
+    //return the Location where we should draw the jLabel
+    public Point getTileCoordinate(int xPoint, int yPoint){
+        Point p = getTileNumber(xPoint,yPoint);
+        return points[p.x][p.y];
     }
     
+    //return Tile number
+    Point getTileNumber(int xPoint , int yPoint){
+        int x = getTileRangeX(xPoint);
+        System.out.println("asdasd"+x);
+        int y = getTileRangeY(yPoint);
+        System.out.println(y);
+        return new Point(x,y);
+    }
     
     private int getTileRangeX(int XOrY){
         if(XOrY>=0 && XOrY<91){
