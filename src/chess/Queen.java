@@ -14,8 +14,8 @@ import javax.swing.ImageIcon;
  */
 public class Queen extends Piece {
 
-    public Queen(String color, int positionX, int positionY, ImageIcon img, String pieceType) {
-        super(color, positionX, positionY, img, pieceType);
+    public Queen(String color,Point position) {
+        super(color,position);
     }
 
     @Override

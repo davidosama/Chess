@@ -14,8 +14,8 @@ import javax.swing.ImageIcon;
  */
 public class Rook extends Piece {
 
-    public Rook(String color, int positionX, int positionY, ImageIcon img, String pieceType) {
-        super(color, positionX, positionY, img, pieceType);
+    public Rook(String color, Point position) {
+        super(color,position);
     }
 
     @Override

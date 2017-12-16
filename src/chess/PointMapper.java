@@ -17,7 +17,7 @@ public class PointMapper {
     int iy;
     boolean first = true;
     Point points[][] = new Point[8][8];
-    public Tile[][] BoardTilesArray=new Tile[8][8];
+    public static Tile[][] BoardTilesArray=new Tile[8][8];
     
     public PointMapper() {
         initBoardTiles();

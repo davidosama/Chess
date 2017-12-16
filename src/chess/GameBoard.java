@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,8 +25,24 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     
     public Bishop blackBishop;
     public Bishop whiteBishop;
-    public Pawn blackPawn;
-    public Pawn whitePawn;
+    
+    public ArrayList<Pawn> blackPawns;
+    public ArrayList<Pawn> whitePawns;
+    
+    public ArrayList<Knight>blackKnights;
+    public ArrayList<Knight>whiteKnights;
+    
+    public ArrayList<Rook>whiteRooks;
+    public ArrayList<Rook>blackRooks;
+    
+    public ArrayList<Bishop>blackBishops;
+    public ArrayList<Bishop>whiteBishops;
+    
+    public Queen blackQueen;
+    public Queen whiteQueen;
+    
+    
+    
     
     
     boolean PlayerSelected=false;
@@ -42,7 +59,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
         jPanel1.setLayout(null);
         this.setLocationRelativeTo(null);
         pm = new PointMapper();
-        GameBoardTile=pm.getBoardTilesArray();
         this.addMouseListener(this);
         initializePiecesPositions();
         
@@ -83,7 +99,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
             }
         });
         jPanel1.add(TestMoveBtn);
-        TestMoveBtn.setBounds(610, 30, 78, 29);
+        TestMoveBtn.setBounds(440, 250, 78, 29);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -197,20 +213,133 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     
     public void initializePiecesPositions(){
         //put the Black Pawns
-        for(int k =0;k<8;k++){
-            Point p = pm.points[k][6];
-            blackPawn= new Pawn("Black",p);
-            blackPawn.label.setBounds(p.x, p.y, 60, 60);
-            jPanel1.add(blackPawn.label);
-            blackPawn.label.setVisible(true);
+        blackPawns=new ArrayList();
+        for(int i =0;i<8;i++){
+            
+            Point p = pm.points[i][6];
+            blackPawns.add(new Pawn("Black",p));
+            blackPawns.get(i).label.setBounds(p.x, p.y, 60, 60);
+            PointMapper.BoardTilesArray[i][6].piece=blackPawns.get(i);
+            jPanel1.add(blackPawns.get(i).label);
+//            blackPawn.label.setVisible(true);
         }
-        for(int k =0;k<8;k++){
-            Point p = pm.points[k][1];
-            whitePawn= new Pawn("White",p);
-            whitePawn.label.setBounds(p.x, p.y, 60, 60);
-            jPanel1.add(whitePawn.label);
-            whitePawn.label.setVisible(true);
+        //white Pawns
+        whitePawns=new ArrayList();
+        for(int i =0;i<8;i++){
+            Point p = pm.points[i][1];
+            whitePawns.add(new Pawn("White",p));
+            whitePawns.get(i).label.setBounds(p.x, p.y, 60, 60);
+            PointMapper.BoardTilesArray[i][1].piece=whitePawns.get(i);
+            jPanel1.add(whitePawns.get(i).label);
         }
+        //black blackKnights
+        blackKnights=new ArrayList(2);
+        Point p = pm.points[1][7];
+        blackKnights.add(new Knight("Black",p));
+        blackKnights.get(0).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[1][7].piece=blackKnights.get(0);
+        jPanel1.add(blackKnights.get(0).label);
+        
+        p = pm.points[6][7];
+        blackKnights.add(new Knight("Black",p));
+        blackKnights.get(1).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[6][7].piece=blackKnights.get(1);
+        jPanel1.add(blackKnights.get(1).label);
+        
+        //white blackKnights
+        whiteKnights=new ArrayList();
+        p = pm.points[1][0];
+        whiteKnights.add(new Knight("White",p));
+        whiteKnights.get(0).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[1][0].piece=whiteKnights.get(0);
+        jPanel1.add(whiteKnights.get(0).label);
+        
+        p = pm.points[6][0];
+        whiteKnights.add(new Knight("White",p));
+        whiteKnights.get(1).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[6][0].piece=whiteKnights.get(1);
+        jPanel1.add(whiteKnights.get(1).label);
+        
+        //black Rooks
+        blackRooks=new ArrayList();
+        p = pm.points[0][7];
+        blackRooks.add(new Rook("Black",p));
+        blackRooks.get(0).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[0][7].piece=blackRooks.get(0);
+        jPanel1.add(blackRooks.get(0).label);
+        
+        p = pm.points[7][7];
+        blackRooks.add(new Rook("Black",p));
+        blackRooks.get(1).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[7][7].piece=blackRooks.get(1);
+        jPanel1.add(blackRooks.get(1).label);
+        
+        
+        //white Rooks
+        whiteRooks=new ArrayList();
+        p = pm.points[0][0];
+        whiteRooks.add(new Rook("White",p));
+        whiteRooks.get(0).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[0][0].piece=whiteRooks.get(0);
+        jPanel1.add(whiteRooks.get(0).label);
+        
+        p = pm.points[7][0];
+        whiteRooks.add(new Rook("White",p));
+        whiteRooks.get(1).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[7][0].piece=whiteRooks.get(1);
+        jPanel1.add(whiteRooks.get(1).label);
+        
+        //black bishops
+        blackBishops=new ArrayList();
+        p = pm.points[2][7];
+        blackBishops.add(new Bishop("Black",p));
+        blackBishops.get(0).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[2][7].piece=blackBishops.get(0);
+        jPanel1.add(blackBishops.get(0).label);
+        
+        p = pm.points[5][7];
+        blackBishops.add(new Bishop("Black",p));
+        blackBishops.get(1).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[5][7].piece=blackBishops.get(1);
+        jPanel1.add(blackBishops.get(1).label);
+        
+        //white bishops
+        whiteBishops=new ArrayList();
+        p = pm.points[2][0];
+        whiteBishops.add(new Bishop("White",p));
+        whiteBishops.get(0).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[2][0].piece=whiteBishops.get(0);
+        jPanel1.add(whiteBishops.get(0).label);
+        
+        p = pm.points[5][0];
+        whiteBishops.add(new Bishop("White",p));
+        whiteBishops.get(1).label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[5][0].piece=whiteBishops.get(1);
+        jPanel1.add(whiteBishops.get(1).label);
+        
+        //black Queen
+        p=pm.points[4][7];
+        blackQueen=new Queen("Black",p);
+        blackQueen.label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[4][7].piece=blackQueen;
+        jPanel1.add(blackQueen.label);
+        
+        //white Queen
+        p=pm.points[3][0];
+        whiteQueen=new Queen("White",p);
+        whiteQueen.label.setBounds(p.x,p.y,60,60);
+        PointMapper.BoardTilesArray[3][0].piece=whiteQueen;
+        jPanel1.add(whiteQueen.label);
+        
+        
+        
+        
+       
+       
+        
+
+        
+
         
        
         
