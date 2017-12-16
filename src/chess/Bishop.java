@@ -5,8 +5,8 @@ import javax.swing.ImageIcon;
 
 public class Bishop extends Piece{
 
-    public Bishop(String color,Point position) {
-        super(color,position);
+    public Bishop(String color, int positionX, int positionY, ImageIcon img, String pieceType) {
+        super(color, positionX, positionY, img, pieceType);
     }
 
     @Override
