@@ -205,6 +205,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
                  FirstSelectedPoint=new Point(PointMapper.getTileRangeX(e.getX()),PointMapper.getTileRangeY(e.getY()));
                  //Now selected, not First
                  First =false;
+                 WhiteTurn = !WhiteTurn;
              }
              //not the player's piece
              else
