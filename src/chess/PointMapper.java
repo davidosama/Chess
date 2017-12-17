@@ -111,8 +111,8 @@ public class PointMapper {
         System.out.println("Error in X Range");
         return -1;
     }
-    private static int getTileRangeY(int XOrY){
-        if(XOrY>=35 && XOrY<120){
+    public static int getTileRangeY(int XOrY){
+        if(XOrY>=0 && XOrY<120){
             return 0;
         }
         else if (XOrY>=120 && XOrY <205){
