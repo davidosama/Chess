@@ -23,8 +23,6 @@ import javax.swing.JLabel;
 public class GameBoard extends javax.swing.JFrame implements MouseListener{
     
     
-    public Bishop blackBishop;
-    public Bishop whiteBishop;
     
     public ArrayList<Pawn> blackPawns;
     public ArrayList<Pawn> whitePawns;
@@ -185,6 +183,12 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     public void mousePressed(MouseEvent e) {
         System.out.println(e.getPoint().toString());
         System.out.println(e.getX());
+//        if(PointMapper){
+//            PlayerSelected=true;
+//            
+//        }
+        
+        
     }
 
     @Override
@@ -355,25 +359,20 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     @Override
     public void paintComponents(Graphics g) {
         super.paintComponents(g); //To change body of generated methods, choose Tools | Templates.
-        
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if(PointMapper.BoardTilesArray[i][j].isEmpty()==false)
-                {
-                    
+        for(int i =0;i<8;i++){
+            for(int j =0;j<8;j++){
+                Tile t = PointMapper.BoardTilesArray[i][j];
+                if(t.isEmpty()==false){
+                    Piece p = t.getPiece();
+                    if(p.alive && (p.position != PointMapper.getTileNumber(p.label.getLocation().x, p.label.getLocation().y))){
+                        p.label.setLocation(PointMapper.points[p.position.x][p.position.y]);
+                        t.setEmpty(true);
+                        PointMapper.BoardTilesArray[p.position.x][p.position.y].setEmpty(false);
+                    }
                 }
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-    }
+  }
     
     
 }

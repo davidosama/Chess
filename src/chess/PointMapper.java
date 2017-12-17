@@ -75,7 +75,7 @@ public class PointMapper {
     }
     
     //return Tile number
-    Point getTileNumber(int xPoint , int yPoint){
+    static Point getTileNumber(int xPoint , int yPoint){
         int x = getTileRangeX(xPoint);
         System.out.println("asdasd"+x);
         int y = getTileRangeY(yPoint);
@@ -83,7 +83,7 @@ public class PointMapper {
         return new Point(x,y);
     }
     
-    private int getTileRangeX(int XOrY){
+    public static int getTileRangeX(int XOrY){
         if(XOrY>=0 && XOrY<91){
             return 0;
         }
@@ -111,7 +111,7 @@ public class PointMapper {
         System.out.println("Error in X Range");
         return -1;
     }
-    private int getTileRangeY(int XOrY){
+    private static int getTileRangeY(int XOrY){
         if(XOrY>=35 && XOrY<120){
             return 0;
         }
