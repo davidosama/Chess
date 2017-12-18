@@ -35,7 +35,6 @@ public class Knight extends Piece {
        return false;
     }        
     
-
     @Override
     public boolean validateMove(int x, int y) {
     //    Point currentPosition = this.position;

@@ -45,6 +45,14 @@ public class Queen extends Piece {
         }
         return false;
     }
+    public boolean canAttack(int x, int y){
+        if ((Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y))||((this.position.getX()-x)==0||(this.position.getY()-y)==0)){
+            if(isPathClear(x, y)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     private boolean isPathClear(int x, int y) {
         Point currentPosition = this.position;

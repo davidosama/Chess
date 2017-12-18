@@ -46,6 +46,8 @@ public class Rook extends Piece {
         }
         return false ;
     }
+    
+    
 
     private boolean isPathClear(int x, int y) {
         Point currentPosition = this.position;

@@ -39,7 +39,7 @@ public static int BlackTurns = 0;
     public Queen blackQueen;
     public Queen whiteQueen;
 
-    public ArrayList<Piece> AllPieces;
+    public static ArrayList<Piece> AllPieces;
 
     boolean PlayerSelected = false;
     static PointMapper pm;
@@ -455,6 +455,25 @@ public static int BlackTurns = 0;
                 }
             }
         }
+    }
+    
+    public static boolean isTileThreatened(String Color,int x, int y){
+        
+        for(int i =0 ; i<AllPieces.size();i++){
+            if(AllPieces.get(i).color!=Color &&AllPieces.get(i).alive){
+                if(AllPieces.get(i).pieceType.equalsIgnoreCase("Pawn")){
+                    Pawn p =(Pawn) AllPieces.get(i);
+                    if(p.canAttack(x, y))
+                        return true;
+                    else 
+                        return false;
+                }
+                else if(AllPieces.get(i).validateMove(x, y))
+                    return true;
+            }
+        }
+        return false;
+        
     }
 
 }
