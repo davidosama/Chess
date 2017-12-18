@@ -23,6 +23,14 @@ public abstract class Piece {
         this.pieceType = pieceType;
     }
     
+    public Piece(String color, Point position, boolean alive, String pieceType, int numOfMoves){
+        this.numOfMoves = numOfMoves;
+        this.color = color;
+        this.position = position;
+        this.alive = alive;
+        this.pieceType = this.getClass().getName();
+    }
+    
     public void loadImage()
     {
         String imageName = this.getClass().getName();
@@ -32,6 +40,14 @@ public abstract class Piece {
         ImageIcon i = new ImageIcon (getClass().getResource("/chess/imgs/"+imageName+".png")) ; 
         label=new JLabel(i);
         //label.setSize(60, 60);
+    }
+    
+    public Point getPosition(){
+        return this.position;
+    }
+    
+    public void setPosition(Point position){
+        this.position = position;
     }
     
     public abstract void move(int x, int y);

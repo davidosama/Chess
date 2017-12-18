@@ -39,7 +39,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     public Queen blackQueen;
     public Queen whiteQueen;
     
-    
+    public static ArrayList <Piece> AllPieces ;
     
     
     

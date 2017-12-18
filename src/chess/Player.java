@@ -16,15 +16,10 @@ public class Player {
     
     public ArrayList<Piece> PiecesSet;
     
-    private Pawn pawn;
-    private Bishop bishop;
-    
-    public void initSet(String color){
-        //pawn = new Pawn();
+    public void initSet(){
     }
     
     Player(String color){
-        initSet(color);
     }
     
 }

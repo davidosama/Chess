@@ -8,7 +8,11 @@ public class Pawn extends Piece{
     public Pawn(String color,Point position) {
         super(color,position);
     }
-
+    
+    public Pawn(String color, Point position, boolean alive, String pieceType, int numOfMoves){
+        super(color, position, alive, pieceType, numOfMoves);
+    }
+    
     @Override
     public void move(int x, int y) {
         if (validateMove(x, y)){
