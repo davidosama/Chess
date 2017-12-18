@@ -67,19 +67,19 @@ public class Queen extends Piece {
                 currentPosition.y++;
             }
             
-            else if(x==this.position.getX()&&y>this.position.getY()){//up
-                currentPosition.y--;
+            else if(x==this.position.getX()&&y>this.position.getY()){//down
+                currentPosition.y++;
             }
             else if(x>this.position.getX()&&y==this.position.getY()){//right
                 currentPosition.x++;
             }
-            else if(x==this.position.getX()&&y<this.position.getY()){//down
-                currentPosition.y++;
+            else if(x==this.position.getX()&&y<this.position.getY()){//up
+                currentPosition.y--;
             }
             else if(x<this.position.getX()&&y==this.position.getY()){//left
                 currentPosition.x--;
             }
-            if(!GameBoard.isEmpty(x, y)){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+            if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
                 return false;
             }
         }

@@ -46,24 +46,24 @@ public class Rook extends Piece {
     }
 
     private boolean isPathClear(int x, int y) {
-        Point currentPosition = this.position;
+        Point currentPosition = new Point ((int)this.position.getX(),(int)this.position.getY());
         int counter = (int) Math.abs(this.position.getX() - x)+(int) Math.abs(this.position.getY() - y);
         if (counter == 1)
             return true;
         for(int i=0 ;i<counter-1;i++){
-            if(x==this.position.getX()&&y>this.position.getY()){//up
-                currentPosition.y--;
+            if(x==this.position.getX()&&y>this.position.getY()){//down
+                currentPosition.y++;
             }
             else if(x>this.position.getX()&&y==this.position.getY()){//right
                 currentPosition.x++;
             }
-            else if(x==this.position.getX()&&y<this.position.getY()){//down
-                currentPosition.y++;
+            else if(x==this.position.getX()&&y<this.position.getY()){//up
+                currentPosition.y--;
             }
             else if(x<this.position.getX()&&y==this.position.getY()){//left
                 currentPosition.x--;
             }
-            if(!GameBoard.isEmpty(x, y)){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+            if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
                 return false;
             }   
         }
