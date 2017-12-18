@@ -21,11 +21,54 @@ import javax.swing.JOptionPane;
  *
  * @author Kero
  */
-public class GameBoard extends javax.swing.JFrame implements MouseListener{
-    
-    
-    
+public class GameBoard extends javax.swing.JFrame implements MouseListener {
+public static int WhiteTurns = 0;
+public static int BlackTurns = 0;
     public ArrayList<Pawn> blackPawns;
+    public ArrayList<Pawn> whitePawns;
+
+    public ArrayList<Knight> blackKnights;
+    public ArrayList<Knight> whiteKnights;
+
+    public ArrayList<Rook> whiteRooks;
+    public ArrayList<Rook> blackRooks;
+
+    public ArrayList<Bishop> blackBishops;
+    public ArrayList<Bishop> whiteBishops;
+
+    public Queen blackQueen;
+    public Queen whiteQueen;
+
+    public ArrayList<Piece> AllPieces;
+
+    boolean PlayerSelected = false;
+    static PointMapper pm;
+    int x = 0;
+    int y = 0;
+    Tile[][] GameBoardTile;
+    private boolean First = true;
+    Point FirstSelectedPoint;
+    boolean WhiteTurn = true;//0 for black 1 for white
+
+    public GameBoard() {
+
+        initComponents();
+
+        jPanel1.setLayout(null);
+        this.setLocationRelativeTo(null);
+        pm = new PointMapper();
+        this.addMouseListener(this);
+        initializePiecesPositions();
+
+        JLabel jLabel1 = new javax.swing.JLabel();
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/background.png"))); // NOI18N
+        jPanel1.add(jLabel1);
+        jLabel1.setBounds(0, 0, 710, 700);
+
+//        GameBoardTile[0][0].setPiece(piece);
+
+        /*
+                public ArrayList<Pawn> blackPawns;
     public ArrayList<Pawn> whitePawns;
     
     public ArrayList<Knight>blackKnights;
@@ -39,63 +82,70 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
     
     public Queen blackQueen;
     public Queen whiteQueen;
-    
-    
-    
-    
-    
-    boolean PlayerSelected=false;
-    static PointMapper pm;
-    int x =0;
-    int y = 0;
-    Tile [][] GameBoardTile;
-    private boolean First = true;
-    Point FirstSelectedPoint;
-    boolean WhiteTurn=true;//0 for black 1 for white
-    
-    public GameBoard() {
-                
+         */
+        AllPieces = new ArrayList<Piece>();
+        for (int i = 0; i < blackPawns.size(); i++) {
+            AllPieces.add(blackPawns.get(i));
+        }
+        for (int i = 0; i < whitePawns.size(); i++) {
+            AllPieces.add(whitePawns.get(i));
+        }
+        for (int i = 0; i < blackKnights.size(); i++) {
+            AllPieces.add(blackKnights.get(i));
+        }
+        for (int i = 0; i < whiteKnights.size(); i++) {
+            AllPieces.add(whiteKnights.get(i));
+        }
+        for (int i = 0; i < whiteRooks.size(); i++) {
+            AllPieces.add(whiteRooks.get(i));
+        }
+        for (int i = 0; i < blackRooks.size(); i++) {
+            AllPieces.add(blackRooks.get(i));
+        }
+        for (int i = 0; i < blackBishops.size(); i++) {
+            AllPieces.add(blackBishops.get(i));
+        }
+        for (int i = 0; i < whiteBishops.size(); i++) {
+            AllPieces.add(whiteBishops.get(i));
+        }
+        AllPieces.add(blackQueen);
+        AllPieces.add(whiteQueen);
 
-        initComponents();
-        
-        jPanel1.setLayout(null);
-        this.setLocationRelativeTo(null);
-        pm = new PointMapper();
-        this.addMouseListener(this);
-        initializePiecesPositions();
-        
-        JLabel jLabel1 = new javax.swing.JLabel();
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/background.png"))); // NOI18N
-        jPanel1.add(jLabel1);
-        jLabel1.setBounds(0, 0, 710, 700);
+    }
 
-//        GameBoardTile[0][0].setPiece(piece);
-        
-        
-    }
-    
-    public static boolean isKing (int x, int y){
+    public static boolean isKing(int x, int y) {
         //implement
         return false;
     }
-    
-    public static void Checkmate (String attackingColor){
+
+    public static void Checkmate(String attackingColor) {
         //implement
     }
-    
-    public static void attack (int x, int y){
-        //implement
+
+    public static void attack(int x, int y) {
+        PointMapper.BoardTilesArray[x][y].piece.alive = false;
     }
-    
-    public static boolean isEnemy (int x, int y, String attackingColor){
-        //implement
+
+    public static boolean isEnemy(int x, int y, String attackingColor) {
+        if (attackingColor.equalsIgnoreCase("White")) {
+            if (!PointMapper.BoardTilesArray[x][y].isEmpty()) {
+
+                if (PointMapper.BoardTilesArray[x][y].piece.color.equalsIgnoreCase("Black")) {
+                    return true;
+                }
+            } else if (attackingColor.equalsIgnoreCase("Black")) {
+                if (PointMapper.BoardTilesArray[x][y].piece.color.equalsIgnoreCase("White")) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
-    
-    public static boolean isEmpty (int x, int y){
-        //implement
-        return false;
+
+    public static boolean isEmpty(int x, int y) {
+        return PointMapper.BoardTilesArray[x][y].isEmpty();
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -160,10 +210,10 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new GameBoard().setVisible(true);
-                
+
             }
         });
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -185,253 +235,226 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
+
         System.out.println(e.getPoint().toString());
         System.out.println(e.getX());
-         if(First && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())){
-             JOptionPane.showMessageDialog(null, "select piece ya 7ywan :'D :P ");
-        }
-        
-         //Awel Select wel moraba3 fih piece 
-         else if (First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()))
-         {  
-             //check if it is the player's piece , then select
-             if((WhiteTurn &&
-                     PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color=="White")
-                     || (!WhiteTurn &&
-                     PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color=="Black"))
-             {
-                 //select (it means save the tile and its information)
-                 FirstSelectedPoint=new Point(PointMapper.getTileRangeX(e.getX()),PointMapper.getTileRangeY(e.getY()));
-                 //Now selected, not First
-                 First =false;
-                 WhiteTurn = !WhiteTurn;
-             }
-             //not the player's piece
-             else
-             {
-                 JOptionPane.showMessageDialog(null, "select el piece bta3tak ya 7ywan xD :'D");
-             }
-         }
-         else if(!First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())){
-            
-            //same color select 
-            if((WhiteTurn &&
-                     PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color=="White")
-                     || (!WhiteTurn &&
-                     PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color=="Black"))
-             {
-                 //select (it means save the tile and its information)
-                 FirstSelectedPoint=new Point(PointMapper.getTileRangeX(e.getX()),PointMapper.getTileRangeY(e.getY()));
-                 
-             }
-        }
-            //different color move
-            else
-         {
-           // PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeX(e.getY()));
-            PointMapper.BoardTilesArray[4][1].piece.position= new Point(4, 2);
+        if (First && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
+            JOptionPane.showMessageDialog(null, "select piece ya 7ywan :'D :P ");
+        } //Awel Select wel moraba3 fih piece 
+        else if (First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
+            //check if it is the player's piece , then select
+            if ((WhiteTurn
+                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
+                    || (!WhiteTurn
+                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black")) {
+                //select (it means save the tile and its information)
+                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                //Now selected, not First
+                First = false;
+                if(WhiteTurn) WhiteTurns++;
+                else BlackTurns++ ;
+                WhiteTurn = !WhiteTurn;
+            } //not the player's piece
+            else {
+                JOptionPane.showMessageDialog(null, "select el piece bta3tak ya 7ywan xD :'D");
+            }
+        } else if (!First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
 
-            First=true;
-         }
-            
-            
-           setPosions();
-           
-           jPanel1.repaint();
-            
+            //same color select 
+            if ((WhiteTurn
+                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
+                    || (!WhiteTurn
+                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black")) {
+                //select (it means save the tile and its information)
+                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+
+            }
+        } //different color move
+        else {
+            PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeX(e.getY()));
+            //PointMapper.BoardTilesArray[4][1].piece.position= new Point(4, 2);
+
+            First = true;
         }
-        //else if (!First && Empty) -----> move
-        //else if(First && !Empty && MyColo) ----> Select
-        
-    
+
+        setPosions();
+
+        jPanel1.repaint();
+
+    }
+    //else if (!First && Empty) -----> move
+    //else if(First && !Empty && MyColo) ----> Select
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-       
+
     }
-    
-    public void initializePiecesPositions(){
+
+    public void initializePiecesPositions() {
         //put the Black Pawns
-        blackPawns=new ArrayList();
-        for(int i =0;i<8;i++){
-            
+        blackPawns = new ArrayList();
+        for (int i = 0; i < 8; i++) {
+
             Point p = PointMapper.points[i][6];
-            blackPawns.add(new Pawn("Black",new Point(i,6)));
+            blackPawns.add(new Pawn("Black", new Point(i, 6)));
             blackPawns.get(i).label.setBounds(p.x, p.y, 60, 60);
-            PointMapper.BoardTilesArray[i][6].piece=blackPawns.get(i);
+            PointMapper.BoardTilesArray[i][6].piece = blackPawns.get(i);
             PointMapper.BoardTilesArray[i][6].setEmpty(false);
             jPanel1.add(blackPawns.get(i).label);
 //            blackPawn.label.setVisible(true);
         }
         //white Pawns
-        whitePawns=new ArrayList();
-        for(int i =0;i<8;i++){
+        whitePawns = new ArrayList();
+        for (int i = 0; i < 8; i++) {
             Point p = PointMapper.points[i][1];
-            whitePawns.add(new Pawn("White",new Point(i,1)));
+            whitePawns.add(new Pawn("White", new Point(i, 1)));
             whitePawns.get(i).label.setBounds(p.x, p.y, 60, 60);
-            PointMapper.BoardTilesArray[i][1].piece=whitePawns.get(i);
+            PointMapper.BoardTilesArray[i][1].piece = whitePawns.get(i);
             PointMapper.BoardTilesArray[i][1].setEmpty(false);
             jPanel1.add(whitePawns.get(i).label);
         }
         //black blackKnights
-        blackKnights=new ArrayList(2);
+        blackKnights = new ArrayList(2);
         Point p = PointMapper.points[1][7];
-        blackKnights.add(new Knight("Black",new Point(1,7)));
-        blackKnights.get(0).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[1][7].piece=blackKnights.get(0);
+        blackKnights.add(new Knight("Black", new Point(1, 7)));
+        blackKnights.get(0).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[1][7].piece = blackKnights.get(0);
         PointMapper.BoardTilesArray[1][7].setEmpty(false);
         jPanel1.add(blackKnights.get(0).label);
-        
+
         //PointMapper.BoardTilesArray[1][7].piece.position = new Point(1,2);
-        
         p = PointMapper.points[6][7];
-        blackKnights.add(new Knight("Black",new Point(6,7)));
-        blackKnights.get(1).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[6][7].piece=blackKnights.get(1);
+        blackKnights.add(new Knight("Black", new Point(6, 7)));
+        blackKnights.get(1).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[6][7].piece = blackKnights.get(1);
         PointMapper.BoardTilesArray[6][7].setEmpty(false);
         jPanel1.add(blackKnights.get(1).label);
-        
+
         //white blackKnights
-        whiteKnights=new ArrayList();
+        whiteKnights = new ArrayList();
         p = PointMapper.points[1][0];
-        whiteKnights.add(new Knight("White",new Point(1,0)));
-        whiteKnights.get(0).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[1][0].piece=whiteKnights.get(0);
+        whiteKnights.add(new Knight("White", new Point(1, 0)));
+        whiteKnights.get(0).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[1][0].piece = whiteKnights.get(0);
         PointMapper.BoardTilesArray[1][0].setEmpty(false);
         jPanel1.add(whiteKnights.get(0).label);
-        
+
         p = PointMapper.points[6][0];
-        whiteKnights.add(new Knight("White",new Point(6,0)));
-        whiteKnights.get(1).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[6][0].piece=whiteKnights.get(1);
+        whiteKnights.add(new Knight("White", new Point(6, 0)));
+        whiteKnights.get(1).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[6][0].piece = whiteKnights.get(1);
         PointMapper.BoardTilesArray[6][0].setEmpty(false);
         jPanel1.add(whiteKnights.get(1).label);
-        
+
         //black Rooks
-        blackRooks=new ArrayList();
+        blackRooks = new ArrayList();
         p = PointMapper.points[0][7];
-        blackRooks.add(new Rook("Black",new Point(0,7)));
-        blackRooks.get(0).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[0][7].piece=blackRooks.get(0);
+        blackRooks.add(new Rook("Black", new Point(0, 7)));
+        blackRooks.get(0).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[0][7].piece = blackRooks.get(0);
         PointMapper.BoardTilesArray[0][7].setEmpty(false);
         jPanel1.add(blackRooks.get(0).label);
-        
+
         p = PointMapper.points[7][7];
-        blackRooks.add(new Rook("Black",new Point(7,7)));
-        blackRooks.get(1).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[7][7].piece=blackRooks.get(1);
+        blackRooks.add(new Rook("Black", new Point(7, 7)));
+        blackRooks.get(1).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[7][7].piece = blackRooks.get(1);
         PointMapper.BoardTilesArray[7][7].setEmpty(false);
         jPanel1.add(blackRooks.get(1).label);
-        
-        
+
         //white Rooks
-        whiteRooks=new ArrayList();
+        whiteRooks = new ArrayList();
         p = PointMapper.points[0][0];
-        whiteRooks.add(new Rook("White",new Point(0,0)));
-        whiteRooks.get(0).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[0][0].piece=whiteRooks.get(0);
+        whiteRooks.add(new Rook("White", new Point(0, 0)));
+        whiteRooks.get(0).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[0][0].piece = whiteRooks.get(0);
         PointMapper.BoardTilesArray[0][0].setEmpty(false);
         jPanel1.add(whiteRooks.get(0).label);
-        
+
         p = PointMapper.points[7][0];
-        whiteRooks.add(new Rook("White",new Point(7,0)));
-        whiteRooks.get(1).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[7][0].piece=whiteRooks.get(1);
+        whiteRooks.add(new Rook("White", new Point(7, 0)));
+        whiteRooks.get(1).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[7][0].piece = whiteRooks.get(1);
         PointMapper.BoardTilesArray[7][0].setEmpty(false);
         jPanel1.add(whiteRooks.get(1).label);
-        
+
         //black bishops
-        blackBishops=new ArrayList();
+        blackBishops = new ArrayList();
         p = PointMapper.points[2][7];
-        blackBishops.add(new Bishop("Black",new Point(2,7)));
-        blackBishops.get(0).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[2][7].piece=blackBishops.get(0);
+        blackBishops.add(new Bishop("Black", new Point(2, 7)));
+        blackBishops.get(0).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[2][7].piece = blackBishops.get(0);
         PointMapper.BoardTilesArray[2][7].setEmpty(false);
         jPanel1.add(blackBishops.get(0).label);
-        
+
         p = PointMapper.points[5][7];
-        blackBishops.add(new Bishop("Black",new Point(5,7)));
-        blackBishops.get(1).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[5][7].piece=blackBishops.get(1);
+        blackBishops.add(new Bishop("Black", new Point(5, 7)));
+        blackBishops.get(1).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[5][7].piece = blackBishops.get(1);
         PointMapper.BoardTilesArray[5][7].setEmpty(false);
         jPanel1.add(blackBishops.get(1).label);
-        
+
         //white bishops
-        whiteBishops=new ArrayList();
+        whiteBishops = new ArrayList();
         p = PointMapper.points[2][0];
-        whiteBishops.add(new Bishop("White",new Point(2,0)));
-        whiteBishops.get(0).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[2][0].piece=whiteBishops.get(0);
+        whiteBishops.add(new Bishop("White", new Point(2, 0)));
+        whiteBishops.get(0).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[2][0].piece = whiteBishops.get(0);
         PointMapper.BoardTilesArray[2][0].setEmpty(false);
         jPanel1.add(whiteBishops.get(0).label);
-        
+
         p = PointMapper.points[5][0];
-        whiteBishops.add(new Bishop("White",new Point(5,0)));
-        whiteBishops.get(1).label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[5][0].piece=whiteBishops.get(1);
+        whiteBishops.add(new Bishop("White", new Point(5, 0)));
+        whiteBishops.get(1).label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[5][0].piece = whiteBishops.get(1);
         PointMapper.BoardTilesArray[5][0].setEmpty(false);
         jPanel1.add(whiteBishops.get(1).label);
-        
+
         //black Queen
-        p=PointMapper.points[4][7];
-        blackQueen=new Queen("Black",new Point(4,7));
-        blackQueen.label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[4][7].piece=blackQueen;
+        p = PointMapper.points[4][7];
+        blackQueen = new Queen("Black", new Point(4, 7));
+        blackQueen.label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[4][7].piece = blackQueen;
         PointMapper.BoardTilesArray[4][7].setEmpty(false);
         jPanel1.add(blackQueen.label);
-        
+
         //white Queen
-        p=PointMapper.points[4][0];
-        whiteQueen=new Queen("White",new Point(4,0));
-        whiteQueen.label.setBounds(p.x,p.y,60,60);
-        PointMapper.BoardTilesArray[4][0].piece=whiteQueen;
+        p = PointMapper.points[4][0];
+        whiteQueen = new Queen("White", new Point(4, 0));
+        whiteQueen.label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[4][0].piece = whiteQueen;
         PointMapper.BoardTilesArray[4][0].setEmpty(false);
         jPanel1.add(whiteQueen.label);
-        
-        
-        
-        
-       
-       
-        
 
-        
+    }
 
-        
-       
-        
-   }
-
-    
     public void setPosions() {
         //super.paintComponents(g); //To change body of generated methods, choose Tools | Templates.
-        for(int i =0;i<8;i++){
-            for(int j =0;j<8;j++){
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 //Tile t = PointMapper.BoardTilesArray[i][j];
-                if(PointMapper.BoardTilesArray[i][j].isEmpty()==false){
+                if (PointMapper.BoardTilesArray[i][j].isEmpty() == false) {
                     //Piece p = t.getPiece();
-                    
-                    if(PointMapper.BoardTilesArray[i][j].getPiece().alive && !(PointMapper.BoardTilesArray[i][j].getPiece().position.equals( PointMapper.getTileNumber(PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().x, PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().y)))){
+
+                    if (PointMapper.BoardTilesArray[i][j].getPiece().alive && !(PointMapper.BoardTilesArray[i][j].getPiece().position.equals(PointMapper.getTileNumber(PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().x, PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().y)))) {
                         PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(PointMapper.points[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y]);
                         PointMapper.BoardTilesArray[i][j].setEmpty(true);
                         PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].setEmpty(false);
-                        PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].piece= PointMapper.BoardTilesArray[i][j].getPiece();
+                        PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].piece = PointMapper.BoardTilesArray[i][j].getPiece();
                     }
                 }
             }
         }
-  }
-    
-    
+    }
+
 }

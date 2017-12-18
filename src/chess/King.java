@@ -9,7 +9,7 @@ public class King extends Piece{
     }
     
     @Override
-    public void move(int x, int y) {
+    public boolean move(int x, int y) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
