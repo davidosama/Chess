@@ -26,6 +26,7 @@ public class Pawn extends Piece {
                     GameBoard.attack(x, y);
                 }
             }
+            this.numOfMoves++;
             return true;
         }
         return false;
@@ -54,7 +55,7 @@ public class Pawn extends Piece {
                 if( x == this.position.getX() && y == this.position.getY()-1){
                     return true;
                 }
-                else if( GameBoard.BlackTurns == 1 && x == this.position.getX() && y == this.position.getY()-2){
+                else if( this.numOfMoves == 0 && x == this.position.getX() && y == this.position.getY()-2){
                     System.out.println("White turrns: "+GameBoard.WhiteTurns+"  | Black turns: "+GameBoard.BlackTurns);
                     return true;
                 }
@@ -70,7 +71,7 @@ public class Pawn extends Piece {
                 if( x == this.position.getX() && y == this.position.getY()+1){
                     return true;
                 }
-                else if( GameBoard.WhiteTurns  == 1  &&  x == this.position.getX() && y == this.position.getY()+2){
+                else if( this.numOfMoves == 0  &&  x == this.position.getX() && y == this.position.getY()+2){
                     System.out.println("White turrns: "+GameBoard.WhiteTurns+"  | Black turns: "+GameBoard.BlackTurns);
                     return true;
                 }
