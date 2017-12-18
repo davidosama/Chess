@@ -1,7 +1,6 @@
 package chess;
 
 import java.awt.Point;
-import javax.swing.ImageIcon;
 
 public class Pawn extends Piece {
 
@@ -46,29 +45,36 @@ public class Pawn extends Piece {
 
     @Override
     public boolean validateMove(int x, int y) {
-        if (this.color.equals("Black")) {//black sets are above so the Pawn is allowed to move down only
-            if (GameBoard.isEmpty(x, y)) {//if there is no piece and the return of the previous function is null/false
-                if (x == this.position.getX() && y == this.position.getY() - 1) {
-                    return true;
-                } else if (this.numOfMoves == 0 && x == this.position.getX() && y == this.position.getY() - 2) {
+        if (this.color.equals("Black")){//black sets are above so the Pawn is allowed to move down only
+            if (GameBoard.isEmpty(x,y)){//if there is no piece and the return of the previous function is null/false
+                if( x == this.position.getX() && y == this.position.getY()-1){
                     return true;
                 }
-            } else if (GameBoard.isEnemy(x, y, this.color)) {//if there is a piece and it's the of the opposite color so it's attacking that piece
-                if ((x == this.position.getX() - 1 || x == this.position.getX() + 1) && y == this.position.getY() - 1) {
+                else if( GameBoard.BlackTurns == 1 && x == this.position.getX() && y == this.position.getY()-2){
+                    System.out.println("White turrns: "+GameBoard.WhiteTurns+"  | Black turns: "+GameBoard.BlackTurns);
                     return true;
                 }
             }
-        } else if (this.color.equals("White")) {//white sets are below so the Pawn is allowed to move up only
-            if (GameBoard.isEmpty(x, y)) {//if there is no piece and the return of the previous function is null/false
-                if (x == this.position.getX() && y == this.position.getY() + 1) {
+            else if (GameBoard.isEnemy(x, y, this.color)){//if there is a piece and it's the of the opposite color so it's attacking that piece
+                if( (x == this.position.getX()-1 || x == this.position.getX()+1) && y == this.position.getY()-1){
                     return true;
-                } else if (this.numOfMoves == 0 && x == this.position.getX() && y == this.position.getY() + 2) {
+                }  
+            }
+        }
+        else if(this.color.equals("White")){//white sets are below so the Pawn is allowed to move up only
+            if(GameBoard.isEmpty(x,y)){//if there is no piece and the return of the previous function is null/false
+                if( x == this.position.getX() && y == this.position.getY()+1){
                     return true;
                 }
-            } else if (GameBoard.isEnemy(x, y, this.color)) {//if there is a piece and it's the of the opposite color so it's attacking that piece
-                if ((x == this.position.getX() - 1 || x == this.position.getX() + 1) && y == this.position.getY() + 1) {
+                else if( GameBoard.WhiteTurns  == 1  &&  x == this.position.getX() && y == this.position.getY()+2){
+                    System.out.println("White turrns: "+GameBoard.WhiteTurns+"  | Black turns: "+GameBoard.BlackTurns);
                     return true;
                 }
+            }
+            else if(GameBoard.isEnemy(x, y, this.color)){//if there is a piece and it's the of the opposite color so it's attacking that piece
+                if( (x == this.position.getX()-1 || x == this.position.getX()+1) && y == this.position.getY()+1){
+                    return true;
+                }  
             }
         }
         return false;
