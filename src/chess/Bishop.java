@@ -37,7 +37,7 @@ public class Bishop extends Piece{
     }
     
     public boolean isPathClear(int x, int y){
-        Point currentPosition = this.position;
+        Point currentPosition =  new Point((int)this.position.getX(),(int)this.position.getY());
         int counter = (int) Math.abs(this.position.getX() - x);
         if (counter == 1)
             return true;
@@ -58,7 +58,7 @@ public class Bishop extends Piece{
                 currentPosition.x++;
                 currentPosition.y++;
             }
-            if(!GameBoard.isEmpty(x, y)){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+            if(!GameBoard.isEmpty(currentPosition.x, currentPosition.y)){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
                 return false;
             }
         }
