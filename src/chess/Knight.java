@@ -24,10 +24,10 @@ public class Knight extends Piece {
                 GameBoard.Checkmate(this.color);
             }
             else{
-               if(!GameBoard.isEmpty(x, y)){
+               this.position.setLocation(x, y);
+                if(!GameBoard.isEmpty(x, y)){
                     GameBoard.attack(x, y);
                 }
-                this.position.setLocation(x, y);
             }
             return true;
         }

@@ -78,9 +78,9 @@ public class PointMapper {
     static Point getTileNumber(int xPoint , int yPoint){
 //        if(panel == 0)
 //        {
-            int x = getTileRangeX(xPoint+6);
+            int x = getTileRangeX(xPoint+25);
         System.out.println("x is    "+x);
-        int y = getTileRangeY(yPoint+27);
+        int y = getTileRangeY(yPoint+25);
         System.out.println("y is     "+ y);
         return new Point(x,y);
 //        }
@@ -94,25 +94,25 @@ public class PointMapper {
         if(XOrY>=0 && XOrY<91){
             return 0;
         }
-        else if (XOrY>=91 && XOrY <177){
+        else if (XOrY>=91 && XOrY <178){
             return 1;
         }
-        else if (XOrY>=177 && XOrY<263){
+        else if (XOrY>=178 && XOrY<265){
             return 2;
         }
-        else if(XOrY>=263 && XOrY<349){
+        else if(XOrY>=265 && XOrY<352){
             return 3;
         }
-        else if(XOrY>=349 && XOrY<435){
+        else if(XOrY>=352 && XOrY<439){
             return 4;
         }
-        else if(XOrY>=435 && XOrY<521){
+        else if(XOrY>=439 && XOrY<526){
             return 5;
         }
-        else if(XOrY>=521 && XOrY<607){
+        else if(XOrY>=526 && XOrY<613){
             return 6;
         }
-        else if(XOrY>=607 && XOrY<700){
+        else if(XOrY>=613 && XOrY<700){
             return 7;
         }
         System.out.println("Error in X Range");
@@ -125,22 +125,22 @@ public class PointMapper {
         else if (XOrY>=120 && XOrY <205){
             return 1;
         }
-        else if (XOrY>=205 && XOrY<290){
+        else if (XOrY>=205 && XOrY<291){
             return 2;
         }
-        else if(XOrY>=290 && XOrY<377){
+        else if(XOrY>=291 && XOrY<378){
             return 3;
         }
-        else if(XOrY>=377 && XOrY<462){
+        else if(XOrY>=378 && XOrY<462){
             return 4;
         }
         else if(XOrY>=462 && XOrY<548){
             return 5;
         }
-        else if(XOrY>=548 && XOrY<634){
+        else if(XOrY>=548 && XOrY<635){
             return 6;
         }
-        else if(XOrY>=634 && XOrY<730){
+        else if(XOrY>=635 && XOrY<718){
             return 7;
         }
         System.out.println("Error in X Range");
