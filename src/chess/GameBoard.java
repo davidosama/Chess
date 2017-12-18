@@ -273,37 +273,55 @@ public static int BlackTurns = 0;
                 FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
             }
             // already saved & empty tile & can move 
-            else if(!(FirstSelectedPoint.equals(new Point(-1,-1)))  && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.validateMove(FirstSelectedPoint.x, FirstSelectedPoint.y))
+            else if(!(FirstSelectedPoint.equals(new Point(-1,-1)))  && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()))
             {
                 //move 
-                PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
+                {
                 WhiteTurn = !WhiteTurn;
                 FirstSelectedPoint = new Point(-1,-1);     
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "ERROR move");
+                }
             }
             // already saved point & not empty & not your color & can move >> attack and move
-            else if(!(FirstSelectedPoint.equals(new Point(-1,-1))) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("Black")) && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.validateMove(FirstSelectedPoint.x, FirstSelectedPoint.y) )
+            else if(!(FirstSelectedPoint.equals(new Point(-1,-1))) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("Black")) )
             {
                 //atack and move 
-                PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
+                {
                 WhiteTurn = !WhiteTurn;
                 FirstSelectedPoint = new Point(-1,-1);
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "ERROR move");
+                }
             }
             //can move
-            else if(!(FirstSelectedPoint.equals(new Point(-1,-1))) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (!WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("White"))&& PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.validateMove(FirstSelectedPoint.x, FirstSelectedPoint.y) )
+            else if(!(FirstSelectedPoint.equals(new Point(-1,-1))) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (!WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("White")) )
             {
                 //atack and move 
-                PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
+                {
                 WhiteTurn = !WhiteTurn;
                 FirstSelectedPoint = new Point(-1,-1);
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "ERROR move");
+                }
             }
             else
             {
@@ -524,9 +542,15 @@ public static int BlackTurns = 0;
                     if (PointMapper.BoardTilesArray[i][j].getPiece().alive && !(PointMapper.BoardTilesArray[i][j].getPiece().position.equals(PointMapper.getTileNumber(PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().x, PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().y)))) {
                         PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(PointMapper.points[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y]);
                         PointMapper.BoardTilesArray[i][j].setEmpty(true);
+                        
                         PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].setEmpty(false);
                         PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].piece = PointMapper.BoardTilesArray[i][j].getPiece();
                     }
+                    if(!PointMapper.BoardTilesArray[i][j].getPiece().alive)
+                    {
+                        PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(new Point(900, 900));
+                    }
+                    
                 }
             }
         }
