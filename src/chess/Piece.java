@@ -1,7 +1,5 @@
 package chess;
 
-
-import java.awt.Image;
 import java.awt.Point;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -20,7 +18,7 @@ public abstract class Piece {
         this.position = position;
         this.alive = true;
         loadImage();
-        this.pieceType = pieceType;
+        this.pieceType = this.getClass().getName().replace("chess.", "");
     }
     
     public Piece(String color, Point position, boolean alive, String pieceType, int numOfMoves){
@@ -49,8 +47,8 @@ public abstract class Piece {
     public void setPosition(Point position){
         this.position = position;
     }
-    
-    public abstract void move(int x, int y);
+
+    public abstract boolean move(int x, int y);
     
     public abstract boolean validateMove(int x, int y);
     

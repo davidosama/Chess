@@ -6,7 +6,6 @@
 package chess;
 
 import java.awt.Point;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,7 +19,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void move(int x, int y) {
+    public boolean move(int x, int y) {
         if (validateMove(x, y)){
             if (GameBoard.isKing(x, y)){
                 GameBoard.Checkmate(this.color);
@@ -31,13 +30,23 @@ public class Queen extends Piece {
                     GameBoard.attack(x, y);
                 }
             }
+            return true;
         }
+        return false;
     }
 
     @Override
     public boolean validateMove(int x, int y) {
         if ((Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y))||((this.position.getX()-x)==0||(this.position.getY()-y)==0)){
             if(isPathClear(x, y) && (GameBoard.isEnemy(x, y, this.color) || GameBoard.isEmpty(x, y))){
+                return true;
+            }
+        }
+        return false;
+    }
+    public boolean canAttack(int x, int y){
+        if ((Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y))||((this.position.getX()-x)==0||(this.position.getY()-y)==0)){
+            if(isPathClear(x, y)){
                 return true;
             }
         }

@@ -6,7 +6,6 @@
 package chess;
 
 import java.awt.Point;
-import javax.swing.ImageIcon;
 
 /**
  *
@@ -19,7 +18,7 @@ public class Knight extends Piece {
         super(color, position);
     }
     @Override
-    public void move(int x, int y) {
+    public boolean move(int x, int y) {
        if(validateMove(x, y)){
             if (GameBoard.isKing(x, y)){
                 GameBoard.Checkmate(this.color);
@@ -30,10 +29,11 @@ public class Knight extends Piece {
                     GameBoard.attack(x, y);
                 }
             }
+            return true;
         }
+       return false;
     }        
     
-
     @Override
     public boolean validateMove(int x, int y) {
     //    Point currentPosition = this.position;
