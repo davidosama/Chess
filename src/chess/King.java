@@ -11,11 +11,18 @@ public class King extends Piece{
     @Override
     public boolean move(int x, int y) {
         if(validateMove(x, y)){
-            this.position.setLocation(x, y);
+            if (GameBoard.isKing(x, y)){
+                GameBoard.Checkmate(this.color);
+            }
+            else{
+               if(!GameBoard.isEmpty(x, y)){
+                    GameBoard.attack(x, y);
+                }
+                this.position.setLocation(x, y);
+            }
             return true;
         }
         return false;
-            
     }
 
      @Override
@@ -37,14 +44,7 @@ public class King extends Piece{
         }
         else {
             return false;
-        }
-         
-       
-        
-        
-        
-        
-        
+        } 
         return true;
     }
     
