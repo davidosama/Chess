@@ -1,7 +1,6 @@
 package chess;
 
 import java.awt.Point;
-import javax.swing.ImageIcon;
 
 public class Pawn extends Piece{
 
@@ -36,7 +35,8 @@ public class Pawn extends Piece{
                 if( x == this.position.getX() && y == this.position.getY()-1){
                     return true;
                 }
-                else if( this.numOfMoves == 0 && x == this.position.getX() && y == this.position.getY()-2){
+                else if( GameBoard.BlackTurns == 1 && x == this.position.getX() && y == this.position.getY()-2){
+                    System.out.println("White turrns: "+GameBoard.WhiteTurns+"  | Black turns: "+GameBoard.BlackTurns);
                     return true;
                 }
             }
@@ -51,7 +51,8 @@ public class Pawn extends Piece{
                 if( x == this.position.getX() && y == this.position.getY()+1){
                     return true;
                 }
-                else if( this.numOfMoves == 0 && x == this.position.getX() && y == this.position.getY()+2){
+                else if( GameBoard.WhiteTurns  == 1  &&  x == this.position.getX() && y == this.position.getY()+2){
+                    System.out.println("White turrns: "+GameBoard.WhiteTurns+"  | Black turns: "+GameBoard.BlackTurns);
                     return true;
                 }
             }
