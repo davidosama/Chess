@@ -37,9 +37,7 @@ public class GameFrame extends javax.swing.JFrame {
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(0, 0));
         setMinimumSize(new java.awt.Dimension(619, 350));
-        setPreferredSize(new java.awt.Dimension(600, 435));
         setResizable(false);
         setSize(new java.awt.Dimension(600, 419));
         getContentPane().setLayout(null);
@@ -52,17 +50,17 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(NewGameBtn);
-        NewGameBtn.setBounds(50, 110, 103, 26);
+        NewGameBtn.setBounds(50, 110, 103, 25);
 
         CreditsBtn.setBackground(new java.awt.Color(153, 153, 153));
         CreditsBtn.setText("Credits");
         getContentPane().add(CreditsBtn);
-        CreditsBtn.setBounds(50, 160, 103, 26);
+        CreditsBtn.setBounds(50, 160, 103, 25);
 
         HowToPlayBtn.setBackground(new java.awt.Color(153, 153, 153));
         HowToPlayBtn.setText("How To Play");
         getContentPane().add(HowToPlayBtn);
-        HowToPlayBtn.setBounds(50, 210, 100, 26);
+        HowToPlayBtn.setBounds(50, 210, 100, 25);
 
         ExitBtn.setBackground(new java.awt.Color(153, 153, 153));
         ExitBtn.setText("Exit");
@@ -72,7 +70,7 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(ExitBtn);
-        ExitBtn.setBounds(50, 260, 103, 26);
+        ExitBtn.setBounds(50, 260, 103, 25);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/chess-king.jpg"))); // NOI18N
         Background.setName(""); // NOI18N
