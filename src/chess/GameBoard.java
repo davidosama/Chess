@@ -47,7 +47,7 @@ public static int BlackTurns = 0;
     int y = 0;
     Tile[][] GameBoardTile;
     private boolean First = true;
-    Point FirstSelectedPoint;
+    Point FirstSelectedPoint= new Point(-1,-1);
     boolean WhiteTurn = true;//0 for black 1 for white
 
     public GameBoard() {
@@ -236,50 +236,125 @@ public static int BlackTurns = 0;
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        System.out.println(e.getPoint().toString());
-        System.out.println(e.getX());
-        if (First && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
-            JOptionPane.showMessageDialog(null, "select piece ya 7ywan :'D :P ");
-        } //Awel Select wel moraba3 fih piece 
-        else if (First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
-            //check if it is the player's piece , then select
-            if ((WhiteTurn
-                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
-                    || (!WhiteTurn
-                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black")) {
-                //select (it means save the tile and its information)
-                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
-                //Now selected, not First
-                First = false;
-                if(WhiteTurn) WhiteTurns++;
-                else BlackTurns++ ;
-                WhiteTurn = !WhiteTurn;
-            } //not the player's piece
-            else {
-                JOptionPane.showMessageDialog(null, "select el piece bta3tak ya 7ywan xD :'D");
+        // first select
+        if(First == true)
+        {
+            // if tile empty
+            if(!(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()))
+            {
+                //your turn >> save point
+                if(WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
+                {
+                    FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                    First = false;
+                }
+                else if(!WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black") // show error message to select piece
+                {
+                    FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                    First = false;
+                }
+                else
+                {
+                    JOptionPane.showMessageDialog(null, "Please select your piece");
+                    First = true;
+                }
             }
-        } else if (!First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
-
-            //same color select 
-            if ((WhiteTurn
-                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
-                    || (!WhiteTurn
-                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black")) {
-                //select (it means save the tile and its information)
-                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
-
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Please select a piece");
+                First = true;
             }
-        } //different color move
-        else {
-            PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeX(e.getY()));
-            //PointMapper.BoardTilesArray[4][1].piece.position= new Point(4, 2);
-
-            First = true;
         }
-
-        setPosions();
-
-        jPanel1.repaint();
+        else if (First == false)
+        {
+            // tile not empty & saved point & your color
+            if((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=new Point(-1,-1)) && WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
+            {
+                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+            }
+            // already saved & empty tile & can move 
+            else if(!(FirstSelectedPoint.equals(new Point(-1,-1)))  && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.validateMove(FirstSelectedPoint.x, FirstSelectedPoint.y))
+            {
+                //move 
+                PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                WhiteTurn = !WhiteTurn;
+                FirstSelectedPoint = new Point(-1,-1);     
+                First = true;
+                setPosions();
+                jPanel1.repaint();
+            }
+            // already saved point & not empty & not your color & can move >> attack and move
+            else if(!(FirstSelectedPoint.equals(new Point(-1,-1))) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("Black")) && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.validateMove(FirstSelectedPoint.x, FirstSelectedPoint.y) )
+            {
+                //atack and move 
+                PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                WhiteTurn = !WhiteTurn;
+                FirstSelectedPoint = new Point(-1,-1);
+                First = true;
+                setPosions();
+                jPanel1.repaint();
+            }
+            //can move
+            else if(!(FirstSelectedPoint.equals(new Point(-1,-1))) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (!WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("White"))&& PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.validateMove(FirstSelectedPoint.x, FirstSelectedPoint.y) )
+            {
+                //atack and move 
+                PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                WhiteTurn = !WhiteTurn;
+                FirstSelectedPoint = new Point(-1,-1);
+                First = true;
+                setPosions();
+                jPanel1.repaint();
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "ERROR Can't move");
+                First= false;
+            }
+        }
+//        System.out.println(e.getPoint().toString());
+//        System.out.println(e.getX());
+//        if (First && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
+//            JOptionPane.showMessageDialog(null, "select piece ya 7ywan :'D :P ");
+//        } //Awel Select wel moraba3 fih piece 
+//        else if (First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
+//            //check if it is the player's piece , then select
+//            if ((WhiteTurn
+//                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
+//                    || (!WhiteTurn
+//                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black")) {
+//                //select (it means save the tile and its information)
+//                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+//                //Now selected, not First
+//                First = false;
+//                if(WhiteTurn) WhiteTurns++;
+//                else BlackTurns++ ;
+//                WhiteTurn = !WhiteTurn;
+//            } //not the player's piece
+//            else {
+//                JOptionPane.showMessageDialog(null, "select el piece bta3tak ya 7ywan xD :'D");
+//            }
+//        } else if (!First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
+//
+//            //same color select 
+//            if ((WhiteTurn
+//                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
+//                    || (!WhiteTurn
+//                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black")) {
+//                //select (it means save the tile and its information)
+//                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+//
+//            }
+//        } //different color move
+//        else {
+//            PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeX(e.getY()));
+//            //PointMapper.BoardTilesArray[4][1].piece.position= new Point(4, 2);
+//
+//            First = true;
+//        }
+//
+//        setPosions();
+//
+//        jPanel1.repaint();
 
     }
     //else if (!First && Empty) -----> move

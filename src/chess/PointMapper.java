@@ -78,7 +78,7 @@ public class PointMapper {
     static Point getTileNumber(int xPoint , int yPoint){
 //        if(panel == 0)
 //        {
-            int x = getTileRangeX(xPoint+25);
+            int x = getTileRangeX(xPoint);
         System.out.println("x is    "+x);
         int y = getTileRangeY(yPoint+25);
         System.out.println("y is     "+ y);
