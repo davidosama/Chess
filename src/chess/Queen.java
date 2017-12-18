@@ -6,6 +6,7 @@
 package chess;
 
 import java.awt.Point;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -44,14 +45,6 @@ public class Queen extends Piece {
         }
         return false;
     }
-    public boolean canAttack(int x, int y){
-        if ((Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y))||((this.position.getX()-x)==0||(this.position.getY()-y)==0)){
-            if(isPathClear(x, y)){
-                return true;
-            }
-        }
-        return false;
-    }
 
     private boolean isPathClear(int x, int y) {
         Point currentPosition = this.position;
@@ -76,19 +69,19 @@ public class Queen extends Piece {
                 currentPosition.y++;
             }
             
-            else if(x==this.position.getX()&&y>this.position.getY()){//down
-                currentPosition.y++;
+            else if(x==this.position.getX()&&y>this.position.getY()){//up
+                currentPosition.y--;
             }
             else if(x>this.position.getX()&&y==this.position.getY()){//right
                 currentPosition.x++;
             }
-            else if(x==this.position.getX()&&y<this.position.getY()){//up
-                currentPosition.y--;
+            else if(x==this.position.getX()&&y<this.position.getY()){//down
+                currentPosition.y++;
             }
             else if(x<this.position.getX()&&y==this.position.getY()){//left
                 currentPosition.x--;
             }
-            if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+            if(!GameBoard.isEmpty(x, y)){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
                 return false;
             }
         }
