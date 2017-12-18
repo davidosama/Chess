@@ -34,7 +34,7 @@ public abstract class Piece {
         //label.setSize(60, 60);
     }
     
-    public abstract void move(int x, int y);
+    public abstract boolean move(int x, int y);
     
     public abstract boolean validateMove(int x, int y);
     

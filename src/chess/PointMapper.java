@@ -76,11 +76,18 @@ public class PointMapper {
     
     //return Tile number
     static Point getTileNumber(int xPoint , int yPoint){
-        int x = getTileRangeX(xPoint);
-        System.out.println("asdasd"+x);
-        int y = getTileRangeY(yPoint);
-        System.out.println(y);
+//        if(panel == 0)
+//        {
+            int x = getTileRangeX(xPoint+25);
+        System.out.println("x is    "+x);
+        int y = getTileRangeY(yPoint+25);
+        System.out.println("y is     "+ y);
         return new Point(x,y);
+//        }
+//        else
+//        {
+//            
+//        }
     }
     
     public static int getTileRangeX(int XOrY){
