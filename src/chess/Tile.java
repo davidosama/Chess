@@ -6,15 +6,17 @@
 package chess;
 
 import java.awt.Point;
+import java.awt.Rectangle;
 
 /**
+ * 
  *
  * @author Mina
  */
 public class Tile {
     
     private int x,y;
-    private Point P1,P2,P3,P4;
+    public Point P1,P2,P3,P4;
     private Boolean Empty;
     Piece piece; 
     
@@ -25,6 +27,10 @@ public class Tile {
         this.P3=P3;
         this.P4=P4;
     }
+    
+//    public Rectangle getRectangle(){
+//        return new Rectangle(P1.x, P2, P3, P4);
+//    }
     
     
     

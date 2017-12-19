@@ -5,7 +5,10 @@
  */
 package chess;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -34,6 +37,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 
     public Queen blackQueen;
     public Queen whiteQueen;
+    
+    
 
     public static ArrayList<Piece> AllPieces;
 
@@ -45,10 +50,25 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     private boolean First = true;
     Point FirstSelectedPoint= null;
     boolean WhiteTurn = true;//0 for black 1 for white
+    private final JLabel SelectedLbl;
 
     public GameBoard() {
 
         initComponents();
+        
+        SelectedLbl = new javax.swing.JLabel();
+
+        SelectedLbl.setBackground(new java.awt.Color(255, 51, 51));
+
+        SelectedLbl.setForeground(new java.awt.Color(255, 51, 51));
+
+        SelectedLbl.setText("");
+
+        SelectedLbl.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(255, 51, 51)));
+
+        jPanel1.add(SelectedLbl);
+        SelectedLbl.setBounds(160, 110, 60, 60);
+        SelectedLbl.setVisible(false);
 
         jPanel1.setLayout(null);
         this.setLocationRelativeTo(null);
@@ -243,11 +263,15 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 {
                     FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
                     First = false;
+                    SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                    SelectedLbl.setVisible(true);
                 }
                 else if(WhiteTurn == false && "Black".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color)) // show error message to select piece
                 {
                     FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
                     First = false;
+                    SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                    SelectedLbl.setVisible(true);
                 }
                 else
                 {
@@ -270,10 +294,14 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
             if(((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=null) && WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White"))
             {
                 FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                    SelectedLbl.setVisible(true);
             }
             else if(((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=null) && !WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black"))
             {
                 FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                    SelectedLbl.setVisible(true);
             }
             
             // already saved & empty tile & can move 
@@ -287,6 +315,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                SelectedLbl.setVisible(false);
                 }
                 else
                 {
@@ -304,6 +333,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                SelectedLbl.setVisible(false);
                 }
                 else
                 {
@@ -321,6 +351,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                SelectedLbl.setVisible(false);
                 }
                 else
                 {
@@ -594,5 +625,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         return false;
         
     }
+
+
+    
+    
 
 }
