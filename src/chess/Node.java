@@ -5,6 +5,9 @@
  */
 package chess;
 
+import java.awt.Point;
+import static java.lang.Integer.min;
+import static java.lang.Math.max;
 import java.util.ArrayList;
 
 /**
@@ -95,7 +98,117 @@ public class Node {
                     }
                 }
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Bishop")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+                    ////////////////////TRIAL/////////////
+//                    //*
+//                    //  *
+//                    //    *
+//                    //      *
+//                    int m = max((int)node.PiecesState.get(i).position.getX(),(int)node.PiecesState.get(i).position.getY());
+//                    int nono = min((int)node.PiecesState.get(i).position.getX(),(int)node.PiecesState.get(i).position.getY());
+//                    int start1X = (int)node.PiecesState.get(i).position.getX()-nono;
+//                    int start1Y = (int)node.PiecesState.get(i).position.getY()-nono;
+//                    int end1X = (int)node.PiecesState.get(i).position.getX()+ (7-m);
+//                    int end1Y = (int)node.PiecesState.get(i).position.getY()+ (7-m);
+////                    Point start1= new Point(start1X,start1Y);
+////                    Point end1 = new Point(end1X, end1Y);
+//                    
+//                    //      *
+//                    //    *
+//                    //  *
+//                    //*
+//                    int start2X = (int)node.PiecesState.get(i).position.getX()+ nono;
+//                    int start2Y = (int)node.PiecesState.get(i).position.getY()-nono;
+//                    int end2X = (int)node.PiecesState.get(i).position.getX()-(7-nono);
+//                    int end2Y = (int)node.PiecesState.get(i).position.getY()+(7-nono);
+//
+//                    
+//                    
+//                    
+//                    for(int k = start1X; k <=end1X;k++)
+//                    {
+//                        if(k==node.PiecesState.get(i).position.getX()) {
+//                            start1X++;
+//                            start1Y++;
+//                            continue;
+//                        }
+//                         ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+//                         if (listCopy.get(i).move(start1X, start1Y)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta);
+//                            childrenNodesList.add(n);
+//                      } 
+//                         start1X++;
+//                         start1Y++;
+//                    }
+//                    
                     
+                    ////// This is for shemaal l foo2
+                    int y = (int) node.PiecesState.get(i).position.getY() - 1;
+                    for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
+//                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
+                        ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+                        //int y = (int)listCopy.get(i).position.getY();
+                        if (listCopy.get(i).move(x, y)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y--;
+                        if (y < 0) {
+                            break;
+                        }
+
+                    }
+
+                    //////This if or yemeeen l ta7ttt 
+                    int y2 = (int) node.PiecesState.get(i).position.getY() + 1;
+                    for (int x = (int) node.PiecesState.get(i).position.getX() + 1; x < 8; x++) {
+//                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
+                        ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+                        //int y = (int)listCopy.get(i).position.getY();
+                        if (listCopy.get(i).move(x, y2)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y2++;
+                        if (y2 > 8) {
+                            break;
+                        }
+                    }
+                    //Thiss s ofr fooo2 yemeeeen 
+                    int y3 = (int) node.PiecesState.get(i).position.getY() - 1;
+                    for (int x = (int) node.PiecesState.get(i).position.getX() + 1; x < 8; x++) {
+                        ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+                        if (listCopy.get(i).move(x, y3)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y3++;
+                        if (y3 > 8) {
+                            break;
+                        }
+                    }
+
+                    /////// This is for ta7tt shemaaaalll
+                    int y4 = (int) node.PiecesState.get(i).position.getY() + 1;
+                    for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
+                        ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+                        if (listCopy.get(i).move(x, y4)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y4--;
+                        if (y4 < 0) {
+                            break;
+                        }
+                    }
+
                 }
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
                     
