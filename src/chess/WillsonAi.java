@@ -26,16 +26,16 @@ public class WillsonAi {
         this.maximizingPlayer = maximizingPlayer;
         this.depth = depth;
     }
-    private int minimax(ArrayList<Piece> possibleState){
+    private int minimax(ArrayList<Piece> possibleState,int depth ,int a,int b,boolean maximizingPlayer ){
         if(this.depth==0){
             return heuristic(possibleState) ;
         }
         ArrayList <ArrayList> possibleChildrenStates = possibleMoves(possibleState);//fill the above arraylist with possible moves (nodes level)
         if(maximizingPlayer==true){
             for (int i=0; i<possibleChildrenStates.size(); i++){
-                this.depth--;
-                this.maximizingPlayer = false;
-                this.a = Integer.max(a, minimax(possibleChildrenStates.get(i)));
+                //this.depth--;
+                //this.maximizingPlayer = false;
+                this.a = Integer.max(a, minimax(possibleChildrenStates.get(i),depth-1,a,b,false));
                 
                 if(this.a >= this.b)
                     break;
@@ -44,9 +44,9 @@ public class WillsonAi {
         }
         else{
             for (int i=0; i<possibleChildrenStates.size(); i++){
-                this.depth--;
-                this.maximizingPlayer = true;
-                this.b = Integer.max(b, minimax(possibleChildrenStates.get(i)));
+//                this.depth--;
+//                this.maximizingPlayer = true;
+                this.b = Integer.min(b, minimax(possibleChildrenStates.get(i),depth-1,a,b,true));
                 
                 if(this.a >= this.b)
                     break;
@@ -110,6 +110,8 @@ public class WillsonAi {
     }
 
     private ArrayList<ArrayList> possibleMoves(ArrayList<Piece> possibleState) {
+        
+        
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
