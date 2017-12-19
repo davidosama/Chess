@@ -18,7 +18,6 @@ public class Pawn extends Piece {
             if (GameBoard.isKing(x, y)) {
                 GameBoard.Checkmate(this.color);
             } else {
-                this.position.setLocation(x, y);
                 if (y == 0 || y == 7) {
                     switchPawn(x, y);
                 }
@@ -26,6 +25,10 @@ public class Pawn extends Piece {
                     GameBoard.attack(x, y);
                 }
             }
+
+            this.position.setLocation(x, y);
+            this.numOfMoves++;
+
             return true;
         }
         return false;
