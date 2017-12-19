@@ -17,22 +17,23 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-    int depth;
-    boolean isMax;
+//    int depth;
+//    boolean isMax;
     //init the maximizer player in constractor
     
-    public Node(ArrayList<Piece> nodeState){
-        //nodeState=GameBoard.AllPieces;
+    public Node(ArrayList<Piece> nodeState, int alpha , int beta){
+        this.alpha = alpha;
+        this.beta = beta;
         
     }
-    private int minimax(Node node,int depth ,int a,int b,boolean maximizingPlayer ){
-        if(this.depth==0){
+    private int minimax(Node node,int depth ,int a,int b,boolean isMax ){
+        if(depth==0){
             node.heuristic=getHeuristic(node);
             return node.heuristic ;
         }
         ////////////////////////////////
-        ArrayList <Node> childrenNodes = getChildrenAndAssignMax(node,!node.isMax);//fill the above arraylist with possible moves (nodes level)
-        if(node.isMax==true){
+        ArrayList <Node> childrenNodes = getChildrenAndAssignMax(node,!isMax);//fill the above arraylist with possible moves (nodes level)
+        if(isMax==true){
             for (int i=0; i<childrenNodes.size(); i++){
                 node.alpha= Integer.max(node.alpha, minimax(childrenNodes.get(i),depth-1,a,b,false));
                 
@@ -58,20 +59,39 @@ public class Node {
     }
     //possible moves
     private ArrayList<Node> getChildrenAndAssignMax(Node node,boolean isMax) {
-        ArrayList<Node> n = new ArrayList();
+        ArrayList<Node> childrenNodesList = new ArrayList();
         String color;
-        if(node.isMax)
+        if(isMax)
             color="White";
         else
             color="Black";
+        for(int i =0;i<node.PiecesState.size();i++){
+            
+        }
+        //parent node which contains a game state ( pieces with their positions ) 
         for(int i = 0 ; i<node.PiecesState.size();i++){
+            
             if(node.PiecesState.get(i).alive){
                 if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    if(node.PiecesState.get(i).validateMove(3, 4)){
-                        node.PiecesState.get(i).position.x=3;
-                        n.add(node);
-                        
-                        
+                    for(int x =0 ; x<8;x++){//kol el amaken eli 3ala el y 
+                        if(x==node.PiecesState.get(i).position.getX())
+                            continue;
+                        ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        int y = (int)listCopy.get(i).position.getY();
+                        if(listCopy.get(i).move(x,y)){
+                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    for(int y =0 ; y<8;y++){//kol el amaken eli 3ala el x
+                        if(y==node.PiecesState.get(i).position.getY())
+                            continue;
+                        ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        int x = (int)listCopy.get(i).position.getX();
+                        if(listCopy.get(i).move(x,y)){
+                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            childrenNodesList.add(n);
+                        }
                     }
                 }
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
