@@ -5,6 +5,7 @@
  */
 package chess;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 /**
@@ -17,7 +18,8 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-//    int depth;
+    static int RootDepth=5;
+    static ArrayList<Node> SecondNodesToChoose=new ArrayList();
     boolean isMax;
     //init the maximizer player in constractor
     
@@ -26,15 +28,15 @@ public class Node {
         this.beta = beta;
         this.isMax=isMax;
         
+        
     }
     
     private int minimax(Node node,int depth ,int a,int b,boolean isMax ){
         //coun
         if(depth==0){
-            node.heuristic=getHeuristic(node);
+            node.heuristic=heuristic(node);
             return node.heuristic ;
         }
-        ////////////////////////////////
         ArrayList <Node> childrenNodes = getChildrenAndAssignMax(node,!isMax);//fill the above arraylist with possible moves (nodes level)
         if(isMax==true){
             for (int i=0; i<childrenNodes.size(); i++){
@@ -44,25 +46,28 @@ public class Node {
                     break;
             }
             node.heuristic=node.alpha;
-            //if(node.alpha > bestAlpha) { best node = node bestAlpha = node.alpha;
+            if(depth == RootDepth){
+                SecondNodesToChoose=childrenNodes;
+            }
             return node.alpha ;
         }
         else{
             for (int i=0; i<childrenNodes.size(); i++){
-//                this.depth--;
-//                this.maximizingPlayer = true;
                 node.beta = Integer.min(node.beta, minimax(childrenNodes.get(i),depth-1,a,b,true));
                 
                 if(node.alpha >= node.beta)
                     break;
             }
             node.heuristic =node.beta;
+            if(depth == RootDepth){
+                SecondNodesToChoose=childrenNodes;
+            }
+
             return node.beta ;
         }    
           
     }
-    //possible moves
-    //var count=0 
+    
     private ArrayList<Node> getChildrenAndAssignMax(Node node,boolean isMax) {
         
         ArrayList<Node> childrenNodesList = new ArrayList();
@@ -71,12 +76,10 @@ public class Node {
             color="White";
         else
             color="Black";
-        for(int i =0;i<node.PiecesState.size();i++){
-            
-        }
+        
         //parent node which contains a game state ( pieces with their positions ) 
         for(int i = 0 ; i<node.PiecesState.size();i++){
-            
+            node.isMax=isMax;
             if(node.PiecesState.get(i).alive){
                 if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
                     for(int x =0 ; x<8;x++){//kol el amaken eli 3ala el y 
@@ -214,8 +217,57 @@ public class Node {
         //assign with isMax//assign with isMax
         return childrenNodesList;
     }
-    public int getHeuristic (Node n){
-        n.heuristic=1;
-        return n.heuristic;
+    private int heuristic (Node LeafNode){ //AI is the white set
+        int Score=0;
+        Point WhiteKing= new Point(),BlackKing= new Point () ;
+        for(int i=0; i < LeafNode.PiecesState.size(); i++){
+            if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("White")){
+            WhiteKing =LeafNode.PiecesState.get(i).position;
+            }
+            else if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")){
+            WhiteKing =LeafNode.PiecesState.get(i).position;
+            }
+            
+        
+        }        
+        
+        for(int i=0; i < LeafNode.PiecesState.size(); i++){
+            if(LeafNode.PiecesState.get(i).alive){
+                int pieceValue=0;
+                switch(LeafNode.PiecesState.get(i).pieceType){
+                    case "Pawn":
+                        pieceValue=10;
+                        break;
+                    case "Knight":
+                        pieceValue=30;
+                        break;
+                    case "Bishop":
+                        pieceValue=30;
+                        break;
+                    case "Rook":
+                        pieceValue=50;
+                        break;
+                    case "Queen":
+                        pieceValue=90;
+                        break;
+                    case "King":
+                        pieceValue=2000;
+                        break;    
+                }
+                if(LeafNode.PiecesState.get(i).color.equalsIgnoreCase("white")){
+                    Score+=pieceValue;
+                    int distance = (int) Math.sqrt( Math.pow(BlackKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(BlackKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+                    Score-= distance ;
+                }
+                else {
+                    Score-=pieceValue;
+                    int distance = (int) Math.sqrt( Math.pow(WhiteKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(WhiteKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+                    Score+= distance ;                    
+                }
+                
+            }
+        }
+        return Score;
     }
+
 }
