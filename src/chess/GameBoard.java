@@ -5,7 +5,10 @@
  */
 package chess;
 
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -34,6 +37,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 
     public Queen blackQueen;
     public Queen whiteQueen;
+    
+    
 
     public static ArrayList<Piece> AllPieces;
 
@@ -43,12 +48,27 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     int y = 0;
     Tile[][] GameBoardTile;
     private boolean First = true;
-    Point FirstSelectedPoint= new Point(-1,-1);
+    Point FirstSelectedPoint= null;
     boolean WhiteTurn = true;//0 for black 1 for white
+    private final JLabel SelectedLbl;
 
     public GameBoard() {
 
         initComponents();
+        
+        SelectedLbl = new javax.swing.JLabel();
+
+        SelectedLbl.setBackground(new java.awt.Color(255, 51, 51));
+
+        SelectedLbl.setForeground(new java.awt.Color(255, 51, 51));
+
+        SelectedLbl.setText("");
+
+        SelectedLbl.setBorder(javax.swing.BorderFactory.createMatteBorder(4, 4, 4, 4, new java.awt.Color(255, 51, 51)));
+
+        jPanel1.add(SelectedLbl);
+        SelectedLbl.setBounds(160, 110, 60, 60);
+        SelectedLbl.setVisible(false);
 
         jPanel1.setLayout(null);
         this.setLocationRelativeTo(null);
@@ -239,19 +259,26 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
             if(!(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()))
             {
                 //your turn >> save point
-                if(WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
+                if(WhiteTurn && "White".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color))
                 {
                     FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
                     First = false;
+                    SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                    SelectedLbl.setVisible(true);
                 }
-                else if(!WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black") // show error message to select piece
+                else if(WhiteTurn == false && "Black".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color)) // show error message to select piece
                 {
                     FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
                     First = false;
+                    SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                    SelectedLbl.setVisible(true);
                 }
                 else
                 {
-                    JOptionPane.showMessageDialog(null, "Please select your piece");
+                    if(WhiteTurn)
+                        JOptionPane.showMessageDialog(null, "Please select your piece it is the white turn");
+                    else
+                        JOptionPane.showMessageDialog(null, "Please select your piece it is the Black turn");
                     First = true;
                 }
             }
@@ -264,21 +291,31 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         else if (First == false)
         {
             // tile not empty & saved point & your color
-            if((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=new Point(-1,-1)) && WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
+            if(((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=null) && WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White"))
             {
                 FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                    SelectedLbl.setVisible(true);
             }
+            else if(((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=null) && !WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black"))
+            {
+                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                    SelectedLbl.setVisible(true);
+            }
+            
             // already saved & empty tile & can move 
-            else if(!(FirstSelectedPoint.equals(new Point(-1,-1)))  && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()))
+            else if((FirstSelectedPoint!=null)  && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()))
             {
                 //move 
                 if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
                 {
                 WhiteTurn = !WhiteTurn;
-                FirstSelectedPoint = new Point(-1,-1);     
+                FirstSelectedPoint = null;     
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                SelectedLbl.setVisible(false);
                 }
                 else
                 {
@@ -286,16 +323,17 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 }
             }
             // already saved point & not empty & not your color & can move >> attack and move
-            else if(!(FirstSelectedPoint.equals(new Point(-1,-1))) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("Black")) )
+            else if((FirstSelectedPoint!=null) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("Black")) )
             {
                 //atack and move 
                 if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
                 {
                 WhiteTurn = !WhiteTurn;
-                FirstSelectedPoint = new Point(-1,-1);
+                FirstSelectedPoint = null;
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                SelectedLbl.setVisible(false);
                 }
                 else
                 {
@@ -303,16 +341,17 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 }
             }
             //can move
-            else if(!(FirstSelectedPoint.equals(new Point(-1,-1))) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (!WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("White")) )
+            else if((FirstSelectedPoint!=null) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (!WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("White")) )
             {
                 //atack and move 
                 if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
                 {
                 WhiteTurn = !WhiteTurn;
-                FirstSelectedPoint = new Point(-1,-1);
+                FirstSelectedPoint = null;
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                SelectedLbl.setVisible(false);
                 }
                 else
                 {
@@ -531,21 +570,37 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         //super.paintComponents(g); //To change body of generated methods, choose Tools | Templates.
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                //Tile t = PointMapper.BoardTilesArray[i][j];
                 if (PointMapper.BoardTilesArray[i][j].isEmpty() == false) {
                     //Piece p = t.getPiece();
 
-                    if (PointMapper.BoardTilesArray[i][j].getPiece().alive && !(PointMapper.BoardTilesArray[i][j].getPiece().position.equals(PointMapper.getTileNumber(PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().x, PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().y)))) {
+                    if (!PointMapper.BoardTilesArray[i][j].getPiece().alive )
+                    {
+                        PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(900, 900);
+                    }
+            }
+        }
+        }
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                //Tile t = PointMapper.BoardTilesArray[i][j];
+                
+                
+                if (PointMapper.BoardTilesArray[i][j].isEmpty() == false) {
+                    //Piece p = t.getPiece();
+
+                    if (PointMapper.BoardTilesArray[i][j].getPiece().alive ) {
+                        if(!(PointMapper.BoardTilesArray[i][j].getPiece().position.equals(PointMapper.getTileNumber(PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().x, PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().y))))
+                        {
                         PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(PointMapper.points[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y]);
                         PointMapper.BoardTilesArray[i][j].setEmpty(true);
                         
                         PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].setEmpty(false);
                         PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].piece = PointMapper.BoardTilesArray[i][j].getPiece();
+                    
+                        }
                     }
-                    if(!PointMapper.BoardTilesArray[i][j].getPiece().alive)
-                    {
-                        PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(new Point(900, 900));
-                    }
+                    
+                   
                     
                 }
             }
@@ -570,5 +625,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         return false;
         
     }
+
+
+    
+    
 
 }

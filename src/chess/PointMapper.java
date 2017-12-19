@@ -69,7 +69,7 @@ public class PointMapper {
     }
     
     //return the Location where we should draw the jLabel
-    public Point getTileCoordinate(int xPoint, int yPoint){
+    public static Point getTileCoordinate(int xPoint, int yPoint){
         Point p = getTileNumber(xPoint,yPoint);
         return points[p.x][p.y];
     }
