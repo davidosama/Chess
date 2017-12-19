@@ -16,10 +16,10 @@ public class Bishop extends Piece{
                 GameBoard.Checkmate(this.color);
             }
             else{
-               this.position.setLocation(x, y);
-                if(!GameBoard.isEmpty(x, y)){
+               if(!GameBoard.isEmpty(x, y)){
                     GameBoard.attack(x, y);
                 }
+               this.position.setLocation(x, y);
             }
             return true;
         }
