@@ -210,8 +210,8 @@ public class Node {
                     }
 
                 }
-                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    
+                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawm")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+                    //kiro
                 }
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("King")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
                     
