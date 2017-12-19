@@ -25,10 +25,9 @@ public class Pawn extends Piece {
                     GameBoard.attack(x, y);
                 }
             }
-
             this.position.setLocation(x, y);
             this.numOfMoves++;
-
+            
             return true;
         }
         return false;

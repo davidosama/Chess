@@ -18,15 +18,18 @@ public class Node {
     int alpha;//=-ve inf
     int beta;
 //    int depth;
-//    boolean isMax;
+    boolean isMax;
     //init the maximizer player in constractor
     
-    public Node(ArrayList<Piece> nodeState, int alpha , int beta){
+    public Node(ArrayList<Piece> nodeState, int alpha , int beta,boolean isMax){
         this.alpha = alpha;
         this.beta = beta;
+        this.isMax=isMax;
         
     }
+    
     private int minimax(Node node,int depth ,int a,int b,boolean isMax ){
+        //coun
         if(depth==0){
             node.heuristic=getHeuristic(node);
             return node.heuristic ;
@@ -41,6 +44,7 @@ public class Node {
                     break;
             }
             node.heuristic=node.alpha;
+            //if(node.alpha > bestAlpha) { best node = node bestAlpha = node.alpha;
             return node.alpha ;
         }
         else{
@@ -58,7 +62,9 @@ public class Node {
           
     }
     //possible moves
+    //var count=0 
     private ArrayList<Node> getChildrenAndAssignMax(Node node,boolean isMax) {
+        
         ArrayList<Node> childrenNodesList = new ArrayList();
         String color;
         if(isMax)
@@ -79,7 +85,7 @@ public class Node {
                         ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
                         int y = (int)listCopy.get(i).position.getY();
                         if(listCopy.get(i).move(x,y)){
-                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
                         }
                     }
@@ -89,7 +95,7 @@ public class Node {
                         ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
                         int x = (int)listCopy.get(i).position.getX();
                         if(listCopy.get(i).move(x,y)){
-                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
                         }
                     }
@@ -102,15 +108,93 @@ public class Node {
                 }
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("King")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
                     
+                    ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                    int x = (int)listCopy.get(i).position.getX();
+                    int y = (int)listCopy.get(i).position.getY();
                     
-                    
-                    
-                    
-                    
-                    
-                    
+                    //et7arak 7arrak yemiin
+                    if(listCopy.get(i).move(x+1,y)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arraka shemal
+                    if(listCopy.get(i).move(x-1,y)){
+                       Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arrakka fo2
+                    if(listCopy.get(i).move(x,y+1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7araka ta7t
+                    if(listCopy.get(i).move(x,y-1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arraka diagonal fo2 yemin 
+                    if(listCopy.get(i).move(x+1,y+1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arrakka diagonal fo2 shemal
+                    if(listCopy.get(i).move(x-1,y+1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arrakka diagonal ta7t shemal
+                    if(listCopy.get(i).move(x-1,y-1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arrakka diagonal ta7t yemin
+                    if(listCopy.get(i).move(x+1,y-1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
                 }
-                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Knight")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+                    
+                    ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                    int x = (int)listCopy.get(i).position.getX();
+                    int y = (int)listCopy.get(i).position.getY();
+                    
+                    if(listCopy.get(i).move(x+1, y+2)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    if(listCopy.get(i).move(x-1, y+2)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    if(listCopy.get(i).move(x+1, y-2)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    if(listCopy.get(i).move(x-1, y-2)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    if(listCopy.get(i).move(x+2, y+1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    if(listCopy.get(i).move(x+2, y-1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    if(listCopy.get(i).move(x-2, y+1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    if(listCopy.get(i).move(x-2, y-1)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    
+                    
+                    
+                    
                     
                 }
                 if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
@@ -128,7 +212,7 @@ public class Node {
             }
         }
         //assign with isMax//assign with isMax
-        return new ArrayList();
+        return childrenNodesList;
     }
     public int getHeuristic (Node n){
         n.heuristic=1;

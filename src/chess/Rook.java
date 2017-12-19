@@ -6,6 +6,7 @@
 package chess;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  *
@@ -73,4 +74,21 @@ public class Rook extends Piece {
         return true ;
     }
     
+//    public ArrayList AImove(int x, int y, ArrayList<Piece> arrayList , int MovingPieceIndex) {
+//        if(validateMove(x, y)){
+////            if (GameBoard.isKing(x, y)){
+////                GameBoard.Checkmate(this.color);
+////            }
+////            else{
+////               if(!GameBoard.isEmpty(x, y)){
+////                    GameBoard.attack(x, y);
+////                }
+//            //arrayList.get(MovingPieceIndex).
+//            
+//               this.position.setLocation(x, y);
+//            }
+//            return true;
+//        }
+//        return false;
+//    }
 }
