@@ -1,6 +1,7 @@
 package chess;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -52,4 +53,45 @@ public abstract class Piece {
     
     public abstract boolean validateMove(int x, int y);
     
+    public boolean isEnemyAI(int x, int y, String attackingColor, ArrayList<Piece> AllPieces){
+        for(int i=0; i<AllPieces.size(); i++){
+            if(AllPieces.get(i).color.equalsIgnoreCase(attackingColor))
+                continue;
+            else{
+                if(AllPieces.get(i).position.getX() == x && AllPieces.get(i).position.getY() == y && AllPieces.get(i).alive == true){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public boolean isEmptyAI(int x, int y, ArrayList<Piece> AllPieces){
+        for(int i=0; i<AllPieces.size(); i++){
+            if(AllPieces.get(i).position.getX() == x && AllPieces.get(i).position.getY() == y && AllPieces.get(i).alive == true){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public boolean isKingAI(int x, int y, String attackingColor, ArrayList<Piece> AllPieces){
+        for(int i=0; i<AllPieces.size(); i++){
+            if(AllPieces.get(i).color.equalsIgnoreCase(attackingColor))
+                continue;
+            else if(AllPieces.get(i).pieceType.equalsIgnoreCase("King") && AllPieces.get(i).position.getX() == x && AllPieces.get(i).position.getY() == y && AllPieces.get(i).alive == true){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public void attackAI(int x, int y, ArrayList<Piece> AllPieces){
+        for(int i=0; i<AllPieces.size(); i++){
+            if(AllPieces.get(i).position.getX() == x && AllPieces.get(i).position.getY() == y && AllPieces.get(i).alive == true){
+                AllPieces.get(i).alive = false;
+                return;
+            }
+        }
+    }
 }
