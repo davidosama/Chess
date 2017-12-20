@@ -18,7 +18,7 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-    static int RootDepth=2;
+    static int RootDepth=15;
     static ArrayList<Node> SecondNodesToChoose=new ArrayList();
     boolean isMax;
     //init the maximizer player in constractor
@@ -57,6 +57,7 @@ public class Node {
                 SecondNodesToChoose=childrenNodes;
             }
             System.out.println("BETA IS "+node.alpha);
+            System.out.println("depth is "+depth);
             return node.alpha ;
         }
         else{
@@ -72,7 +73,9 @@ public class Node {
                 SecondNodesToChoose=childrenNodes;
             }
             System.out.println("BETA IS "+node.beta);
+            System.out.println("depth is "+depth);
             return node.beta ;
+            
         }    
           
     }
