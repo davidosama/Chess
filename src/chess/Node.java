@@ -210,8 +210,55 @@ public class Node {
                     }
 
                 }
-                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawm")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    //kiro
+                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawn")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+                    //kiro   get color > black up  y-1 > true >  
+                    // black
+                    if(node.PiecesState.get(i).color.equals("Black")){
+                    ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        int y = (int)listCopy.get(i).position.getY()-1;
+                        int x = (int)listCopy.get(i).position.getX();
+                        if(listCopy.get(i).move(x,y)){
+                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            childrenNodesList.add(n);
+                        }
+                        listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                         y = (int)listCopy.get(i).position.getY()-1;
+                         x = (int)listCopy.get(i).position.getX()+1;
+                        if(listCopy.get(i).move(x,y)){
+                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            childrenNodesList.add(n);
+                        }
+                       listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        y = (int)listCopy.get(i).position.getY()-1;
+                        x = (int)listCopy.get(i).position.getX()-1;
+                        if(listCopy.get(i).move(x,y)){
+                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            childrenNodesList.add(n);
+                        }
+                }
+                    if(node.PiecesState.get(i).color.equals("White")){
+                    ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        int y = (int)listCopy.get(i).position.getY()+1;
+                        int x = (int)listCopy.get(i).position.getX();
+                        if(listCopy.get(i).move(x,y)){
+                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            childrenNodesList.add(n);
+                        }
+                        listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                         y = (int)listCopy.get(i).position.getY()+1;
+                         x = (int)listCopy.get(i).position.getX()+1;
+                        if(listCopy.get(i).move(x,y)){
+                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            childrenNodesList.add(n);
+                        }
+                       listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        y = (int)listCopy.get(i).position.getY()+1;
+                        x = (int)listCopy.get(i).position.getX()-1;
+                        if(listCopy.get(i).move(x,y)){
+                            Node n= new Node(listCopy,node.alpha,node.beta);
+                            childrenNodesList.add(n);
+                        }
+                    }
                 }
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("King")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
                     
