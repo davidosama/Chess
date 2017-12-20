@@ -84,6 +84,9 @@ public class Knight extends Piece {
 
     @Override
     public boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if( x>7 || x <0 || y>7 || y<0){
+            return false;
+        }
         if((Math.abs(x-this.position.getX())==2 && Math.abs(y-this.position.getY())==1)||(Math.abs(x-this.position.getX())==1 && Math.abs(y-this.position.getY())==2)){
             if(isEmptyAI(x, y,AllPieces) || isEnemyAI(x, y, this.color,AllPieces))
                 return true ;

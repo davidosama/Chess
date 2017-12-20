@@ -111,6 +111,9 @@ public class Rook extends Piece {
 
     @Override
     public boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if( x>7 || x <0 || y>7 || y<0){
+            return false;
+        }
         if((this.position.getX()-x)==0||(this.position.getY()-y)==0){
             if(isPathClearAI(x, y,AllPieces) && (isEnemyAI(x, y, this.color,AllPieces) || isEmptyAI(x, y,AllPieces))){
                 return true;

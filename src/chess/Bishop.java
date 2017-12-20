@@ -84,6 +84,9 @@ public class Bishop extends Piece{
     
     @Override
     public boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if( x>7 || x <0 || y>7 || y<0){
+            return false;
+        }
         if (Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y)){
             if(isPathClearAI(x, y,AllPieces) && (isEnemyAI(x, y, this.color,AllPieces) || isEmptyAI(x, y,AllPieces))){
                 return true;

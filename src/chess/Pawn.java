@@ -109,6 +109,9 @@ public class Pawn extends Piece {
 
     @Override
     public boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if( x>7 || x <0 || y>7 || y<0){
+            return false;
+        }
         if (this.color.equals("Black")){//black sets are above so the Pawn is allowed to move down only
             if (isEmptyAI(x,y,AllPieces)){//if there is no piece and the return of the previous function is null/false
                 if( x == this.position.getX() && y == this.position.getY()-1){

@@ -68,6 +68,9 @@ public class King extends Piece{
     
     @Override
     public boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if( x>7 || x <0 || y>7 || y<0){
+            return false;
+        }
         if(Math.abs(x-this.position.getX())<=1&&(Math.abs(y-this.position.getY()))<=1){
             
             if(isEmptyAI(x,y,AllPieces)){
