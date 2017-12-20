@@ -712,12 +712,16 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
             ArrayList<Piece> newList = Node.Play(n,2,n.alpha,n.beta,true);
             WhiteTurn=!WhiteTurn;
             for (int i = 0; i <newList.size(); i++) {
-                if(!newList.get(i).position.equals(AllPiecesCloned.get(i)))
+                if(!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY()))
                 {
-                    AllPiecesCloned.get(i).position= new Point((int)newList.get(i).position.getX(), (int)newList.get(i).position.getY());
+                    int x = newList.get(i).position.x;
+                    int y = newList.get(i).position.y;
+                    AllPiecesCloned.get(i).move(x, y);
+                    
                 }
             }
         }
+        setPosions();
     }
     
     public static boolean isTileThreatened(String Color,int x, int y){
