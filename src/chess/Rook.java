@@ -153,6 +153,8 @@ public class Rook extends Piece implements Cloneable{
         Rook k = new Rook(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
+        k.pieceType = this.pieceType;
+        k.label = null;
        return k;
     }
 }

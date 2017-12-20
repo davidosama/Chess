@@ -96,6 +96,8 @@ public class King extends Piece implements Cloneable{
         King k = new King(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
+        k.pieceType = this.pieceType;
+        k.label = null;
        return k;
     }
 }

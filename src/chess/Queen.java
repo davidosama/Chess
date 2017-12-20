@@ -172,6 +172,8 @@ public class Queen extends Piece implements Cloneable{
         Queen k = new Queen(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
+        k.pieceType = this.pieceType;
+        k.label = null;
        return k;
     }
     
