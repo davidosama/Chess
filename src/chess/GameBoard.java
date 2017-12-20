@@ -38,6 +38,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     public Queen blackQueen;
     public Queen whiteQueen;
     
+    public King blackKing;
+    public King whiteKing;
     
 
     public static ArrayList<Piece> AllPieces;
@@ -563,6 +565,20 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         PointMapper.BoardTilesArray[4][0].piece = whiteQueen;
         PointMapper.BoardTilesArray[4][0].setEmpty(false);
         jPanel1.add(whiteQueen.label);
+        
+        p=PointMapper.points[3][0];
+        whiteKing=new King("White", new Point(3,0));
+        whiteKing.label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[3][0].piece=whiteKing;
+        PointMapper.BoardTilesArray[3][0].setEmpty(false);
+        jPanel1.add(whiteKing.label);
+        
+        p=PointMapper.points[3][7];
+        blackKing=new King("Black", new Point(3,7));
+        blackKing.label.setBounds(p.x, p.y, 60, 60);
+        PointMapper.BoardTilesArray[3][7].piece=blackKing;
+        PointMapper.BoardTilesArray[3][7].setEmpty(false);
+        jPanel1.add(blackKing.label);
 
     }
 
