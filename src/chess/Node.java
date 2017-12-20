@@ -23,6 +23,9 @@ public class Node {
     boolean isMax;
     //init the maximizer player in constractor
     
+    
+    public Node(){}
+    
     public Node(ArrayList<Piece> nodeState, int alpha , int beta,boolean isMax){
         this.alpha = alpha;
         this.beta = beta;
@@ -76,7 +79,6 @@ public class Node {
             color="White";
         else
             color="Black";
-        
         //parent node which contains a game state ( pieces with their positions ) 
         for(int i = 0 ; i<node.PiecesState.size();i++){
             node.isMax=isMax;
@@ -227,10 +229,7 @@ public class Node {
             else if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")){
             WhiteKing =LeafNode.PiecesState.get(i).position;
             }
-            
-        
         }        
-        
         for(int i=0; i < LeafNode.PiecesState.size(); i++){
             if(LeafNode.PiecesState.get(i).alive){
                 int pieceValue=0;
@@ -264,10 +263,27 @@ public class Node {
                     int distance = (int) Math.sqrt( Math.pow(WhiteKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(WhiteKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
                     Score+= distance ;                    
                 }
-                
             }
         }
         return Score;
     }
+    
+    public ArrayList ReturnStateToMove(int minimax){
+        for(int i =0;i<SecondNodesToChoose.size();i++){
+            if(SecondNodesToChoose.get(i).heuristic==minimax){
+                return SecondNodesToChoose.get(i).PiecesState;
+            }
+            
+        }
+        System.out.println("RETURNING NULLLL IN RETURNSTATETOMOVE");
+        return null;
+    }
+
+
+    public void Play(Node node,int depth ,int a,int b,boolean isMax){
+        ReturnStateToMove(minimax(node, depth, a, b, isMax));
+    }
 
 }
+
+
