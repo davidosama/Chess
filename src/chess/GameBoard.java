@@ -417,7 +417,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 //        setPosions();
 //
 //        jPanel1.repaint();
-
+setPosions();
     }
     //else if (!First && Empty) -----> move
     //else if(First && !Empty && MyColo) ----> Select
