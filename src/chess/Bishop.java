@@ -125,7 +125,7 @@ public class Bishop extends Piece implements Cloneable{
     }
     @Override
     public Bishop clone() throws CloneNotSupportedException {
-        Bishop k = new Bishop(this.color, this.position);
+        Bishop k = new Bishop(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
        return k;

@@ -98,7 +98,7 @@ public class Knight extends Piece implements Cloneable{
     }
     @Override
     protected Knight clone() throws CloneNotSupportedException {
-        Knight k = new Knight(this.color, this.position);
+        Knight k = new Knight(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
        return k;

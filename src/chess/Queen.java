@@ -169,7 +169,7 @@ public class Queen extends Piece implements Cloneable{
     }
     @Override
     protected Queen clone() throws CloneNotSupportedException {
-        Queen k = new Queen(this.color, this.position);
+        Queen k = new Queen(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
        return k;

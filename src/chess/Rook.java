@@ -150,7 +150,7 @@ public class Rook extends Piece implements Cloneable{
     
     @Override
     protected Rook clone() throws CloneNotSupportedException {
-        Rook k = new Rook(this.color, this.position);
+        Rook k = new Rook(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
        return k;

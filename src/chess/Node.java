@@ -32,6 +32,7 @@ public class Node {
     
         public Node(ArrayList<Piece> nodeState, int alpha , int beta,boolean isMax){
         this.PiecesState=nodeState;
+            
         this.alpha = alpha;
         this.beta = beta;
         this.isMax=isMax;
@@ -48,7 +49,7 @@ public class Node {
             return node.heuristic ;
         }
         System.out.println("after checking leaf nodes");
-        ArrayList <Node> childrenNodes = getChildrenAndAssignMax(node,!isMax);//fill the above arraylist with possible moves (nodes level)
+        ArrayList <Node> childrenNodes = getChildrenAndAssignMax(node,isMax);//fill the above arraylist with possible moves (nodes level)
         if(isMax==true){
             System.out.println("is Maximizer");
             for (int i=0; i<childrenNodes.size(); i++){

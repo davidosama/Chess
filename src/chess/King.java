@@ -93,7 +93,7 @@ public class King extends Piece implements Cloneable{
     }
     @Override
     public King clone() throws CloneNotSupportedException {
-        King k = new King(this.color, this.position);
+        King k = new King(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
        return k;

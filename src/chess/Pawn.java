@@ -154,7 +154,7 @@ public class Pawn extends Piece implements Cloneable{
 
     @Override
     protected Pawn clone() throws CloneNotSupportedException {
-        Pawn k = new Pawn(this.color, this.position);
+        Pawn k = new Pawn(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));
         k.alive = this.alive;
         k.numOfMoves = this.numOfMoves;
        return k;

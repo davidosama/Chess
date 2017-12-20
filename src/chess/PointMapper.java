@@ -6,6 +6,7 @@
 package chess;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  *
@@ -73,6 +74,14 @@ public class PointMapper {
         Point p = getTileNumber(xPoint,yPoint);
         return points[p.x][p.y];
     }
+    
+//    public static ArrayList<Piece> ClonePieces (ArrayList<Piece> p  ) throws CloneNotSupportedException
+//            {
+//                ArrayList<Piece> pi =new ArrayList<>();
+//                for (int i = 0; i < p.size(); i++) {
+//                    pi.add(p.get(i).clone());
+//                }
+//            }
     
     //return Tile number
     static Point getTileNumber(int xPoint , int yPoint){

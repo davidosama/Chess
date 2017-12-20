@@ -137,7 +137,11 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 //            
 //            }
         
-        //AllPieces.get(0).alive = false;
+        for (int i = 0; i < AllPieces.size(); i++) {
+            //AllPieces.get(i).alive = false;
+        }
+        
+        
         setPosions();
 
     }
