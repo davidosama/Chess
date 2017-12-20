@@ -206,7 +206,7 @@ public class Node {
                             break;
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        if (listCopy.get(i).move(x, y3)) {
+                        if (listCopy.get(i).moveAI(x, y3,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         } else {
@@ -225,7 +225,7 @@ public class Node {
                             break;
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        if (listCopy.get(i).move(x, y4)) {
+                        if (listCopy.get(i).moveAI(x, y4,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         } else {
@@ -245,7 +245,7 @@ public class Node {
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         int y = (int) listCopy.get(i).position.getY();
-                        if (listCopy.get(i).move(x, y)) {
+                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         }
@@ -256,7 +256,7 @@ public class Node {
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         int x = (int) listCopy.get(i).position.getX();
-                        if (listCopy.get(i).move(x, y)) {
+                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         }
@@ -273,7 +273,7 @@ public class Node {
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         //int y = (int)listCopy.get(i).position.getY();
-                        if (listCopy.get(i).move(x, y)) {
+                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         } else {
@@ -293,7 +293,7 @@ public class Node {
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         //int y = (int)listCopy.get(i).position.getY();
-                        if (listCopy.get(i).move(x, y2)) {
+                        if (listCopy.get(i).moveAI(x, y2,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         } else {
@@ -312,7 +312,7 @@ public class Node {
                             break;
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        if (listCopy.get(i).move(x, y3)) {
+                        if (listCopy.get(i).moveAI(x, y3,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         } else {
@@ -331,7 +331,7 @@ public class Node {
                             break;
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        if (listCopy.get(i).move(x, y4)) {
+                        if (listCopy.get(i).moveAI(x, y4,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         } else {
