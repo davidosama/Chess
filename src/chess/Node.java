@@ -21,7 +21,7 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-    static int RootDepth=3;
+    static int RootDepth=4;
     static ArrayList<Node> SecondNodesToChoose=new ArrayList();
     boolean isMax;
     
@@ -52,7 +52,7 @@ public class Node {
         if(isMax==true){
             System.out.println("is Maximizer");
             for (int i=0; i<childrenNodes.size(); i++){
-                node.alpha= Integer.max(node.alpha, minimax(childrenNodes.get(i),depth-1,a,b,false));
+                node.alpha= Integer.max(node.alpha, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,false));
                 
                 if(node.alpha >= node.beta)
                     break;
@@ -61,17 +61,18 @@ public class Node {
             if(depth == RootDepth){
                 SecondNodesToChoose=childrenNodes;
             }
-            System.out.println("BETA IS "+node.alpha);
+            System.out.println("Alpha IS "+node.alpha);
             System.out.println("depth is "+depth);
             return node.alpha ;
         }
         else{
             System.out.println("is Minimizer");
             for (int i=0; i<childrenNodes.size(); i++){
-                node.beta = Integer.min(node.beta, minimax(childrenNodes.get(i),depth-1,a,b,true));
+                node.beta = Integer.min(node.beta, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,true));
+                System.out.println("beta is "+node.beta+"when depth is "+ depth );
                 
                 if(node.alpha >= node.beta)
-                    break;
+                   break;
             }
             node.heuristic =node.beta;
             if(depth == RootDepth){
@@ -448,7 +449,7 @@ public class Node {
         return Score;
     }
     
-    public static ArrayList ReturnStateToMove(int minimax){
+    public static ArrayList<Piece> ReturnStateToMove(int minimax){
         System.out.println("Size is "+SecondNodesToChoose.size());
         for(int i =0;i<SecondNodesToChoose.size();i++){
             System.out.println("Last Heuristic   "+SecondNodesToChoose.get(i).heuristic+" i is "+i);
@@ -465,9 +466,15 @@ public class Node {
 
 
     public static void Play(Node node,int depth ,int a,int b,boolean isMax){
-        System.out.println("node is "+node.PiecesState);
-        ReturnStateToMove(minimax(node, depth, a, b, isMax));
         
+        for(int i =0;i<node.PiecesState.size();i++){
+            System.out.println("{iece type : "+node.PiecesState.get(i).pieceType+"Position "+node.PiecesState.get(i).position);
+        }
+        
+        ArrayList <Piece>l = ReturnStateToMove(minimax(node, depth, a, b, isMax));
+        for(int i =0;i<l.size();i++){
+            System.out.println("{iece type : "+l.get(i).pieceType+"Position "+l.get(i).position);
+        }
     }
 
 }
