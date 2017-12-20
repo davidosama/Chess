@@ -130,6 +130,33 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         AllPieces.add(whiteQueen.clone());
         
         
+        AllPiecesCloned = new ArrayList<Piece>();
+        for (int i = 0; i < blackPawns.size(); i++) {
+            AllPiecesCloned.add(blackPawns.get(i));
+        }
+        for (int i = 0; i < whitePawns.size(); i++) {
+            AllPiecesCloned.add(whitePawns.get(i));
+        }
+        for (int i = 0; i < blackKnights.size(); i++) {
+            AllPiecesCloned.add(blackKnights.get(i));
+        }
+        for (int i = 0; i < whiteKnights.size(); i++) {
+            AllPiecesCloned.add(whiteKnights.get(i));
+        }
+        for (int i = 0; i < whiteRooks.size(); i++) {
+            AllPiecesCloned.add(whiteRooks.get(i));
+        }
+        for (int i = 0; i < blackRooks.size(); i++) {
+            AllPiecesCloned.add(blackRooks.get(i));
+        }
+        for (int i = 0; i < blackBishops.size(); i++) {
+            AllPiecesCloned.add(blackBishops.get(i));
+        }
+        for (int i = 0; i < whiteBishops.size(); i++) {
+            AllPiecesCloned.add(whiteBishops.get(i));
+        }
+        AllPiecesCloned.add(blackQueen);
+        AllPiecesCloned.add(whiteQueen);
 //        //AllPiecesCloned = (ArrayList<Piece>) AllPieces.clone();
 //            for (int i = 0; i < AllPieces.size(); i++) {
 //                AllPiecesCloned.add(AllPieces.get(i).clone());
@@ -682,8 +709,14 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
             //AI Plays
             System.out.println("All Pieces"+AllPieces);
             Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
-            Node.Play(n,2,n.alpha,n.beta,true);
+            ArrayList<Piece> newList = Node.Play(n,2,n.alpha,n.beta,true);
             WhiteTurn=!WhiteTurn;
+            for (int i = 0; i <newList.size(); i++) {
+                if(!newList.get(i).position.equals(AllPiecesCloned.get(i)))
+                {
+                    AllPiecesCloned.get(i).position= new Point((int)newList.get(i).position.getX(), (int)newList.get(i).position.getY());
+                }
+            }
         }
     }
     

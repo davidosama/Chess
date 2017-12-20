@@ -466,7 +466,7 @@ public class Node {
     }
 
 
-    public static void Play(Node node,int depth ,int a,int b,boolean isMax){
+    public static ArrayList<Piece> Play(Node node,int depth ,int a,int b,boolean isMax){
         
         for(int i =0;i<node.PiecesState.size();i++){
             System.out.println("{iece type : "+node.PiecesState.get(i).pieceType+"Position "+node.PiecesState.get(i).position);
@@ -476,6 +476,7 @@ public class Node {
         for(int i =0;i<l.size();i++){
             System.out.println("{iece type : "+l.get(i).pieceType+"Position "+l.get(i).position);
         }
+        return l;
     }
 
 }
