@@ -51,7 +51,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     Tile[][] GameBoardTile;
     private boolean First = true;
     Point FirstSelectedPoint= null;
-    boolean WhiteTurn = true;//0 for black 1 for white
+    boolean WhiteTurn = false;//0 for black 1 for white
     private final JLabel SelectedLbl;
 
     public GameBoard() {
@@ -163,6 +163,10 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     }
 
     public static boolean isEmpty(int x, int y) {
+        System.out.println("x : "+x+"y : "+y);
+        if(x<0||x>7||y<0||y>7){
+            return false;
+        }
         return PointMapper.BoardTilesArray[x][y].isEmpty();
     }
 
@@ -626,6 +630,10 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         
         if(WhiteTurn){
             //AI Plays
+            System.out.println("All Pieces"+AllPieces);
+            Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
+            Node.Play(n,5,n.alpha,n.beta,true);
+            WhiteTurn=!WhiteTurn;
         }
     
     

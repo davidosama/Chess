@@ -18,7 +18,7 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-    static int RootDepth=5;
+    static int RootDepth=2;
     static ArrayList<Node> SecondNodesToChoose=new ArrayList();
     boolean isMax;
     //init the maximizer player in constractor
@@ -26,7 +26,8 @@ public class Node {
     
     public Node(){}
     
-    public Node(ArrayList<Piece> nodeState, int alpha , int beta,boolean isMax){
+        public Node(ArrayList<Piece> nodeState, int alpha , int beta,boolean isMax){
+        this.PiecesState=nodeState;
         this.alpha = alpha;
         this.beta = beta;
         this.isMax=isMax;
@@ -34,14 +35,17 @@ public class Node {
         
     }
     
-    private int minimax(Node node,int depth ,int a,int b,boolean isMax ){
+    private static int minimax(Node node,int depth ,int a,int b,boolean isMax ){
+        System.out.println("Beginning minimax");
         //coun
         if(depth==0){
             node.heuristic=heuristic(node);
             return node.heuristic ;
         }
+        System.out.println("after checking leaf nodes");
         ArrayList <Node> childrenNodes = getChildrenAndAssignMax(node,!isMax);//fill the above arraylist with possible moves (nodes level)
         if(isMax==true){
+            System.out.println("is Maximizer");
             for (int i=0; i<childrenNodes.size(); i++){
                 node.alpha= Integer.max(node.alpha, minimax(childrenNodes.get(i),depth-1,a,b,false));
                 
@@ -52,9 +56,11 @@ public class Node {
             if(depth == RootDepth){
                 SecondNodesToChoose=childrenNodes;
             }
+            System.out.println("BETA IS "+node.alpha);
             return node.alpha ;
         }
         else{
+            System.out.println("is Minimizer");
             for (int i=0; i<childrenNodes.size(); i++){
                 node.beta = Integer.min(node.beta, minimax(childrenNodes.get(i),depth-1,a,b,true));
                 
@@ -65,13 +71,13 @@ public class Node {
             if(depth == RootDepth){
                 SecondNodesToChoose=childrenNodes;
             }
-
+            System.out.println("BETA IS "+node.beta);
             return node.beta ;
         }    
           
     }
     
-    private ArrayList<Node> getChildrenAndAssignMax(Node node,boolean isMax) {
+    private static ArrayList<Node> getChildrenAndAssignMax(Node node,boolean isMax) {
         
         ArrayList<Node> childrenNodesList = new ArrayList();
         String color;
@@ -80,6 +86,7 @@ public class Node {
         else
             color="Black";
         //parent node which contains a game state ( pieces with their positions ) 
+        System.out.println("Piece State"+node.PiecesState);
         for(int i = 0 ; i<node.PiecesState.size();i++){
             node.isMax=isMax;
             if(node.PiecesState.get(i).alive){
@@ -163,39 +170,46 @@ public class Node {
                     ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
                     int x = (int)listCopy.get(i).position.getX();
                     int y = (int)listCopy.get(i).position.getY();
-                    
-                    if(listCopy.get(i).move(x+1, y+2)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    if(listCopy.get(i).move(x-1, y+2)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    if(listCopy.get(i).move(x+1, y-2)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    if(listCopy.get(i).move(x-1, y-2)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    if(listCopy.get(i).move(x+2, y+1)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    if(listCopy.get(i).move(x+2, y-1)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    if(listCopy.get(i).move(x-2, y+1)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    if(listCopy.get(i).move(x-2, y-1)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
+                    if(x+1>=0&&x+1<=7&&y+2>=0&&y+2<=7)
+                        if(listCopy.get(i).move(x+1, y+2)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    if(x-1>=0&&x-1<=7&&y+2>=0&&y+2<=7)
+                        if(listCopy.get(i).move(x-1, y+2)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    if(x+1>=0&&x+1<=7&&y-2>=0&&y-2<=7)
+                        if(listCopy.get(i).move(x+1, y-2)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    if(x-1>=0&&x-1<=7&&y-2>=0&&y-2<=7)
+                        if(listCopy.get(i).move(x-1, y-2)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    if(x+2>=0&&x+2<=7&&y+1>=0&&y+1<=7)
+                        if(listCopy.get(i).move(x+2, y+1)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    if(x+2>=0&&x+2<=7&&y-1>=0&&y-1<=7)
+                        if(listCopy.get(i).move(x+2, y-1)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    if(x-2>=0&&x-2<=7&&y+1>=0&&y+1<=7)
+                        if(listCopy.get(i).move(x-2, y+1)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    if(x-2>=0&&x-2<=7&&y-1>=0&&y-1<=7)
+                        if(listCopy.get(i).move(x-2, y-1)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
                     
                     
                     
@@ -219,7 +233,7 @@ public class Node {
         //assign with isMax//assign with isMax
         return childrenNodesList;
     }
-    private int heuristic (Node LeafNode){ //AI is the white set
+    private static int heuristic (Node LeafNode){ //AI is the white set
         int Score=0;
         Point WhiteKing= new Point(),BlackKing= new Point () ;
         for(int i=0; i < LeafNode.PiecesState.size(); i++){
@@ -268,9 +282,11 @@ public class Node {
         return Score;
     }
     
-    public ArrayList ReturnStateToMove(int minimax){
+    public static ArrayList ReturnStateToMove(int minimax){
         for(int i =0;i<SecondNodesToChoose.size();i++){
+            System.out.println("heuristic   "+SecondNodesToChoose.get(i).heuristic);
             if(SecondNodesToChoose.get(i).heuristic==minimax){
+                System.out.println(SecondNodesToChoose.get(i).PiecesState);
                 return SecondNodesToChoose.get(i).PiecesState;
             }
             
@@ -280,8 +296,10 @@ public class Node {
     }
 
 
-    public void Play(Node node,int depth ,int a,int b,boolean isMax){
+    public static void Play(Node node,int depth ,int a,int b,boolean isMax){
+        System.out.println("node is "+node.PiecesState);
         ReturnStateToMove(minimax(node, depth, a, b, isMax));
+        
     }
 
 }

@@ -37,6 +37,9 @@ public class Knight extends Piece {
     @Override
     public boolean validateMove(int x, int y) {
     //    Point currentPosition = this.position;
+        if(x<0||x>7){
+            return false;
+        }
         if((Math.abs(x-this.position.getX())==2 && Math.abs(y-this.position.getY())==1)||(Math.abs(x-this.position.getX())==1 && Math.abs(y-this.position.getY())==2)){
             if(GameBoard.isEmpty(x, y) || GameBoard.isEnemy(x, y, this.color))
                 return true ;
