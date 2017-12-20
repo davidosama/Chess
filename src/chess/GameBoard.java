@@ -635,7 +635,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
             //AI Plays
             System.out.println("All Pieces"+AllPieces);
             Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
-            Node.Play(n,15,n.alpha,n.beta,true);
+            Node.Play(n,3,n.alpha,n.beta,true);
             WhiteTurn=!WhiteTurn;
         }
     
