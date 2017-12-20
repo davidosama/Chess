@@ -5,6 +5,8 @@
  */
 package chess;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 
 /**
@@ -86,8 +88,12 @@ public class GameFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_ExitBtnActionPerformed
 
     private void NewGameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameBtnActionPerformed
-        // TODO add your handling code here:
-        new GameBoard().setVisible(true);
+        try {
+            // TODO add your handling code here:
+            new GameBoard().setVisible(true);
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         this.setVisible(false);
     }//GEN-LAST:event_NewGameBtnActionPerformed
 

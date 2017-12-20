@@ -126,8 +126,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         for (int i = 0; i < whiteBishops.size(); i++) {
             AllPieces.add(whiteBishops.get(i).clone());
         }
-        AllPieces.add(blackQueen);
-        AllPieces.add(whiteQueen);
+        AllPieces.add(blackQueen.clone());
+        AllPieces.add(whiteQueen.clone());
         
         
 //        //AllPiecesCloned = (ArrayList<Piece>) AllPieces.clone();
@@ -137,7 +137,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 //            
 //            }
         
-        AllPieces.get(0).alive = false;
+        //AllPieces.get(0).alive = false;
         setPosions();
 
     }
