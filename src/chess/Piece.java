@@ -53,6 +53,14 @@ public abstract class Piece {
     
     public abstract boolean validateMove(int x, int y);
     
+    public abstract boolean moveAI(int x, int y, ArrayList<Piece> AllPieces);
+    
+    public abstract boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces);
+    
+    public void CheckmateAI(String attackingColor, ArrayList<Piece> AllPieces){
+        //implement
+    }
+    
     public boolean isEnemyAI(int x, int y, String attackingColor, ArrayList<Piece> AllPieces){
         for(int i=0; i<AllPieces.size(); i++){
             if(AllPieces.get(i).color.equalsIgnoreCase(attackingColor))

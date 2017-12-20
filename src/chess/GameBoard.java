@@ -5,10 +5,7 @@
  */
 package chess;
 
-import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -129,8 +126,14 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 
     }
 
-    public static boolean isKing(int x, int y) {
-        //implement
+    public static boolean isKing(int x, int y, String attackingColor) {
+       if(!PointMapper.BoardTilesArray[x][y].isEmpty()){
+           if(!PointMapper.BoardTilesArray[x][y].piece.color.equalsIgnoreCase(attackingColor)){
+               if(PointMapper.BoardTilesArray[x][y].piece.pieceType.equalsIgnoreCase("King") && PointMapper.BoardTilesArray[x][y].piece.alive == true){
+                   return true;
+               }
+           }
+       }
         return false;
     }
 

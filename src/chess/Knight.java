@@ -6,6 +6,7 @@
 package chess;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 /**
  *
@@ -20,12 +21,29 @@ public class Knight extends Piece {
     @Override
     public boolean move(int x, int y) {
        if(validateMove(x, y)){
-            if (GameBoard.isKing(x, y)){
+            if (GameBoard.isKing(x, y, this.color)){
                 GameBoard.Checkmate(this.color);
             }
             else{
                if(!GameBoard.isEmpty(x, y)){
                     GameBoard.attack(x, y);
+                }
+               this.position.setLocation(x, y);
+            }
+            return true;
+        }
+       return false;
+    }        
+    
+    @Override
+    public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
+       if(validateMoveAI(x, y, AllPieces)){
+            if (isKingAI(x, y,this.color,AllPieces)){
+                CheckmateAI(this.color, AllPieces);
+            }
+            else{
+               if(isEmptyAI(x, y,AllPieces)){
+                    attackAI(x, y,AllPieces);
                 }
                this.position.setLocation(x, y);
             }
@@ -64,6 +82,13 @@ public class Knight extends Piece {
         return false;
     }
 
-
+    @Override
+    public boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if((Math.abs(x-this.position.getX())==2 && Math.abs(y-this.position.getY())==1)||(Math.abs(x-this.position.getX())==1 && Math.abs(y-this.position.getY())==2)){
+            if(isEmptyAI(x, y,AllPieces) || isEnemyAI(x, y, this.color,AllPieces))
+                return true ;
+        }
+        return false;
+    }
     
 }

@@ -22,7 +22,7 @@ public class Rook extends Piece {
     @Override
     public boolean move(int x, int y) {
         if(validateMove(x, y)){
-            if (GameBoard.isKing(x, y)){
+            if (GameBoard.isKing(x, y, this.color)){
                 GameBoard.Checkmate(this.color);
             }
             else{
@@ -91,4 +91,57 @@ public class Rook extends Piece {
 //        }
 //        return false;
 //    }
+
+    @Override
+    public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if(validateMoveAI(x, y,AllPieces)){
+            if (isKingAI(x, y, this.color,AllPieces)){
+                CheckmateAI(this.color,AllPieces);
+            }
+            else{
+               if(!isEmptyAI(x, y,AllPieces)){
+                    attackAI(x, y,AllPieces);
+                }
+               this.position.setLocation(x, y);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if((this.position.getX()-x)==0||(this.position.getY()-y)==0){
+            if(isPathClearAI(x, y,AllPieces) && (isEnemyAI(x, y, this.color,AllPieces) || isEmptyAI(x, y,AllPieces))){
+                return true;
+            }
+        
+        }
+        return false ;
+    }
+    
+    private boolean isPathClearAI(int x, int y, ArrayList<Piece> AllPieces) {
+        Point currentPosition = new Point ((int)this.position.getX(),(int)this.position.getY());
+        int counter = (int) Math.abs(this.position.getX() - x)+(int) Math.abs(this.position.getY() - y);
+        if (counter == 1)
+            return true;
+        for(int i=0 ;i<counter-1;i++){
+            if(x==this.position.getX()&&y>this.position.getY()){//down
+                currentPosition.y++;
+            }
+            else if(x>this.position.getX()&&y==this.position.getY()){//right
+                currentPosition.x++;
+            }
+            else if(x==this.position.getX()&&y<this.position.getY()){//up
+                currentPosition.y--;
+            }
+            else if(x<this.position.getX()&&y==this.position.getY()){//left
+                currentPosition.x--;
+            }
+            if(!isEmptyAI((int)currentPosition.getX(),(int)currentPosition.getY(), AllPieces)){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }   
+        }
+        return true ;
+    }
 }
