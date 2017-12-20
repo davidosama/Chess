@@ -3,7 +3,7 @@ package chess;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class King extends Piece{
+public class King extends Piece implements Cloneable{
 
     public King(String color, Point position){
         super(color,position);
@@ -91,5 +91,11 @@ public class King extends Piece{
         }
         return true;
     }
-    
+    @Override
+    public King clone() throws CloneNotSupportedException {
+        King k = new King(this.color, this.position);
+        k.alive = this.alive;
+        k.numOfMoves = this.numOfMoves;
+       return k;
+    }
 }

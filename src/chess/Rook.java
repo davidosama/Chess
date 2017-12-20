@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author ToniGeorge
  */
-public class Rook extends Piece {
+public class Rook extends Piece implements Cloneable{
 
 
     public Rook(String color, Point position) {
@@ -147,4 +147,13 @@ public class Rook extends Piece {
         }
         return true ;
     }
+    
+    @Override
+    protected Rook clone() throws CloneNotSupportedException {
+        Rook k = new Rook(this.color, this.position);
+        k.alive = this.alive;
+        k.numOfMoves = this.numOfMoves;
+       return k;
+    }
 }
+

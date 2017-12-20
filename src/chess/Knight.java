@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author ToniGeorge
  */
-public class Knight extends Piece {
+public class Knight extends Piece implements Cloneable{
 
 
     public Knight(String color,Point position) {
@@ -95,6 +95,13 @@ public class Knight extends Piece {
                 return true ;
         }
         return false;
+    }
+    @Override
+    protected Knight clone() throws CloneNotSupportedException {
+        Knight k = new Knight(this.color, this.position);
+        k.alive = this.alive;
+        k.numOfMoves = this.numOfMoves;
+       return k;
     }
     
 }

@@ -3,7 +3,7 @@ package chess;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Pawn extends Piece {
+public class Pawn extends Piece implements Cloneable{
 
     public Pawn(String color, Point position) {
         super(color, position);
@@ -151,4 +151,15 @@ public class Pawn extends Piece {
     public void switchPawn(int x, int y) {// swich the pawn with a dead piece when it reaches the end. should be placed in GameBoard??
 
     }
+
+    @Override
+    protected Pawn clone() throws CloneNotSupportedException {
+        Pawn k = new Pawn(this.color, this.position);
+        k.alive = this.alive;
+        k.numOfMoves = this.numOfMoves;
+       return k;
+    }
+    
+    
+    
 }

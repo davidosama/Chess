@@ -3,7 +3,7 @@ package chess;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class Bishop extends Piece{
+public class Bishop extends Piece implements Cloneable{
 
     public Bishop(String color,Point position) {
         super(color,position);
@@ -122,5 +122,12 @@ public class Bishop extends Piece{
             }
         }
         return true;
+    }
+    @Override
+    public Bishop clone() throws CloneNotSupportedException {
+        Bishop k = new Bishop(this.color, this.position);
+        k.alive = this.alive;
+        k.numOfMoves = this.numOfMoves;
+       return k;
     }
 }

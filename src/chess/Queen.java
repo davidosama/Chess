@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author ToniGeorge
  */
-public class Queen extends Piece {
+public class Queen extends Piece implements Cloneable{
 
 
     public Queen(String color,Point position) {
@@ -166,6 +166,13 @@ public class Queen extends Piece {
             }
         }
         return true;
+    }
+    @Override
+    protected Queen clone() throws CloneNotSupportedException {
+        Queen k = new Queen(this.color, this.position);
+        k.alive = this.alive;
+        k.numOfMoves = this.numOfMoves;
+       return k;
     }
     
 }

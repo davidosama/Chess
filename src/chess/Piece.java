@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public abstract class Piece {
+public abstract class Piece implements Cloneable{
     int numOfMoves;
     String color;
     Point position;
@@ -102,4 +102,12 @@ public abstract class Piece {
             }
         }
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone(); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    
+    
 }

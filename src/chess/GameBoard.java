@@ -9,6 +9,8 @@ import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -40,7 +42,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     
 
     public static ArrayList<Piece> AllPieces;
-
+    public static ArrayList<Piece> AllPiecesCloned;
+    
     boolean PlayerSelected = false;
     static PointMapper pm;
     int x = 0;
@@ -51,7 +54,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     boolean WhiteTurn = false;//0 for black 1 for white
     private final JLabel SelectedLbl;
 
-    public GameBoard() {
+    public GameBoard() throws CloneNotSupportedException {
 
         initComponents();
         
@@ -100,31 +103,42 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
          */
         AllPieces = new ArrayList<Piece>();
         for (int i = 0; i < blackPawns.size(); i++) {
-            AllPieces.add(blackPawns.get(i));
+            AllPieces.add(blackPawns.get(i).clone());
         }
         for (int i = 0; i < whitePawns.size(); i++) {
-            AllPieces.add(whitePawns.get(i));
+            AllPieces.add(whitePawns.get(i).clone());
         }
         for (int i = 0; i < blackKnights.size(); i++) {
-            AllPieces.add(blackKnights.get(i));
+            AllPieces.add(blackKnights.get(i).clone());
         }
         for (int i = 0; i < whiteKnights.size(); i++) {
-            AllPieces.add(whiteKnights.get(i));
+            AllPieces.add(whiteKnights.get(i).clone());
         }
         for (int i = 0; i < whiteRooks.size(); i++) {
-            AllPieces.add(whiteRooks.get(i));
+            AllPieces.add(whiteRooks.get(i).clone());
         }
         for (int i = 0; i < blackRooks.size(); i++) {
-            AllPieces.add(blackRooks.get(i));
+            AllPieces.add(blackRooks.get(i).clone());
         }
         for (int i = 0; i < blackBishops.size(); i++) {
-            AllPieces.add(blackBishops.get(i));
+            AllPieces.add(blackBishops.get(i).clone());
         }
         for (int i = 0; i < whiteBishops.size(); i++) {
-            AllPieces.add(whiteBishops.get(i));
+            AllPieces.add(whiteBishops.get(i).clone());
         }
         AllPieces.add(blackQueen);
         AllPieces.add(whiteQueen);
+        
+        
+//        //AllPiecesCloned = (ArrayList<Piece>) AllPieces.clone();
+//            for (int i = 0; i < AllPieces.size(); i++) {
+//                AllPiecesCloned.add(AllPieces.get(i).clone());
+//    
+//            
+//            }
+        
+        AllPieces.get(0).alive = false;
+        setPosions();
 
     }
 
@@ -234,7 +248,11 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new GameBoard().setVisible(true);
+                try {
+                    new GameBoard().setVisible(true);
+                } catch (CloneNotSupportedException ex) {
+                    Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             }
         });
@@ -260,8 +278,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
-// first select
+        if(WhiteTurn== false){
+        // first select
         if(First == true)
         {
             // if tile empty
@@ -325,6 +343,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
+                AIPlay();
+                
                 }
                 else
                 {
@@ -343,6 +363,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
+                AIPlay();
                 }
                 else
                 {
@@ -361,6 +382,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
+                AIPlay();
                 }
                 else
                 {
@@ -417,7 +439,13 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 //        setPosions();
 //
 //        jPanel1.repaint();
-setPosions();
+ 
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(null, "it is white turn");
+        }
+        setPosions();
     }
     //else if (!First && Empty) -----> move
     //else if(First && !Empty && MyColo) ----> Select
@@ -632,22 +660,27 @@ setPosions();
             }
         }
         
+        
+    
+    
+    
+    
+    
+    
+    
+    
+    }
+    
+    public void AIPlay()
+            
+    {
         if(WhiteTurn){
             //AI Plays
             System.out.println("All Pieces"+AllPieces);
-            ArrayList<Piece> l = (ArrayList<Piece>) AllPieces.clone();
-            Node n = new Node(l,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
+            Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
             Node.Play(n,2,n.alpha,n.beta,true);
             WhiteTurn=!WhiteTurn;
         }
-    
-    
-    
-    
-    
-    
-    
-    
     }
     
     public static boolean isTileThreatened(String Color,int x, int y){
