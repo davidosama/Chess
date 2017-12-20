@@ -101,62 +101,10 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     public Queen blackQueen;
     public Queen whiteQueen;
          */
-        AllPieces = new ArrayList<Piece>();
-        for (int i = 0; i < blackPawns.size(); i++) {
-            AllPieces.add(blackPawns.get(i).clone());
-        }
-        for (int i = 0; i < whitePawns.size(); i++) {
-            AllPieces.add(whitePawns.get(i).clone());
-        }
-        for (int i = 0; i < blackKnights.size(); i++) {
-            AllPieces.add(blackKnights.get(i).clone());
-        }
-        for (int i = 0; i < whiteKnights.size(); i++) {
-            AllPieces.add(whiteKnights.get(i).clone());
-        }
-        for (int i = 0; i < whiteRooks.size(); i++) {
-            AllPieces.add(whiteRooks.get(i).clone());
-        }
-        for (int i = 0; i < blackRooks.size(); i++) {
-            AllPieces.add(blackRooks.get(i).clone());
-        }
-        for (int i = 0; i < blackBishops.size(); i++) {
-            AllPieces.add(blackBishops.get(i).clone());
-        }
-        for (int i = 0; i < whiteBishops.size(); i++) {
-            AllPieces.add(whiteBishops.get(i).clone());
-        }
-        AllPieces.add(blackQueen.clone());
-        AllPieces.add(whiteQueen.clone());
         
         
-        AllPiecesCloned = new ArrayList<Piece>();
-        for (int i = 0; i < blackPawns.size(); i++) {
-            AllPiecesCloned.add(blackPawns.get(i));
-        }
-        for (int i = 0; i < whitePawns.size(); i++) {
-            AllPiecesCloned.add(whitePawns.get(i));
-        }
-        for (int i = 0; i < blackKnights.size(); i++) {
-            AllPiecesCloned.add(blackKnights.get(i));
-        }
-        for (int i = 0; i < whiteKnights.size(); i++) {
-            AllPiecesCloned.add(whiteKnights.get(i));
-        }
-        for (int i = 0; i < whiteRooks.size(); i++) {
-            AllPiecesCloned.add(whiteRooks.get(i));
-        }
-        for (int i = 0; i < blackRooks.size(); i++) {
-            AllPiecesCloned.add(blackRooks.get(i));
-        }
-        for (int i = 0; i < blackBishops.size(); i++) {
-            AllPiecesCloned.add(blackBishops.get(i));
-        }
-        for (int i = 0; i < whiteBishops.size(); i++) {
-            AllPiecesCloned.add(whiteBishops.get(i));
-        }
-        AllPiecesCloned.add(blackQueen);
-        AllPiecesCloned.add(whiteQueen);
+        
+        
 //        //AllPiecesCloned = (ArrayList<Piece>) AllPieces.clone();
 //            for (int i = 0; i < AllPieces.size(); i++) {
 //                AllPiecesCloned.add(AllPieces.get(i).clone());
@@ -164,9 +112,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 //            
 //            }
         
-        for (int i = 0; i < AllPieces.size(); i++) {
-            //AllPieces.get(i).alive = false;
-        }
+        
         
         
         setPosions();
@@ -374,7 +320,11 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
-                AIPlay();
+                    try {
+                        AIPlay();
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 
                 }
                 else
@@ -394,7 +344,11 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
-                AIPlay();
+                    try {
+                        AIPlay();
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 else
                 {
@@ -413,7 +367,11 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
-                AIPlay();
+                    try {
+                        AIPlay();
+                    } catch (CloneNotSupportedException ex) {
+                        Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
                 else
                 {
@@ -702,14 +660,68 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     
     }
     
-    public void AIPlay()
+    public void AIPlay() throws CloneNotSupportedException
             
     {
         if(WhiteTurn){
+            AllPieces = new ArrayList<Piece>();
+        for (int i = 0; i < blackPawns.size(); i++) {
+            AllPieces.add(blackPawns.get(i).clone());
+        }
+        for (int i = 0; i < whitePawns.size(); i++) {
+            AllPieces.add(whitePawns.get(i).clone());
+        }
+        for (int i = 0; i < blackKnights.size(); i++) {
+            AllPieces.add(blackKnights.get(i).clone());
+        }
+        for (int i = 0; i < whiteKnights.size(); i++) {
+            AllPieces.add(whiteKnights.get(i).clone());
+        }
+        for (int i = 0; i < whiteRooks.size(); i++) {
+            AllPieces.add(whiteRooks.get(i).clone());
+        }
+        for (int i = 0; i < blackRooks.size(); i++) {
+            AllPieces.add(blackRooks.get(i).clone());
+        }
+        for (int i = 0; i < blackBishops.size(); i++) {
+            AllPieces.add(blackBishops.get(i).clone());
+        }
+        for (int i = 0; i < whiteBishops.size(); i++) {
+            AllPieces.add(whiteBishops.get(i).clone());
+        }
+        AllPieces.add(blackQueen.clone());
+        AllPieces.add(whiteQueen.clone());
             //AI Plays
             System.out.println("All Pieces"+AllPieces);
+            AllPiecesCloned = new ArrayList<Piece>();
+        for (int i = 0; i < blackPawns.size(); i++) {
+            AllPiecesCloned.add(blackPawns.get(i));
+        }
+        for (int i = 0; i < whitePawns.size(); i++) {
+            AllPiecesCloned.add(whitePawns.get(i));
+        }
+        for (int i = 0; i < blackKnights.size(); i++) {
+            AllPiecesCloned.add(blackKnights.get(i));
+        }
+        for (int i = 0; i < whiteKnights.size(); i++) {
+            AllPiecesCloned.add(whiteKnights.get(i));
+        }
+        for (int i = 0; i < whiteRooks.size(); i++) {
+            AllPiecesCloned.add(whiteRooks.get(i));
+        }
+        for (int i = 0; i < blackRooks.size(); i++) {
+            AllPiecesCloned.add(blackRooks.get(i));
+        }
+        for (int i = 0; i < blackBishops.size(); i++) {
+            AllPiecesCloned.add(blackBishops.get(i));
+        }
+        for (int i = 0; i < whiteBishops.size(); i++) {
+            AllPiecesCloned.add(whiteBishops.get(i));
+        }
+        AllPiecesCloned.add(blackQueen);
+        AllPiecesCloned.add(whiteQueen);
             Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
-            ArrayList<Piece> newList = Node.Play(n,2,n.alpha,n.beta,true);
+            ArrayList<Piece> newList = Node.Play(n,3,n.alpha,n.beta,true);
             WhiteTurn=!WhiteTurn;
             for (int i = 0; i <newList.size(); i++) {
                 if(!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY()))

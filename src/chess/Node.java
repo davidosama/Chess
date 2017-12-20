@@ -21,7 +21,7 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-    static int RootDepth=2;
+    static int RootDepth=3;
     static ArrayList<Node> SecondNodesToChoose=new ArrayList();
     boolean isMax;
     
@@ -39,8 +39,41 @@ public class Node {
         
         
     }
+        
+    public static ArrayList<Piece> ClonePieces (ArrayList<Piece> AllPieces) throws CloneNotSupportedException{
+        ArrayList<Piece> cloneList = new ArrayList<Piece>();
+            for (int i = 0; i < AllPieces.size(); i++) {
+                switch(AllPieces.get(i).pieceType){
+                    case "Pawn":
+                        Pawn p = (Pawn)AllPieces.get(i).clone();
+                        cloneList.add(p);
+                        break;
+                    case "Rook":
+                        Rook r = (Rook)AllPieces.get(i).clone();
+                        cloneList.add(r);
+                        break;
+                    case "Queen":
+                        Queen q = (Queen)AllPieces.get(i).clone();
+                        cloneList.add(q);
+                        break;
+                    case "Knight":
+                        Knight k = (Knight)AllPieces.get(i).clone();
+                        cloneList.add(k);
+                        break;
+                    case "Bishop":
+                       Bishop b = (Bishop)AllPieces.get(i).clone();
+                       cloneList.add(b);
+                       break;
+                    case "King":
+                       King king = (King)AllPieces.get(i).clone();
+                       cloneList.add(king);
+                       break;
+                }
+            }
+            return cloneList;
+    }
     
-    private static int minimax(Node node,int depth ,int a,int b,boolean isMax ){
+    private static int minimax(Node node,int depth ,int a,int b,boolean isMax ) throws CloneNotSupportedException{
         System.out.println("Beginning minimax");
         //coun
         if(depth==0){
@@ -87,7 +120,7 @@ public class Node {
           
     }
     
-    private static ArrayList<Node> getChildrenAndAssignMax(Node node,boolean isMax) {
+    private static ArrayList<Node> getChildrenAndAssignMax(Node node,boolean isMax) throws CloneNotSupportedException {
         
         ArrayList<Node> childrenNodesList = new ArrayList();
         String color;
@@ -104,7 +137,7 @@ public class Node {
                     for(int x =0 ; x<8;x++){//kol el amaken eli 3ala el y 
                         if(x==node.PiecesState.get(i).position.getX())
                             continue;
-                        ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         int y = (int)listCopy.get(i).position.getY();
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
@@ -114,7 +147,7 @@ public class Node {
                     for(int y =0 ; y<8;y++){//kol el amaken eli 3ala el x
                         if(y==node.PiecesState.get(i).position.getY())
                             continue;
-                        ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         int x = (int)listCopy.get(i).position.getX();
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
@@ -123,54 +156,11 @@ public class Node {
                     }
                 }
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Bishop")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    ////////////////////TRIAL/////////////
-//                    //*
-//                    //  *
-//                    //    *
-//                    //      *
-//                    int m = max((int)node.PiecesState.get(i).position.getX(),(int)node.PiecesState.get(i).position.getY());
-//                    int nono = min((int)node.PiecesState.get(i).position.getX(),(int)node.PiecesState.get(i).position.getY());
-//                    int start1X = (int)node.PiecesState.get(i).position.getX()-nono;
-//                    int start1Y = (int)node.PiecesState.get(i).position.getY()-nono;
-//                    int end1X = (int)node.PiecesState.get(i).position.getX()+ (7-m);
-//                    int end1Y = (int)node.PiecesState.get(i).position.getY()+ (7-m);
-////                    Point start1= new Point(start1X,start1Y);
-////                    Point end1 = new Point(end1X, end1Y);
-//                    
-//                    //      *
-//                    //    *
-//                    //  *
-//                    //*
-//                    int start2X = (int)node.PiecesState.get(i).position.getX()+ nono;
-//                    int start2Y = (int)node.PiecesState.get(i).position.getY()-nono;
-//                    int end2X = (int)node.PiecesState.get(i).position.getX()-(7-nono);
-//                    int end2Y = (int)node.PiecesState.get(i).position.getY()+(7-nono);
-//
-//                    
-//                    
-//                    
-//                    for(int k = start1X; k <=end1X;k++)
-//                    {
-//                        if(k==node.PiecesState.get(i).position.getX()) {
-//                            start1X++;
-//                            start1Y++;
-//                            continue;
-//                        }
-//                         ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
-//                         if (listCopy.get(i).move(start1X, start1Y)) {
-//                            Node n = new Node(listCopy, node.alpha, node.beta);
-//                            childrenNodesList.add(n);
-//                      } 
-//                         start1X++;
-//                         start1Y++;
-//                    }
-//                    
-                    
                     ////// This is for shemaal l foo2
                     int y = (int) node.PiecesState.get(i).position.getY() - 1;
                     for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
 //                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
-                        ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         //int y = (int)listCopy.get(i).position.getY();
                         if (listCopy.get(i).moveAI(x,y,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
@@ -189,7 +179,7 @@ public class Node {
                     int y2 = (int) node.PiecesState.get(i).position.getY() + 1;
                     for (int x = (int) node.PiecesState.get(i).position.getX() + 1; x < 8; x++) {
 //                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
-                        ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         //int y = (int)listCopy.get(i).position.getY();
                         if (listCopy.get(i).moveAI(x,y2,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
@@ -205,7 +195,7 @@ public class Node {
                     //Thiss s ofr fooo2 yemeeeen 
                     int y3 = (int) node.PiecesState.get(i).position.getY() - 1;
                     for (int x = (int) node.PiecesState.get(i).position.getX() + 1; x < 8; x++) {
-                        ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         if (listCopy.get(i).moveAI(x,y3,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
@@ -221,7 +211,7 @@ public class Node {
                     /////// This is for ta7tt shemaaaalll
                     int y4 = (int) node.PiecesState.get(i).position.getY() + 1;
                     for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
-                        ArrayList<Piece> listCopy = (ArrayList<Piece>) node.PiecesState.clone();
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         if (listCopy.get(i).moveAI(x,y4,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
@@ -239,21 +229,21 @@ public class Node {
                     //kiro   get color > black up  y-1 > true >  
                     // black
                     if(node.PiecesState.get(i).color.equals("Black")){
-                    ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         int y = (int)listCopy.get(i).position.getY()-1;
                         int x = (int)listCopy.get(i).position.getX();
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
                         }
-                        listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        listCopy = Node.ClonePieces(node.PiecesState);
                          y = (int)listCopy.get(i).position.getY()-1;
                          x = (int)listCopy.get(i).position.getX()+1;
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
                         }
-                       listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                       listCopy = Node.ClonePieces(node.PiecesState);
                         y = (int)listCopy.get(i).position.getY()-1;
                         x = (int)listCopy.get(i).position.getX()-1;
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
@@ -262,21 +252,21 @@ public class Node {
                         }
                 }
                     if(node.PiecesState.get(i).color.equals("White")){
-                    ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         int y = (int)listCopy.get(i).position.getY()+1;
                         int x = (int)listCopy.get(i).position.getX();
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
                         }
-                        listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                        listCopy = Node.ClonePieces(node.PiecesState);
                          y = (int)listCopy.get(i).position.getY()+1;
                          x = (int)listCopy.get(i).position.getX()+1;
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
                         }
-                       listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                       listCopy = Node.ClonePieces(node.PiecesState);
                         y = (int)listCopy.get(i).position.getY()+1;
                         x = (int)listCopy.get(i).position.getX()-1;
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
@@ -287,7 +277,7 @@ public class Node {
                 }
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("King")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
                     
-                    ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                     int x = (int)listCopy.get(i).position.getX();
                     int y = (int)listCopy.get(i).position.getY();
                     
@@ -334,7 +324,7 @@ public class Node {
                 }
                 if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Knight")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
                     
-                    ArrayList<Piece> listCopy = (ArrayList<Piece>)node.PiecesState.clone();
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                     int x = (int)listCopy.get(i).position.getX();
                     int y = (int)listCopy.get(i).position.getY();
                     if(x+1>=0&&x+1<=7&&y+2>=0&&y+2<=7)
@@ -378,23 +368,7 @@ public class Node {
                             childrenNodesList.add(n);
                         }
                     
-                    
-                    
-                    
-                    
                 }
-                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    
-                }
-                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    
-                }if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    
-                }
-                
-                
-                
-                
             }
         }
         //assign with isMax//assign with isMax
@@ -466,8 +440,8 @@ public class Node {
     }
 
 
-    public static ArrayList<Piece> Play(Node node,int depth ,int a,int b,boolean isMax){
-        
+
+    public static ArrayList<Piece> Play(Node node,int depth ,int a,int b,boolean isMax) throws CloneNotSupportedException{
         for(int i =0;i<node.PiecesState.size();i++){
             System.out.println("{iece type : "+node.PiecesState.get(i).pieceType+"Position "+node.PiecesState.get(i).position);
         }

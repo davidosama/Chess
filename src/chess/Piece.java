@@ -35,7 +35,7 @@ public abstract class Piece implements Cloneable{
         String imageName = this.getClass().getName();
         imageName = imageName.replace("chess.", "");
         imageName=color+imageName;
-        System.out.println("Image Name is : "+imageName);
+//        System.out.println("Image Name is : "+imageName);
         ImageIcon i = new ImageIcon (getClass().getResource("/chess/imgs/"+imageName+".png")) ; 
         label=new JLabel(i);
         //label.setSize(60, 60);
