@@ -21,7 +21,7 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-    static int RootDepth=4;
+    static int RootDepth=2;
     static ArrayList<Node> SecondNodesToChoose=new ArrayList();
     boolean isMax;
     
