@@ -74,7 +74,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(EasyBtn);
-        EasyBtn.setBounds(50, 60, 100, 26);
+        EasyBtn.setBounds(50, 60, 100, 32);
         EasyBtn.setVisible(false);
 
         BackBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -85,7 +85,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(BackBtn);
-        BackBtn.setBounds(50, 210, 100, 26);
+        BackBtn.setBounds(50, 210, 100, 32);
         BackBtn.setVisible(false);
 
         NormalBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -96,7 +96,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(NormalBtn);
-        NormalBtn.setBounds(50, 110, 100, 26);
+        NormalBtn.setBounds(50, 110, 100, 32);
         NormalBtn.setVisible(false);
 
         HardBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -107,7 +107,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(HardBtn);
-        HardBtn.setBounds(50, 160, 100, 26);
+        HardBtn.setBounds(50, 160, 100, 32);
         HardBtn.setVisible(false);
 
         NewGameBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -118,17 +118,17 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(NewGameBtn);
-        NewGameBtn.setBounds(50, 110, 100, 26);
+        NewGameBtn.setBounds(50, 110, 100, 32);
 
         CreditsBtn.setBackground(new java.awt.Color(153, 153, 153));
         CreditsBtn.setText("Credits");
         getContentPane().add(CreditsBtn);
-        CreditsBtn.setBounds(50, 160, 100, 26);
+        CreditsBtn.setBounds(50, 160, 100, 32);
 
         HowToPlayBtn.setBackground(new java.awt.Color(153, 153, 153));
         HowToPlayBtn.setText("How To Play");
         getContentPane().add(HowToPlayBtn);
-        HowToPlayBtn.setBounds(50, 210, 100, 26);
+        HowToPlayBtn.setBounds(50, 210, 100, 32);
 
         ExitBtn.setBackground(new java.awt.Color(153, 153, 153));
         ExitBtn.setText("Exit");
@@ -138,7 +138,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(ExitBtn);
-        ExitBtn.setBounds(50, 260, 103, 26);
+        ExitBtn.setBounds(50, 260, 103, 32);
 
         LoadBtn.setBackground(new java.awt.Color(153, 153, 153));
         LoadBtn.setText("Load Game");
@@ -148,7 +148,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(LoadBtn);
-        LoadBtn.setBounds(500, 40, 100, 26);
+        LoadBtn.setBounds(500, 40, 100, 32);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/chess-king.jpg"))); // NOI18N
         Background.setName(""); // NOI18N
@@ -283,20 +283,20 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
 //                Media hit = new Media(new File(bip).toURI().toString());
 //                MediaPlayer mediaPlayer = new MediaPlayer(hit);
 //                mediaPlayer.play();
-                AudioInputStream audioIn;
-                try {
-                    audioIn = AudioSystem.getAudioInputStream(getClass().getResource("/chess/imgs/el3ab.wav"));
-                    Clip clip = AudioSystem.getClip();
-                clip.open(audioIn);
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-                clip.start();
-                } catch (UnsupportedAudioFileException ex) {
-                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (IOException ex) {
-                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (LineUnavailableException ex) {
-                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//                AudioInputStream audioIn;
+//                try {
+//                    audioIn = AudioSystem.getAudioInputStream(getClass().getResource("/chess/imgs/el3ab.wav"));
+//                    Clip clip = AudioSystem.getClip();
+//                clip.open(audioIn);
+//                clip.loop(Clip.LOOP_CONTINUOUSLY);
+//                clip.start();
+//                } catch (UnsupportedAudioFileException ex) {
+//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (LineUnavailableException ex) {
+//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                }
                
                 
             }
