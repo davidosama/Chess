@@ -19,7 +19,7 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-    static int RootDepth=3;
+    static int RootDepth= GameBoard.depth;
     static ArrayList<Node> SecondNodesToChoose=new ArrayList();
     boolean isMax;
     
