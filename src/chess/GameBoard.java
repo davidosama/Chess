@@ -588,7 +588,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
                     SelectedLbl.setVisible(true);
             }
-            else if(((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=null) && !WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black"))
+            else if(((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=null) && !WhiteTurn && "Black".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color)))
             {
                 FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
                 SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
@@ -606,12 +606,20 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 First = true;
                 setPosions();
                 jPanel1.repaint();
+                
                 SelectedLbl.setVisible(false);
-                    try {
-                        AIPlay();
-                    } catch (CloneNotSupportedException ex) {
-                        Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                Thread t2 = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    AIPlay();
+                                } catch (CloneNotSupportedException ex) {
+                                    Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        });
+                     t2.start();   
+                    
                 
                 }
                 else
@@ -631,11 +639,17 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
-                    try {
-                        AIPlay();
-                    } catch (CloneNotSupportedException ex) {
-                        Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                     Thread t2 = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    AIPlay();
+                                } catch (CloneNotSupportedException ex) {
+                                    Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        });
+                     t2.start();
                 }
                 else
                 {
@@ -654,11 +668,17 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
-                    try {
-                        AIPlay();
-                    } catch (CloneNotSupportedException ex) {
-                        Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                     Thread t1 = new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    AIPlay();
+                                } catch (CloneNotSupportedException ex) {
+                                    Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                                }
+                            }
+                        });
+                     t1.start();
                 }
                 else
                 {
@@ -938,7 +958,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         
         
     
-    
+        System.out.println("done ");
     
     
     
