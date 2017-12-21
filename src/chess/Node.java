@@ -77,7 +77,7 @@ public class Node {
         System.out.println("Beginning minimax");
         //coun
         if(depth==0){
-            node.heuristic=heuristic(node);
+            node.heuristic=heuristic2(node);
             System.out.println("Heuristic .  "+node.heuristic);
             return node.heuristic ;
         }
@@ -443,6 +443,56 @@ public class Node {
                             childrenNodesList.add(n);
                         }
                     
+                }
+                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawn")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+                    //kiro   get color > black up  y-1 > true >  
+                    // black
+                    if(node.PiecesState.get(i).color.equals("Black")){
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        int y = (int)listCopy.get(i).position.getY()-1;
+                        int x = (int)listCopy.get(i).position.getX();
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                        listCopy = Node.ClonePieces(node.PiecesState);
+                         y = (int)listCopy.get(i).position.getY()-1;
+                         x = (int)listCopy.get(i).position.getX()+1;
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                       listCopy = Node.ClonePieces(node.PiecesState);
+                        y = (int)listCopy.get(i).position.getY()-1;
+                        x = (int)listCopy.get(i).position.getX()-1;
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                }
+                    if(node.PiecesState.get(i).color.equals("White")){
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        int y = (int)listCopy.get(i).position.getY()+1;
+                        int x = (int)listCopy.get(i).position.getX();
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                        listCopy = Node.ClonePieces(node.PiecesState);
+                         y = (int)listCopy.get(i).position.getY()+1;
+                         x = (int)listCopy.get(i).position.getX()+1;
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                       listCopy = Node.ClonePieces(node.PiecesState);
+                        y = (int)listCopy.get(i).position.getY()+1;
+                        x = (int)listCopy.get(i).position.getX()-1;
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
                 }
             }
         }
