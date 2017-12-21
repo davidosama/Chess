@@ -234,9 +234,9 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
                     data = (ArrayList<Object>) in.readObject();
                     in.close();
                     fileIn.close();
-                    System.out.println("loaded depth = " + (int) data.get(0));
                     
                     new GameBoard((int)data.get(0),true,data ).setVisible(true);
+                    this.setVisible(false);
                     
                 } catch (Exception e) {
                     System.out.println("errorrrrr");
