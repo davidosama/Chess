@@ -315,6 +315,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 //move 
                 if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
                 {
+                    // checkmate
                 WhiteTurn = !WhiteTurn;
                 FirstSelectedPoint = null;     
                 First = true;
@@ -339,6 +340,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 //atack and move 
                 if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
                 {
+                     // checkmate
                 WhiteTurn = !WhiteTurn;
                 FirstSelectedPoint = null;
                 First = true;
@@ -359,6 +361,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
             //can move
             else if((FirstSelectedPoint!=null) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (!WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("White")) )
             {
+                if(checkCheckmate(AllPiecesCloned).equalsIgnoreCase("Black"))// checkmate
+                {
+
                 //atack and move 
                 if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
                 {
@@ -383,6 +388,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
             {
                 JOptionPane.showMessageDialog(null, "ERROR Can't move");
                 First= false;
+            }
             }
         }
 //        System.out.println(e.getPoint().toString());
