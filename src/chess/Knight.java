@@ -6,13 +6,14 @@
 package chess;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author ToniGeorge
  */
-public class Knight extends Piece implements Cloneable{
+public class Knight extends Piece implements Cloneable,Serializable{
 
 
     public Knight(String color,Point position) {

@@ -8,8 +8,6 @@ package chess;
 import static chess.GameBoard.AllPieces;
 import java.awt.Point;
 
-import static java.lang.Integer.min;
-import static java.lang.Math.max;
 import java.util.ArrayList;
 
 /**
@@ -22,7 +20,7 @@ public class Node {
     int heuristic;
     int alpha;//=-ve inf
     int beta;
-    static int RootDepth=3;
+    static int RootDepth= GameBoard.depth;
     static ArrayList<Node> SecondNodesToChoose=new ArrayList();
     boolean isMax;
     
@@ -104,7 +102,6 @@ public class Node {
             System.out.println("is Minimizer");
             for (int i=0; i<childrenNodes.size(); i++){
                 node.beta = Integer.min(node.beta, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,true));
-                System.out.println("beta is "+node.beta+"when depth is "+ depth );
                 
                 if(node.alpha >= node.beta)
                    break;
@@ -130,7 +127,6 @@ public class Node {
         else
             color="Black";
         //parent node which contains a game state ( pieces with their positions ) 
-        System.out.println("Piece State"+node.PiecesState);
         for(int i = 0 ; i<node.PiecesState.size();i++){
             node.isMax=isMax;
             if(node.PiecesState.get(i).alive){
@@ -145,7 +141,7 @@ public class Node {
                             continue;
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            System.out.println("Node.Alpha is "+node.alpha+"Node.Beta is "+node.beta);
+                            System.out.println("Node.Alpha is "+node.alpha+"  Node.Beta is "+node.beta);
                             childrenNodesList.add(n);
                         }
                     }
@@ -579,12 +575,12 @@ public class Node {
             System.out.println("Last Heuristic   "+SecondNodesToChoose.get(i).heuristic+" i is "+i);
             if(SecondNodesToChoose.get(i).heuristic==minimax){
                 System.out.println("MiniMax matched is "+minimax);
-                System.out.println(SecondNodesToChoose.get(i).PiecesState);
+//                System.out.println(SecondNodesToChoose.get(i).PiecesState);
                 return SecondNodesToChoose.get(i).PiecesState;
             }
             
         }
-        System.out.println("RETURNING NULLLL IN RETURNSTATETOMOVE");
+        System.out.println("RETURNING NULLL IN RETURN STATE TO MOVE!");
         return null;
     }
 
