@@ -7,13 +7,14 @@ package chess;
 
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.io.Serializable;
 
 /**
  * 
  *
  * @author Mina
  */
-public class Tile {
+public class Tile implements Serializable{
     
     private int x,y;
     public Point P1,P2,P3,P4;

@@ -6,13 +6,14 @@
 package chess;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  *
  * @author Kero
  */
-public class PointMapper {
+public class PointMapper implements Serializable{
     
     int ix;
     int iy;

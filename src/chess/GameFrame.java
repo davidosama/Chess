@@ -5,15 +5,31 @@
  */
 package chess;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.stage.FileChooser;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Kero
  */
-public class GameFrame extends javax.swing.JFrame {
+public class GameFrame extends javax.swing.JFrame implements Serializable{
 
     /**
      * Creates new form GameFrame
@@ -32,17 +48,67 @@ public class GameFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        EasyBtn = new javax.swing.JButton();
+        BackBtn = new javax.swing.JButton();
+        NormalBtn = new javax.swing.JButton();
+        HardBtn = new javax.swing.JButton();
         NewGameBtn = new javax.swing.JButton();
         CreditsBtn = new javax.swing.JButton();
         HowToPlayBtn = new javax.swing.JButton();
         ExitBtn = new javax.swing.JButton();
+        LoadBtn = new javax.swing.JButton();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(619, 350));
+        setPreferredSize(new java.awt.Dimension(600, 419));
         setResizable(false);
         setSize(new java.awt.Dimension(600, 419));
         getContentPane().setLayout(null);
+
+        EasyBtn.setBackground(new java.awt.Color(153, 153, 153));
+        EasyBtn.setText("Easy");
+        EasyBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EasyBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(EasyBtn);
+        EasyBtn.setBounds(50, 60, 100, 32);
+        EasyBtn.setVisible(false);
+
+        BackBtn.setBackground(new java.awt.Color(153, 153, 153));
+        BackBtn.setText("Back");
+        BackBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(BackBtn);
+        BackBtn.setBounds(50, 210, 100, 32);
+        BackBtn.setVisible(false);
+
+        NormalBtn.setBackground(new java.awt.Color(153, 153, 153));
+        NormalBtn.setText("Normal");
+        NormalBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NormalBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(NormalBtn);
+        NormalBtn.setBounds(50, 110, 100, 32);
+        NormalBtn.setVisible(false);
+
+        HardBtn.setBackground(new java.awt.Color(153, 153, 153));
+        HardBtn.setText("Hard");
+        HardBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HardBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(HardBtn);
+        HardBtn.setBounds(50, 160, 100, 32);
+        HardBtn.setVisible(false);
 
         NewGameBtn.setBackground(new java.awt.Color(153, 153, 153));
         NewGameBtn.setText("New Game");
@@ -52,17 +118,17 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(NewGameBtn);
-        NewGameBtn.setBounds(50, 110, 103, 25);
+        NewGameBtn.setBounds(50, 110, 100, 32);
 
         CreditsBtn.setBackground(new java.awt.Color(153, 153, 153));
         CreditsBtn.setText("Credits");
         getContentPane().add(CreditsBtn);
-        CreditsBtn.setBounds(50, 160, 103, 25);
+        CreditsBtn.setBounds(50, 160, 100, 32);
 
         HowToPlayBtn.setBackground(new java.awt.Color(153, 153, 153));
         HowToPlayBtn.setText("How To Play");
         getContentPane().add(HowToPlayBtn);
-        HowToPlayBtn.setBounds(50, 210, 100, 25);
+        HowToPlayBtn.setBounds(50, 210, 100, 32);
 
         ExitBtn.setBackground(new java.awt.Color(153, 153, 153));
         ExitBtn.setText("Exit");
@@ -72,7 +138,17 @@ public class GameFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(ExitBtn);
-        ExitBtn.setBounds(50, 260, 103, 25);
+        ExitBtn.setBounds(50, 260, 103, 32);
+
+        LoadBtn.setBackground(new java.awt.Color(153, 153, 153));
+        LoadBtn.setText("Load Game");
+        LoadBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LoadBtnActionPerformed(evt);
+            }
+        });
+        getContentPane().add(LoadBtn);
+        LoadBtn.setBounds(500, 40, 100, 32);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/chess-king.jpg"))); // NOI18N
         Background.setName(""); // NOI18N
@@ -90,12 +166,87 @@ public class GameFrame extends javax.swing.JFrame {
     private void NewGameBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewGameBtnActionPerformed
         try {
             // TODO add your handling code here:
-            new GameBoard().setVisible(true);
+            EasyBtn.setVisible(true);
+            NormalBtn.setVisible(true);
+            HardBtn.setVisible(true);
+            BackBtn.setVisible(true);
+            //new GameBoard().setVisible(true);
+        } catch (Exception ex) {
+            Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //this.setVisible(false);
+    }//GEN-LAST:event_NewGameBtnActionPerformed
+
+    private void BackBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBtnActionPerformed
+        // TODO add your handling code here:
+            EasyBtn.setVisible(false);
+            NormalBtn.setVisible(false);
+            HardBtn.setVisible(false);
+            BackBtn.setVisible(false);
+    }//GEN-LAST:event_BackBtnActionPerformed
+
+    private void EasyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EasyBtnActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        try {
+            new GameBoard(1,false,new ArrayList<Object>()).setVisible(true);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }//GEN-LAST:event_EasyBtnActionPerformed
+
+    private void NormalBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NormalBtnActionPerformed
+        // TODO add your handling code here:
         this.setVisible(false);
-    }//GEN-LAST:event_NewGameBtnActionPerformed
+        try {
+            new GameBoard(2,false,new ArrayList<Object>()).setVisible(true);
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+               
+    }//GEN-LAST:event_NormalBtnActionPerformed
+
+    private void HardBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HardBtnActionPerformed
+        // TODO add your handling code here:
+        this.setVisible(false);
+        try {
+            new GameBoard(1,false,new ArrayList<Object>()).setVisible(true);
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    
+    }//GEN-LAST:event_HardBtnActionPerformed
+
+    private void LoadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LoadBtnActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser();
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.addChoosableFileFilter(new FileNameExtensionFilter("Willson", "willson"));
+        
+
+                int result= fc.showOpenDialog(this);
+            if(result==JFileChooser.APPROVE_OPTION)
+            {
+                ArrayList<Object> data = new ArrayList<>();
+                try {
+                    FileInputStream fileIn = new FileInputStream(fc.getSelectedFile().getAbsolutePath());
+                    ObjectInputStream in = new ObjectInputStream(fileIn);
+                    data = (ArrayList<Object>) in.readObject();
+                    in.close();
+                    fileIn.close();
+                    
+                    new GameBoard((int)data.get(0),true,data ).setVisible(true);
+                    this.setVisible(false);
+                    
+                } catch (Exception e) {
+                    System.out.println("errorrrrr");
+                }
+            }
+        
+//        if (selectedFile != null) {
+//            System.out.println(selectedFile.getAbsolutePath());
+//        }
+    }//GEN-LAST:event_LoadBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,16 +278,41 @@ public class GameFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+//                String bip = "el3ab.mp3";
                 new GameFrame().setVisible(true);
+//                Media hit = new Media(new File(bip).toURI().toString());
+//                MediaPlayer mediaPlayer = new MediaPlayer(hit);
+//                mediaPlayer.play();
+//                AudioInputStream audioIn;
+//                try {
+//                    audioIn = AudioSystem.getAudioInputStream(getClass().getResource("/chess/imgs/el3ab.wav"));
+//                    Clip clip = AudioSystem.getClip();
+//                clip.open(audioIn);
+//                clip.loop(Clip.LOOP_CONTINUOUSLY);
+//                clip.start();
+//                } catch (UnsupportedAudioFileException ex) {
+//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (LineUnavailableException ex) {
+//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+               
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BackBtn;
     private javax.swing.JLabel Background;
     private javax.swing.JButton CreditsBtn;
+    private javax.swing.JButton EasyBtn;
     private javax.swing.JButton ExitBtn;
+    private javax.swing.JButton HardBtn;
     private javax.swing.JButton HowToPlayBtn;
+    private javax.swing.JButton LoadBtn;
     private javax.swing.JButton NewGameBtn;
+    private javax.swing.JButton NormalBtn;
     // End of variables declaration//GEN-END:variables
 }
