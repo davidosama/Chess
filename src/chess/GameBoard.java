@@ -444,7 +444,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
     }
 
     public static boolean isEmpty(int x, int y) {
-        System.out.println("x : "+x+"y : "+y);
+//        System.out.println("x : "+x+"y : "+y);
         if(x<0||x>7||y<0||y>7){
             return false;
         }
@@ -981,7 +981,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         AllPieces.add(blackKing.clone());
         AllPieces.add(whiteKing.clone());
             //AI Plays
-            System.out.println("All Pieces"+AllPieces);
+//            System.out.println("All Pieces"+AllPieces);
             AllPiecesCloned = new ArrayList<Piece>();
         for (int i = 0; i < blackPawns.size(); i++) {
             AllPiecesCloned.add(blackPawns.get(i));
@@ -1012,7 +1012,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         AllPiecesCloned.add(blackKing);
         AllPiecesCloned.add(whiteKing);
             Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
-            ArrayList<Piece> newList = Node.Play(n,3,n.alpha,n.beta,true);
+            ArrayList<Piece> newList = Node.Play(n,4,n.alpha,n.beta,true);
             WhiteTurn=!WhiteTurn;
             for (int i = 0; i <newList.size(); i++) {
                 if(!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY()))

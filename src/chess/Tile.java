@@ -6,7 +6,6 @@
 package chess;
 
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.io.Serializable;
 
 /**
