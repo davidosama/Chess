@@ -691,50 +691,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 First= false;
             }
         }
-//        System.out.println(e.getPoint().toString());
-//        System.out.println(e.getX());
-//        if (First && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
-//            JOptionPane.showMessageDialog(null, "select piece ya 7ywan :'D :P ");
-//        } //Awel Select wel moraba3 fih piece 
-//        else if (First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
-//            //check if it is the player's piece , then select
-//            if ((WhiteTurn
-//                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
-//                    || (!WhiteTurn
-//                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black")) {
-//                //select (it means save the tile and its information)
-//                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
-//                //Now selected, not First
-//                First = false;
-//                if(WhiteTurn) WhiteTurns++;
-//                else BlackTurns++ ;
-//                WhiteTurn = !WhiteTurn;
-//            } //not the player's piece
-//            else {
-//                JOptionPane.showMessageDialog(null, "select el piece bta3tak ya 7ywan xD :'D");
-//            }
-//        } else if (!First && !(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
-//
-//            //same color select 
-//            if ((WhiteTurn
-//                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")
-//                    || (!WhiteTurn
-//                    && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "Black")) {
-//                //select (it means save the tile and its information)
-//                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
-//
-//            }
-//        } //different color move
-//        else {
-//            PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeX(e.getY()));
-//            //PointMapper.BoardTilesArray[4][1].piece.position= new Point(4, 2);
-//
-//            First = true;
-//        }
-//
-//        setPosions();
-//
-//        jPanel1.repaint();
  
         }
         else
@@ -743,12 +699,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         }
         setPosions();
     }
-    //else if (!First && Empty) -----> move
-    //else if(First && !Empty && MyColo) ----> Select
     
-    //else if (!First && Empty) -----> move
-    //else if(First && !Empty && MyColo) ----> Select
-
     @Override
     public void mouseReleased(MouseEvent e) {
 
@@ -1041,11 +992,11 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                     int y = newList.get(i).position.y;
                     if(AllPiecesCloned.get(i).move(x, y))
                     {
-                        JOptionPane.showMessageDialog(null, "moved to ("+ x + " , "+y +")");
+                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType+" moved to ("+ x + " , "+y +")");
                     }
                     else
                     {
-                        JOptionPane.showMessageDialog(null, "DIDN'T move ("+ x + " , "+y +")");
+                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType+" DIDN'T move ("+ x + " , "+y +")");
                     }
                     
                     
