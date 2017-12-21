@@ -133,22 +133,26 @@ public class Node {
         for(int i = 0 ; i<node.PiecesState.size();i++){
             node.isMax=isMax;
             if(node.PiecesState.get(i).alive){
+                //rook
                 if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    for(int x =0 ; x<8;x++){//kol el amaken eli 3ala el y 
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                    int y = (int)listCopy.get(i).position.getY();
+                    //loop on x values--> same row
+                    for(int x = 0 ; x<8;x++){
+                        //kol el amaken eli 3ala el x
                         if(x==node.PiecesState.get(i).position.getX())
                             continue;
-                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        int y = (int)listCopy.get(i).position.getY();
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            System.out.println("Node.Alpha is "+node.alpha+"Node.Beta is "+node.beta);
                             childrenNodesList.add(n);
                         }
                     }
-                    for(int y =0 ; y<8;y++){//kol el amaken eli 3ala el x
+                    //loop on different y values --> same column
+                    int x = (int)listCopy.get(i).position.getX();
+                    for(y =0 ; y<8;y++){//kol el amaken eli 3ala el x
                         if(y==node.PiecesState.get(i).position.getY())
                             continue;
-                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        int x = (int)listCopy.get(i).position.getX();
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
@@ -450,11 +454,11 @@ public class Node {
         Point WhiteKing= new Point(),BlackKing= new Point () ;
         for(int i=0; i < LeafNode.PiecesState.size(); i++){
             if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("White")){
-            WhiteKing =LeafNode.PiecesState.get(i).position;
-            }
-            else if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")){
-            WhiteKing =LeafNode.PiecesState.get(i).position;
-            }
+                WhiteKing =LeafNode.PiecesState.get(i).position;
+                }
+                else if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")){
+                BlackKing =LeafNode.PiecesState.get(i).position;
+                }
         }        
         for(int i=0; i < LeafNode.PiecesState.size(); i++){
             if(LeafNode.PiecesState.get(i).alive){
@@ -522,6 +526,70 @@ public class Node {
             System.out.println("{iece type : "+l.get(i).pieceType+"Position "+l.get(i).position);
         }
         return l;
+    }
+    
+    
+    private static int heuristic2 (Node LeafNode){ //AI is the white set
+        int Score=0;
+        Point WhiteKing= new Point();
+        Point BlackKing= new Point ();
+        int BlackCount=0;
+        int WhiteCount=0;
+        
+        for(int i=0; i < LeafNode.PiecesState.size(); i++){
+            if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("White")){
+                WhiteKing =LeafNode.PiecesState.get(i).position;
+                }
+                else if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")){
+                BlackKing =LeafNode.PiecesState.get(i).position;
+                }
+        }        
+        for(int i=0; i < LeafNode.PiecesState.size(); i++){
+            if(LeafNode.PiecesState.get(i).alive){
+                int pieceValue=0;
+                switch(LeafNode.PiecesState.get(i).pieceType){
+                    case "Pawn":
+                        pieceValue=10;
+                        break;
+                    case "Knight":
+                        pieceValue=30;
+                        break;
+                    case "Bishop":
+                        pieceValue=30;
+                        break;
+                    case "Rook":
+                        pieceValue=50;
+                        break;
+                    case "Queen":
+                        pieceValue=90;
+                        break;
+                    case "King":
+                        pieceValue=2000;
+                        break;    
+                }
+                if(LeafNode.PiecesState.get(i).color.equalsIgnoreCase("white")){
+                    WhiteCount++;
+                    Score+=pieceValue;
+                    int distance = (int) Math.sqrt( Math.pow(BlackKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(BlackKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+                    Score-= distance ;
+                }
+                else {
+                    BlackCount++;
+                    Score-=pieceValue;
+                    int distance = (int) Math.sqrt( Math.pow(WhiteKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(WhiteKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+                    Score+= distance ;                    
+                }
+            }
+            if(BlackCount>WhiteCount){
+                Score-=BlackCount;
+            }
+            else
+                Score+=WhiteCount*2;
+        }
+        
+        
+        System.out.println("Score is "+Score);
+        return Score;
     }
 
 }
