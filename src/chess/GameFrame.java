@@ -283,20 +283,20 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
 //                Media hit = new Media(new File(bip).toURI().toString());
 //                MediaPlayer mediaPlayer = new MediaPlayer(hit);
 //                mediaPlayer.play();
-//                AudioInputStream audioIn;
-//                try {
-//                    audioIn = AudioSystem.getAudioInputStream(getClass().getResource("/chess/imgs/el3ab.wav"));
-//                    Clip clip = AudioSystem.getClip();
-//                clip.open(audioIn);
-//                clip.loop(Clip.LOOP_CONTINUOUSLY);
-//                clip.start();
-//                } catch (UnsupportedAudioFileException ex) {
-//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (IOException ex) {
-//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
-//                } catch (LineUnavailableException ex) {
-//                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
-//                }
+                AudioInputStream audioIn;
+                try {
+                    audioIn = AudioSystem.getAudioInputStream(getClass().getResource("/chess/imgs/el3ab.wav"));
+                    Clip clip = AudioSystem.getClip();
+                clip.open(audioIn);
+                clip.loop(Clip.LOOP_CONTINUOUSLY);
+                clip.start();
+                } catch (UnsupportedAudioFileException ex) {
+                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (LineUnavailableException ex) {
+                    Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
+                }
                
                 
             }
