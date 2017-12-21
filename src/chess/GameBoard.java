@@ -691,6 +691,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         }
         AllPieces.add(blackQueen.clone());
         AllPieces.add(whiteQueen.clone());
+        AllPieces.add(blackKing.clone());
+        AllPieces.add(whiteKing.clone());
             //AI Plays
             System.out.println("All Pieces"+AllPieces);
             AllPiecesCloned = new ArrayList<Piece>();
@@ -720,6 +722,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         }
         AllPiecesCloned.add(blackQueen);
         AllPiecesCloned.add(whiteQueen);
+        AllPiecesCloned.add(blackKing);
+        AllPiecesCloned.add(whiteKing);
             Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
             ArrayList<Piece> newList = Node.Play(n,3,n.alpha,n.beta,true);
             WhiteTurn=!WhiteTurn;
