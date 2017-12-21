@@ -1012,7 +1012,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         AllPiecesCloned.add(blackKing);
         AllPiecesCloned.add(whiteKing);
             Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
-            ArrayList<Piece> newList = Node.Play(n,4,n.alpha,n.beta,true);
+            ArrayList<Piece> newList = Node.Play(n,3,n.alpha,n.beta,true);
             WhiteTurn=!WhiteTurn;
             for (int i = 0; i <newList.size(); i++) {
                 if(!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY()))
