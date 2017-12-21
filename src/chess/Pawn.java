@@ -59,7 +59,6 @@ public class Pawn extends Piece implements Cloneable, Serializable{
     
     public boolean canAttack(int x, int y) {
         if (this.color.equals("Black")) {
-            System.out.println("alskdhaslkdjaslkdajsl");
             if ((x == this.position.getX() - 1 || x == this.position.getX() + 1) && y == this.position.getY() - 1) {
                 return true;
             }
@@ -67,10 +66,8 @@ public class Pawn extends Piece implements Cloneable, Serializable{
         } 
         else{
              if ((x == this.position.getX() - 1 || x == this.position.getX() + 1) && y == this.position.getY() + 1) {
-                 System.out.println("alskdhaslkdjaslkdajsl");
                     return true;
                 }
-             System.out.println("eeeeeeeeeeeeeel");
              return false;
         }
         

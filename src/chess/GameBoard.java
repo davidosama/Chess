@@ -444,7 +444,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
     }
 
     public static boolean isEmpty(int x, int y) {
-        System.out.println("x : "+x+"y : "+y);
+//        System.out.println("x : "+x+"y : "+y);
         if(x<0||x>7||y<0||y>7){
             return false;
         }
@@ -1001,7 +1001,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         AllPieces.add(blackKing.clone());
         AllPieces.add(whiteKing.clone());
             //AI Plays
-            System.out.println("All Pieces"+AllPieces);
+//            System.out.println("All Pieces"+AllPieces);
             AllPiecesCloned = new ArrayList<Piece>();
         for (int i = 0; i < blackPawns.size(); i++) {
             AllPiecesCloned.add(blackPawns.get(i));
