@@ -59,7 +59,7 @@ public class Queen extends Piece implements Cloneable{
         int counter = (int) Math.sqrt( Math.pow(x - this.position.getX(),2)+Math.pow(y - this.position.getY(),2)); // change old counters by this one
         if (counter==1)
             return true ;
-        for(int i = 0; i < counter-1 ; i++){
+        for(int i = 0; i < counter-2 ; i++){
             if (x < this.position.getX() && y < this.position.getY()){//top-left
                 currentPosition.x--;
                 currentPosition.y--;
@@ -131,7 +131,7 @@ public class Queen extends Piece implements Cloneable{
         int counter = (int) Math.sqrt( Math.pow(x - this.position.getX(),2)+Math.pow(y - this.position.getY(),2)); // change old counters by this one
         if (counter==1)
             return true ;
-        for(int i = 0; i < counter-1 ; i++){
+        for(int i = 0; i < counter-2 ; i++){
             if (x < this.position.getX() && y < this.position.getY()){//top-left
                 currentPosition.x--;
                 currentPosition.y--;

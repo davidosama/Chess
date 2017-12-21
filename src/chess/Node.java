@@ -5,6 +5,7 @@
  */
 package chess;
 
+import static chess.GameBoard.AllPieces;
 import java.awt.Point;
 
 import static java.lang.Integer.min;
@@ -77,7 +78,7 @@ public class Node {
         System.out.println("Beginning minimax");
         //coun
         if(depth==0){
-            node.heuristic=heuristic2(node);
+            node.heuristic=heuristic(node);
             System.out.println("Heuristic .  "+node.heuristic);
             return node.heuristic ;
         }
@@ -271,12 +272,10 @@ public class Node {
                     ////// This is for fooo2 shemaaal
                     int y = (int) node.PiecesState.get(i).position.getY() - 1;
                     for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
-//                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
                         if (y < 0) {
                             break;
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        //int y = (int)listCopy.get(i).position.getY();
                         if (listCopy.get(i).moveAI(x, y,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
@@ -448,30 +447,55 @@ public class Node {
                     //kiro   get color > black up  y-1 > true >  
                     // black
                     if(node.PiecesState.get(i).color.equals("Black")){
-                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        int y = (int)listCopy.get(i).position.getY()-1;
-                        int x = (int)listCopy.get(i).position.getX();
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
+                        if(node.PiecesState.get(i).numOfMoves==0){
+                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                            int y = (int)listCopy.get(i).position.getY()-2;
+                            int x = (int)listCopy.get(i).position.getX();
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
                         }
-                        listCopy = Node.ClonePieces(node.PiecesState);
-                         y = (int)listCopy.get(i).position.getY()-1;
-                         x = (int)listCopy.get(i).position.getX()+1;
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
+                            
+                            
+                        
                         }
-                       listCopy = Node.ClonePieces(node.PiecesState);
-                        y = (int)listCopy.get(i).position.getY()-1;
-                        x = (int)listCopy.get(i).position.getX()-1;
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                }
+                        
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                            int y = (int)listCopy.get(i).position.getY()-1;
+                            int x = (int)listCopy.get(i).position.getX();
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                            }
+                        
+                            listCopy = Node.ClonePieces(node.PiecesState);
+                             y = (int)listCopy.get(i).position.getY()-1;
+                             x = (int)listCopy.get(i).position.getX()+1;
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                            }
+                           listCopy = Node.ClonePieces(node.PiecesState);
+                            y = (int)listCopy.get(i).position.getY()-1;
+                            x = (int)listCopy.get(i).position.getX()-1;
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                            }
+                    }
                     if(node.PiecesState.get(i).color.equals("White")){
-                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                       
+                        if(node.PiecesState.get(i).numOfMoves==0){
+                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                            int y = (int)listCopy.get(i).position.getY()+2;
+                            int x = (int)listCopy.get(i).position.getX();
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                        }
+                        }
+                        
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         int y = (int)listCopy.get(i).position.getY()+1;
                         int x = (int)listCopy.get(i).position.getX();
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
@@ -636,12 +660,75 @@ public class Node {
             else
                 Score+=WhiteCount*2;
         }
+            for (int i = 0; i < LeafNode.PiecesState.size(); i++) {
+            if (LeafNode.PiecesState.get(i).alive && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("white")) {
+                for (int j = 0; j < LeafNode.PiecesState.size(); j++) {
+                    if (LeafNode.PiecesState.get(j).alive && LeafNode.PiecesState.get(j).color.equalsIgnoreCase("black")) {
+                        int posX = (int) LeafNode.PiecesState.get(i).getPosition().getX();
+                        int posY = (int) LeafNode.PiecesState.get(i).getPosition().getY();
+                        if (LeafNode.PiecesState.get(j).validateMoveAI(posX, posY, LeafNode.PiecesState)) {
+                            switch (LeafNode.PiecesState.get(i).pieceType) {
+                                case "Pawn":
+                                    Score= -50;
+                                case "Knight":
+                                    Score= -80;
+                                case "Bishop":
+                                    Score= -80;
+                                case "Rook":
+                                    Score= -100;
+                                case "Queen":
+                                    Score= -140;
+                                case "King":
+                                    Score= -2000;
+                                default:
+                                    Score= -100 ;
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        
         
         
         System.out.println("Score is "+Score);
         return Score;
     }
-
+    public static int isThreatenedAI(Node LeafNode) {
+        for (int i = 0; i < LeafNode.PiecesState.size(); i++) {
+            if (LeafNode.PiecesState.get(i).alive && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("white")) {
+                for (int j = 0; j < LeafNode.PiecesState.size(); j++) {
+                    if (LeafNode.PiecesState.get(j).alive && LeafNode.PiecesState.get(j).color.equalsIgnoreCase("black")) {
+                        int posX = (int) LeafNode.PiecesState.get(i).getPosition().getX();
+                        int posY = (int) LeafNode.PiecesState.get(i).getPosition().getY();
+                        if (LeafNode.PiecesState.get(j).validateMoveAI(posX, posY, LeafNode.PiecesState)) {
+                            switch (LeafNode.PiecesState.get(i).pieceType) {
+                                case "Pawn":
+                                    return -10;
+                                case "Knight":
+                                    return -30;
+                                case "Bishop":
+                                    return -30;
+                                case "Rook":
+                                    return -50;
+                                case "Queen":
+                                    return -90;
+                                case "King":
+                                    return -2000;
+                                default:
+                                    return -40 ;
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        return 0;
+    }
 }
 
 
