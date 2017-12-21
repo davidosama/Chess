@@ -1,9 +1,10 @@
 package chess;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Pawn extends Piece implements Cloneable{
+public class Pawn extends Piece implements Cloneable, Serializable{
 
     public Pawn(String color, Point position) {
         super(color, position);

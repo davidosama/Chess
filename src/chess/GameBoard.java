@@ -6,19 +6,28 @@
 package chess;
 
 import java.awt.Point;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
  * @author Kero
  */
-public class GameBoard extends javax.swing.JFrame implements MouseListener {
+public class GameBoard extends javax.swing.JFrame implements MouseListener ,Serializable{
 
     public static int WhiteTurns = 0;
     public static int BlackTurns = 0;
@@ -40,6 +49,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     public King blackKing;
     public King whiteKing;
     
+    public static int depth = 0;
+    
 
     public static ArrayList<Piece> AllPieces;
     public static ArrayList<Piece> AllPiecesCloned;
@@ -53,11 +64,35 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     Point FirstSelectedPoint= null;
     boolean WhiteTurn = false;//0 for black 1 for white
     private final JLabel SelectedLbl;
+    private final JButton SaveBtn;
 
-    public GameBoard() throws CloneNotSupportedException {
-
-        initComponents();
+    public GameBoard(int dep,boolean load, ArrayList<Object> data) throws CloneNotSupportedException {
         
+        this.depth = dep;
+        initComponents();
+        pm = new PointMapper();
+        
+                
+
+        
+        SaveBtn = new javax.swing.JButton();
+
+        SaveBtn.setText("Save Game");
+        SaveBtn.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            SaveBtnActionPerformed(evt);
+        } catch (IOException ex) {
+            Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+            
+        });
+
+        jPanel1.add(SaveBtn);
+        SaveBtn.setBounds(610, 240, 100, 26);
+
         SelectedLbl = new javax.swing.JLabel();
 
         SelectedLbl.setBackground(new java.awt.Color(255, 51, 51));
@@ -73,11 +108,221 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
         SelectedLbl.setVisible(false);
 
         jPanel1.setLayout(null);
+        
         this.setLocationRelativeTo(null);
-        pm = new PointMapper();
+        
         this.addMouseListener(this);
+        if(load == false)
+        {
         initializePiecesPositions();
+        }
+        else{
+            //1- depth
+            // used in Gameframe when makin new gameBoard
+            
+            //2- whiteTurn
+            this.WhiteTurn = (boolean) data.get(1);
+            //3- array lists with order
+            /*
+            public ArrayList<Pawn> blackPawns;
+            public ArrayList<Pawn> whitePawns;
+            public ArrayList<Knight> blackKnights;
+            public ArrayList<Knight> whiteKnights;
+            public ArrayList<Rook> whiteRooks;
+            public ArrayList<Rook> blackRooks;
+            public ArrayList<Bishop> blackBishops;
+            public ArrayList<Bishop> whiteBishops;
+            public Queen blackQueen;
+            public Queen whiteQueen;
+            public King blackKing;
+            public King whiteKing;
+        */
+            blackPawns = (ArrayList<Pawn>) data.get(2);
+            whitePawns = (ArrayList<Pawn>) data.get(3);
+              blackKnights = (ArrayList<Knight>) data.get(4);
+              whiteKnights = (ArrayList<Knight>) data.get(5);
+              whiteRooks = (ArrayList<Rook>) data.get(6);
+              blackRooks = (ArrayList<Rook>) data.get(7);
+              blackBishops = (ArrayList<Bishop>) data.get(8);
+              whiteBishops = (ArrayList<Bishop>) data.get(9);
+              blackQueen = (Queen) data.get(10);
+              whiteQueen = (Queen) data.get(11);
+              blackKing = (King) data.get(12);
+              whiteKing= (King) data.get(13);
+              
+              //4- point mapper
+              
+//              for (int i = 0; i < 8; i++) {
+//
+//            
+//            
+//            jPanel1.add(blackPawns.get(i).label);
+////            blackPawn.label.setVisible(true);
+//        }
+//        //white Pawns
+//
+//        for (int i = 0; i < 8; i++) {
+//            
+//            
+//            jPanel1.add(whitePawns.get(i).label);
+//        }
+//        //black blackKnights
+//       
+//        jPanel1.add(blackKnights.get(0).label);
+//
+//        //PointMapper.BoardTilesArray[1][7].piece.position = new Point(1,2);
+//        
+//        jPanel1.add(blackKnights.get(1).label);
+//
+//        //white blackKnights
+//        
+//        jPanel1.add(whiteKnights.get(0).label);
+//
+//        
+//        jPanel1.add(whiteKnights.get(1).label);
+//
+//        //black Rooks
+//        
+//        jPanel1.add(blackRooks.get(0).label);
+//
+//
+//        jPanel1.add(blackRooks.get(1).label);
+//
+//        
+//        jPanel1.add(whiteRooks.get(0).label);
+//
+//        
+//        jPanel1.add(whiteRooks.get(1).label);
+//
+//        //black bishops
+//        
+//        jPanel1.add(blackBishops.get(0).label);
+//
+//        
+//        jPanel1.add(blackBishops.get(1).label);
+//
+//        //white bishops
+//        
+//        jPanel1.add(whiteBishops.get(0).label);
+//
+//        
+//        jPanel1.add(whiteBishops.get(1).label);
+//
+//        //black Queen
+//        
+//        jPanel1.add(blackQueen.label);
+//
+//        //white Queen
+//        
+//        jPanel1.add(whiteQueen.label);
+//        
+//        
+//        jPanel1.add(whiteKing.label);
+//        
+//        
+//        jPanel1.add(blackKing.label);
+//              
+        for (int i = 0; i < 8; i++) {
 
+
+            PointMapper.BoardTilesArray[(int)blackPawns.get(i).position.getX()][(int)blackPawns.get(i).position.getY()].piece = blackPawns.get(i);
+            PointMapper.BoardTilesArray[(int)blackPawns.get(i).position.getX()][(int)blackPawns.get(i).position.getY()].setEmpty(false);
+            jPanel1.add(blackPawns.get(i).label);
+//            blackPawn.label.setVisible(true);
+        }
+        //white Pawns
+        for (int i = 0; i < 8; i++) {
+   
+            PointMapper.BoardTilesArray[(int)whitePawns.get(i).position.getX()][(int)whitePawns.get(i).position.getY()].piece = whitePawns.get(i);
+            PointMapper.BoardTilesArray[(int)whitePawns.get(i).position.getX()][(int)whitePawns.get(i).position.getY()].setEmpty(false);
+            jPanel1.add(whitePawns.get(i).label);
+        }
+        //black blackKnights
+        PointMapper.BoardTilesArray[(int)blackKnights.get(0).position.getX()][(int)blackKnights.get(0).position.getY()].piece = blackKnights.get(0);
+        PointMapper.BoardTilesArray[(int)blackKnights.get(0).position.getX()][(int)blackKnights.get(0).position.getY()].setEmpty(false);
+        jPanel1.add(blackKnights.get(0).label);
+
+        //PointMapper.BoardTilesArray[1][7].piece.position = new Point(1,2);
+
+        PointMapper.BoardTilesArray[(int)blackKnights.get(1).position.getX()][(int)blackKnights.get(1).position.getY()].piece = blackKnights.get(1);
+        PointMapper.BoardTilesArray[(int)blackKnights.get(1).position.getX()][(int)blackKnights.get(1).position.getY()].setEmpty(false);
+        jPanel1.add(blackKnights.get(1).label);
+
+        //white blackKnights
+
+        PointMapper.BoardTilesArray[(int)whiteKnights.get(0).position.getX()][(int)whiteKnights.get(0).position.getY()].piece = whiteKnights.get(0);
+        PointMapper.BoardTilesArray[(int)whiteKnights.get(0).position.getX()][(int)whiteKnights.get(0).position.getY()].setEmpty(false);
+        jPanel1.add(whiteKnights.get(0).label);
+
+
+        PointMapper.BoardTilesArray[(int)whiteKnights.get(1).position.getX()][(int)whiteKnights.get(1).position.getY()].piece = whiteKnights.get(1);
+        PointMapper.BoardTilesArray[(int)whiteKnights.get(1).position.getX()][(int)whiteKnights.get(1).position.getY()].setEmpty(false);
+        jPanel1.add(whiteKnights.get(1).label);
+
+        //black Rooks
+  
+        PointMapper.BoardTilesArray[(int)blackRooks.get(0).position.getX()][(int)blackRooks.get(0).position.getY()].piece = blackRooks.get(0);
+        PointMapper.BoardTilesArray[(int)blackRooks.get(0).position.getX()][(int)blackRooks.get(0).position.getY()].setEmpty(false);
+        jPanel1.add(blackRooks.get(0).label);
+
+        PointMapper.BoardTilesArray[(int)blackRooks.get(1).position.getX()][(int)blackRooks.get(1).position.getY()].piece = blackRooks.get(1);
+        PointMapper.BoardTilesArray[(int)blackRooks.get(1).position.getX()][(int)blackRooks.get(1).position.getY()].setEmpty(false);
+        jPanel1.add(blackRooks.get(1).label);
+
+        //white Rooks
+
+        PointMapper.BoardTilesArray[(int)whiteRooks.get(0).position.getX()][(int)whiteRooks.get(0).position.getY()].piece = whiteRooks.get(0);
+        PointMapper.BoardTilesArray[(int)whiteRooks.get(0).position.getX()][(int)whiteRooks.get(0).position.getY()].setEmpty(false);
+        jPanel1.add(whiteRooks.get(0).label);
+
+
+        PointMapper.BoardTilesArray[(int)whiteRooks.get(1).position.getX()][(int)whiteRooks.get(1).position.getY()].piece = whiteRooks.get(1);
+        PointMapper.BoardTilesArray[(int)whiteRooks.get(1).position.getX()][(int)whiteRooks.get(1).position.getY()].setEmpty(false);
+        jPanel1.add(whiteRooks.get(1).label);
+
+        //black bishops
+
+        PointMapper.BoardTilesArray[(int)blackBishops.get(0).position.getX()][(int)blackBishops.get(0).position.getY()].piece = blackBishops.get(0);
+        PointMapper.BoardTilesArray[(int)blackBishops.get(0).position.getX()][(int)blackBishops.get(0).position.getY()].setEmpty(false);
+        jPanel1.add(blackBishops.get(0).label);
+
+
+        PointMapper.BoardTilesArray[(int)blackBishops.get(1).position.getX()][(int)blackBishops.get(1).position.getY()].piece = blackBishops.get(1);
+        PointMapper.BoardTilesArray[(int)blackBishops.get(1).position.getX()][(int)blackBishops.get(1).position.getY()].setEmpty(false);
+        jPanel1.add(blackBishops.get(1).label);
+
+        //white bishops
+
+        PointMapper.BoardTilesArray[(int)whiteBishops.get(0).position.getX()][(int)whiteBishops.get(0).position.getY()].piece = whiteBishops.get(0);
+        PointMapper.BoardTilesArray[(int)whiteBishops.get(0).position.getX()][(int)whiteBishops.get(0).position.getY()].setEmpty(false);
+        jPanel1.add(whiteBishops.get(0).label);
+
+        PointMapper.BoardTilesArray[(int)whiteBishops.get(1).position.getX()][(int)whiteBishops.get(1).position.getY()].piece = whiteBishops.get(1);
+        PointMapper.BoardTilesArray[(int)whiteBishops.get(1).position.getX()][(int)whiteBishops.get(1).position.getY()].setEmpty(false);
+        jPanel1.add(whiteBishops.get(1).label);
+
+        //black Queen
+
+        PointMapper.BoardTilesArray[(int)blackQueen.position.getX()][(int)blackQueen.position.getY()].piece = blackQueen;
+        PointMapper.BoardTilesArray[(int)blackQueen.position.getX()][(int)blackQueen.position.getY()].setEmpty(false);
+        jPanel1.add(blackQueen.label);
+
+        //white Queen
+
+        PointMapper.BoardTilesArray[(int)whiteQueen.position.getX()][(int)whiteQueen.position.getY()].piece = whiteQueen;
+        PointMapper.BoardTilesArray[(int)whiteQueen.position.getX()][(int)whiteQueen.position.getY()].setEmpty(false);
+        jPanel1.add(whiteQueen.label);
+        
+        PointMapper.BoardTilesArray[(int)whiteKing.position.getX()][(int)whiteKing.position.getY()].piece=whiteKing;
+        PointMapper.BoardTilesArray[(int)whiteKing.position.getX()][(int)whiteKing.position.getY()].setEmpty(false);
+        jPanel1.add(whiteKing.label);
+        
+
+        PointMapper.BoardTilesArray[(int)blackKing.position.getX()][(int)blackKing.position.getY()].piece=blackKing;
+        PointMapper.BoardTilesArray[(int)blackKing.position.getX()][(int)blackKing.position.getY()].setEmpty(false);
+        jPanel1.add(blackKing.label);
+              
+        }
         JLabel jLabel1 = new javax.swing.JLabel();
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/background.png"))); // NOI18N
         jPanel1.add(jLabel1);
@@ -119,6 +364,46 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
 
     }
 
+    private void SaveBtnActionPerformed(ActionEvent evt) throws FileNotFoundException, IOException {
+        JFileChooser fc = new JFileChooser();
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.addChoosableFileFilter(new FileNameExtensionFilter("Willson", "willson"));
+        if(fc.showSaveDialog(this) == fc.APPROVE_OPTION)
+        {
+           String filename = fc.getSelectedFile().getAbsolutePath();
+           if (!filename .endsWith(".willson")){
+                filename += ".willson";
+                ArrayList<Object> data = new ArrayList<Object>();
+        data.add(depth);
+        data.add(WhiteTurn);
+        data.add(blackPawns);
+        data.add(whitePawns);
+        data.add(blackKnights);
+        data.add(whiteKnights);
+        data.add(whiteRooks);
+        data.add(blackRooks);
+        data.add(blackBishops);
+        data.add(whiteBishops);
+        data.add(whiteQueen);
+        data.add(blackQueen);
+        data.add(blackKing);
+        data.add(whiteKing);
+        FileOutputStream fileOut = new FileOutputStream(filename);
+        ObjectOutputStream out = new ObjectOutputStream(fileOut);
+        out.writeObject(data);
+        out.close();
+        fileOut.close();
+        System.out.println("Saved file");
+        
+        
+
+         }
+
+              
+        }
+    }
+    
+    
     public static boolean isKing(int x, int y, String attackingColor) {
        if(!PointMapper.BoardTilesArray[x][y].isEmpty()){
            if(!PointMapper.BoardTilesArray[x][y].piece.color.equalsIgnoreCase(attackingColor)){
@@ -198,43 +483,43 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    new GameBoard().setVisible(true);
-                } catch (CloneNotSupportedException ex) {
-                    Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-                }
-
-            }
-        });
-
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(GameBoard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                try {
+//                    new GameBoard().setVisible(true);
+//                } catch (CloneNotSupportedException ex) {
+//                    Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//
+//            }
+//        });
+//
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
@@ -728,7 +1013,16 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener {
                 {
                     int x = newList.get(i).position.x;
                     int y = newList.get(i).position.y;
-                    AllPiecesCloned.get(i).move(x, y);
+                    if(AllPiecesCloned.get(i).move(x, y))
+                    {
+                        JOptionPane.showMessageDialog(null, "moved to ("+ x + " , "+y +")");
+                    }
+                    else
+                    {
+                        JOptionPane.showMessageDialog(null, "DIDN'T move ("+ x + " , "+y +")");
+                    }
+                    
+                    
                     
                 }
             }

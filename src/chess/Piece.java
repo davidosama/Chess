@@ -1,11 +1,12 @@
 package chess;
 
 import java.awt.Point;
+import java.io.Serializable;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-public abstract class Piece implements Cloneable{
+public abstract class Piece implements Cloneable, Serializable{
     int numOfMoves;
     String color;
     Point position;
