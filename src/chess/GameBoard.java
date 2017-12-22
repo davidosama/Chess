@@ -64,34 +64,13 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
     Point FirstSelectedPoint= null;
     boolean WhiteTurn = false;//0 for black 1 for white
     private final JLabel SelectedLbl;
-    private final JButton SaveBtn;
-
+    
     public GameBoard(int dep,boolean load, ArrayList<Object> data) throws CloneNotSupportedException {
         
         this.depth = dep;
         initComponents();
         pm = new PointMapper();
-        
-                
-
-        
-        SaveBtn = new javax.swing.JButton();
-
-        SaveBtn.setText("Save Game");
-        SaveBtn.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        try {
-            SaveBtnActionPerformed(evt);
-        } catch (IOException ex) {
-            Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-            
-        });
-
-        jPanel1.add(SaveBtn);
-        SaveBtn.setBounds(610, 240, 100, 26);
+      
 
         SelectedLbl = new javax.swing.JLabel();
 
@@ -366,44 +345,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
     }
 
-    private void SaveBtnActionPerformed(ActionEvent evt) throws FileNotFoundException, IOException {
-        JFileChooser fc = new JFileChooser();
-        fc.setAcceptAllFileFilterUsed(false);
-        fc.addChoosableFileFilter(new FileNameExtensionFilter("Willson", "willson"));
-        if(fc.showSaveDialog(this) == fc.APPROVE_OPTION)
-        {
-           String filename = fc.getSelectedFile().getAbsolutePath();
-           if (!filename .endsWith(".willson")){
-                filename += ".willson";
-                ArrayList<Object> data = new ArrayList<Object>();
-        data.add(depth);
-        data.add(WhiteTurn);
-        data.add(blackPawns);
-        data.add(whitePawns);
-        data.add(blackKnights);
-        data.add(whiteKnights);
-        data.add(whiteRooks);
-        data.add(blackRooks);
-        data.add(blackBishops);
-        data.add(whiteBishops);
-        data.add(whiteQueen);
-        data.add(blackQueen);
-        data.add(blackKing);
-        data.add(whiteKing);
-        data.add(PointMapper.BoardTilesArray);
-        FileOutputStream fileOut = new FileOutputStream(filename);
-        ObjectOutputStream out = new ObjectOutputStream(fileOut);
-        out.writeObject(data);
-        out.close();
-        fileOut.close();
-        
-        
-
-         }
-
-              
-        }
-    }
     
     
     public static boolean isKing(int x, int y, String attackingColor) {
@@ -460,8 +401,14 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
         jPanel1 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(705, 728));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanel1.setMinimumSize(new java.awt.Dimension(700, 725));
         jPanel1.setPreferredSize(new java.awt.Dimension(720, 750));
@@ -481,6 +428,25 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+         String ObjButtons[] = {"Yes","No","Cancel"};
+        int PromptResult = JOptionPane.showOptionDialog(null, 
+        "Save Game", "Do you want to save the game?", 
+        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+        ObjButtons,ObjButtons[0]);
+        if(PromptResult==1)
+        {
+          System.exit(0);          
+        }
+        else if(PromptResult==0)
+        {
+            saveGame();
+            System.exit(0);
+        }
+        
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
@@ -1024,6 +990,56 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         }
         return false;
         
+    }
+
+    private void saveGame() {
+        JFileChooser fc = new JFileChooser();
+        fc.setAcceptAllFileFilterUsed(false);
+        fc.addChoosableFileFilter(new FileNameExtensionFilter("Willson", "willson"));
+        if(fc.showSaveDialog(this) == fc.APPROVE_OPTION)
+        {
+           String filename = fc.getSelectedFile().getAbsolutePath();
+           if (!filename .endsWith(".willson")){
+               ObjectOutputStream out = null;
+               try {
+                   filename += ".willson";
+                   ArrayList<Object> data = new ArrayList<Object>();
+                   data.add(depth);
+                   data.add(WhiteTurn);
+                   data.add(blackPawns);
+                   data.add(whitePawns);
+                   data.add(blackKnights);
+                   data.add(whiteKnights);
+                   data.add(whiteRooks);
+                   data.add(blackRooks);
+                   data.add(blackBishops);
+                   data.add(whiteBishops);
+                   data.add(whiteQueen);
+                   data.add(blackQueen);
+                   data.add(blackKing);
+                   data.add(whiteKing);
+                   data.add(PointMapper.BoardTilesArray);
+                   FileOutputStream fileOut = new FileOutputStream(filename);
+                   out = new ObjectOutputStream(fileOut);
+                   out.writeObject(data);
+                   out.close();
+                   fileOut.close();
+               } catch (IOException ex) {
+                   Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+               } finally {
+                   try {
+                       out.close();
+                   } catch (IOException ex) {
+                       Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                   }
+               }
+        
+        
+
+         }
+
+              
+        }
     }
 
 
