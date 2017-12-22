@@ -56,44 +56,64 @@ public class Queen extends Piece implements Cloneable,Serializable{
     }
 
     private boolean isPathClear(int x, int y) {
-        Point currentPosition = this.position;
-        int counter = (int) Math.sqrt( Math.pow(x - this.position.getX(),2)+Math.pow(y - this.position.getY(),2)); // change old counters by this one
-        if (counter==1)
+        Point currentPosition =  new Point((int)this.position.getX(),(int)this.position.getY());
+        //int counter = (int) Math.sqrt( Math.pow(x - this.position.getX(),2)+Math.pow(y - this.position.getY(),2)); // change old counters by this one
+        int counterDiagonal =(int) Math.abs(this.position.getX() - x);
+        int counterStraight =(int) Math.abs(this.position.getX() - x)+(int) Math.abs(this.position.getY() - y);
+        //System.out.println("Counter of Queen = "+counter);
+        if ((counterDiagonal|counterStraight)==1)
             return true ;
-        for(int i = 0; i < counter-1 ; i++){
+        //for(int i = 0; i < counter-1 ; i++){
             if (x < this.position.getX() && y < this.position.getY()){//top-left
-                currentPosition.x--;
-                currentPosition.y--;
-            }
+                for(int i = 0; i < counterDiagonal-1 ; i++){
+                    currentPosition.x--;
+                    currentPosition.y--;
+                }
+                }
+            //}
             else if(x < this.position.getX() && y > this.position.getY()){//down-left
-                currentPosition.x--;
-                currentPosition.y++;
+                for(int i = 0; i < counterDiagonal-1 ; i++){
+                    currentPosition.x--;
+                    currentPosition.y++;
+                }
             }
             else if(x > this.position.getX() && y < this.position.getY()){//top-right
-                currentPosition.x++;
-                currentPosition.y--;
+                for(int i = 0; i < counterDiagonal-1 ; i++){
+                    currentPosition.x++;
+                    currentPosition.y--;
+                }
             }
             else if (x > this.position.getX() && y > this.position.getY()){//down-right
-                currentPosition.x++;
-                currentPosition.y++;
+                for(int i = 0; i < counterDiagonal-1 ; i++){
+                    currentPosition.x++;
+                    currentPosition.y++;
+                }
             }
             
             else if(x==this.position.getX()&&y>this.position.getY()){//down
-                currentPosition.y++;
+                for(int i=0;i<counterStraight;i++){
+                    currentPosition.y++;
+                }
             }
             else if(x>this.position.getX()&&y==this.position.getY()){//right
-                currentPosition.x++;
+                for(int i=0;i<counterStraight;i++){
+                    currentPosition.x++;
+                }
             }
             else if(x==this.position.getX()&&y<this.position.getY()){//up
-                currentPosition.y--;
+                for(int i=0;i<counterStraight;i++){
+                    currentPosition.y--;
+                }
             }
             else if(x<this.position.getX()&&y==this.position.getY()){//left
-                currentPosition.x--;
+                for(int i=0;i<counterStraight;i++){
+                    currentPosition.x--;
+                }
             }
             if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
                 return false;
             }
-        }
+        
         return true;
     }
 
@@ -128,7 +148,7 @@ public class Queen extends Piece implements Cloneable,Serializable{
     }
     
     private boolean isPathClearAI(int x, int y, ArrayList<Piece> AllPieces) {
-        Point currentPosition = this.position;
+        Point currentPosition =  new Point((int)this.position.getX(),(int)this.position.getY());
         int counter = (int) Math.sqrt( Math.pow(x - this.position.getX(),2)+Math.pow(y - this.position.getY(),2)); // change old counters by this one
         if (counter==1)
             return true ;

@@ -1007,9 +1007,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
             }
         }
         setPosions();
-        if(checkCheckmate(AllPiecesCloned).equals("Black")||checkCheckmate(AllPiecesCloned).equals("Black")){
-            JOptionPane.showMessageDialog(null, "CHECKAMTE");
-        }
+//        if(checkCheckmate(AllPiecesCloned).equals("Black")||checkCheckmate(AllPiecesCloned).equals("Black")){
+//            JOptionPane.showMessageDialog(null, "CHECKAMTE");
+//        }
     }
     
     public static boolean isTileThreatened(String Color,int x, int y){
