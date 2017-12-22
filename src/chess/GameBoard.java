@@ -852,6 +852,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         jPanel1.add(whiteQueen.label);
         
         p=PointMapper.points[3][0];
+        King.WhiteKingPosition=new Point(3,0);
         whiteKing=new King("White", new Point(3,0));
         whiteKing.label.setBounds(p.x, p.y, 60, 60);
         PointMapper.BoardTilesArray[3][0].piece=whiteKing;
@@ -859,6 +860,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         jPanel1.add(whiteKing.label);
         
         p=PointMapper.points[3][7];
+        King.BlackKingPosition=new Point(3,0);
         blackKing=new King("Black", new Point(3,7));
         blackKing.label.setBounds(p.x, p.y, 60, 60);
         PointMapper.BoardTilesArray[3][7].piece=blackKing;
@@ -1015,8 +1017,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                     Pawn p =(Pawn) AllPieces.get(i);
                     if(p.canAttack(x, y))
                         return true;
-                    else 
-                        return false;
                 }
                 else if(AllPieces.get(i).validateMove(x, y))
                     return true;

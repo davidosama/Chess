@@ -6,6 +6,8 @@ import java.util.ArrayList;
 
 public class King extends Piece implements Cloneable,Serializable{
 
+    static Point BlackKingPosition;
+    static Point WhiteKingPosition;
     public King(String color, Point position){
         super(color,position);
     }
@@ -21,6 +23,14 @@ public class King extends Piece implements Cloneable,Serializable{
                     GameBoard.attack(x, y);
                 }
                this.position.setLocation(x, y);
+               if(this.color.equalsIgnoreCase("Black")){
+                   BlackKingPosition.x=x;
+                   BlackKingPosition.y=y;
+               }
+               else{
+                   WhiteKingPosition.x=x;
+                   WhiteKingPosition.y=y;
+               }
             }
             return true;
         }
@@ -38,6 +48,14 @@ public class King extends Piece implements Cloneable,Serializable{
                     attackAI(x, y,AllPieces);
                 }
                this.position.setLocation(x, y);
+               if(this.color.equalsIgnoreCase("Black")){
+                   BlackKingPosition.x=x;
+                   BlackKingPosition.y=y;
+               }
+               else{
+                   WhiteKingPosition.x=x;
+                   WhiteKingPosition.y=y;
+               }
             }
             return true;
         }
@@ -47,24 +65,16 @@ public class King extends Piece implements Cloneable,Serializable{
     @Override
     public boolean validateMove(int x, int y) {
         if(Math.abs(x-this.position.getX())<=1&&(Math.abs(y-this.position.getY()))<=1){
-            
-            if(GameBoard.isEmpty(x,y)){
+            if(GameBoard.isEmpty(x,y)||GameBoard.isEnemy(x, y, this.color)){
                 if(GameBoard.isTileThreatened(this.color, x, y))
                     return false;
                 else 
                     return true;
-                
             }
-            else{
-                if(GameBoard.isEnemy(x, y, this.color)){
-                    GameBoard.attack(x, y);
-                }
-            }
-        }
-        else {
             return false;
         }
-        return true;
+        return false;
+        
     }
     
     @Override
@@ -73,24 +83,17 @@ public class King extends Piece implements Cloneable,Serializable{
             return false;
         }
         if(Math.abs(x-this.position.getX())<=1&&(Math.abs(y-this.position.getY()))<=1){
-            
-            if(isEmptyAI(x,y,AllPieces)){
-                if(GameBoard.isTileThreatened(this.color, x, y))//
+            if(isEmptyAI(x,y,AllPieces)||isEnemyAI(x, y, this.color, AllPieces)){
+                if(GameBoard.isTileThreatened(this.color, x, y))
                     return false;
                 else 
                     return true;
                 
             }
-            else{
-                if(isEnemyAI(x, y, this.color, AllPieces)){
-                    attackAI(x, y, AllPieces);
-                }
-            }
-        }
-        else {
             return false;
         }
-        return true;
+        return false;
+            
     }
     @Override
     public King clone() throws CloneNotSupportedException {
