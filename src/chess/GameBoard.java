@@ -866,6 +866,36 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         PointMapper.BoardTilesArray[3][7].piece=blackKing;
         PointMapper.BoardTilesArray[3][7].setEmpty(false);
         jPanel1.add(blackKing.label);
+        
+        AllPiecesCloned = new ArrayList<Piece>();
+        for (int i = 0; i < blackPawns.size(); i++) {
+            AllPiecesCloned.add(blackPawns.get(i));
+        }
+        for (int i = 0; i < whitePawns.size(); i++) {
+            AllPiecesCloned.add(whitePawns.get(i));
+        }
+        for (int i = 0; i < blackKnights.size(); i++) {
+            AllPiecesCloned.add(blackKnights.get(i));
+        }
+        for (int i = 0; i < whiteKnights.size(); i++) {
+            AllPiecesCloned.add(whiteKnights.get(i));
+        }
+        for (int i = 0; i < whiteRooks.size(); i++) {
+            AllPiecesCloned.add(whiteRooks.get(i));
+        }
+        for (int i = 0; i < blackRooks.size(); i++) {
+            AllPiecesCloned.add(blackRooks.get(i));
+        }
+        for (int i = 0; i < blackBishops.size(); i++) {
+            AllPiecesCloned.add(blackBishops.get(i));
+        }
+        for (int i = 0; i < whiteBishops.size(); i++) {
+            AllPiecesCloned.add(whiteBishops.get(i));
+        }
+        AllPiecesCloned.add(blackQueen);
+        AllPiecesCloned.add(whiteQueen);
+        AllPiecesCloned.add(blackKing);
+        AllPiecesCloned.add(whiteKing);
 
     }
 

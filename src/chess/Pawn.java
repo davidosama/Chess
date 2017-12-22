@@ -23,7 +23,7 @@ public class Pawn extends Piece implements Cloneable, Serializable{
             this.position.setLocation(x, y);
             if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatened("Black", (int)GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
                 //undo the setLocation 
-                JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
+                //JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
                 this.position.setLocation(OldX, OldY);
                 return false;
             }
@@ -41,21 +41,19 @@ public class Pawn extends Piece implements Cloneable, Serializable{
 
     @Override
     public boolean moveAI(int x, int y, ArrayList<Piece> AllPiece) {
-        if (validateMoveAI(x,y,AllPiece)) {
-            if (isKingAI(x, y, this.color, AllPiece)) {
-                CheckmateAI(this.color, AllPiece);
-            }
-            else {
-                if (y == 0 || y == 7) {
-                    switchPawn(x, y);
-                }
-                if (!isEmptyAI(x, y, AllPiece)) {
-                    attackAI(x, y, AllPiece);
-                }
-            }
+        if (validateMoveAI(x, y, AllPiece)) {
+            int OldX = (int) this.position.getX();
+            int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            this.numOfMoves++;
-            
+            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatenedAI("White", (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), AllPiece)) {
+                //undo the setLocation 
+                //JOptionPane.showConfirmDialog(null, "WHITE KING IS THREATENED");
+                this.position.setLocation(OldX, OldY);
+                return false;
+            }
+            if (!isEmptyAI(x, y, AllPiece)) {
+                attackAI(x, y, AllPiece);
+            }
             return true;
         }
         return false;
