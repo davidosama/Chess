@@ -826,7 +826,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         jPanel1.add(whiteKing.label);
         
         p=PointMapper.points[3][7];
-        King.BlackKingPosition=new Point(3,0);
+        King.BlackKingPosition=new Point(3,7);
         blackKing=new King("Black", new Point(3,7));
         blackKing.label.setBounds(p.x, p.y, 60, 60);
         PointMapper.BoardTilesArray[3][7].piece=blackKing;
@@ -973,26 +973,42 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
             }
         }
         setPosions();
-        if(checkCheckmate(AllPiecesCloned).equals("Black")||checkCheckmate(AllPiecesCloned).equals("Black")){
-            JOptionPane.showMessageDialog(null, "CHECKAMTE");
+        String ColorCheckMate=checkCheckmate(AllPiecesCloned);
+        if(ColorCheckMate.equalsIgnoreCase("Black")||ColorCheckMate.equalsIgnoreCase("White")){
+            JOptionPane.showMessageDialog(null, "CHECKAMTE"+ColorCheckMate);
         }
     }
     
-    public static boolean isTileThreatened(String Color,int x, int y){
+   public static boolean isTileThreatened(String Color,int x, int y){
         
-        for(int i =0 ; i<AllPieces.size();i++){
-            if(AllPieces.get(i).color!=Color &&AllPieces.get(i).alive){
-                if(AllPieces.get(i).pieceType.equalsIgnoreCase("Pawn")){
-                    Pawn p =(Pawn) AllPieces.get(i);
+        for(int i =0 ; i<AllPiecesCloned.size();i++){
+            if(!(AllPiecesCloned.get(i).color.equals(Color)) &&AllPiecesCloned.get(i).alive){
+                if(AllPiecesCloned.get(i).pieceType.equalsIgnoreCase("Pawn")){
+                    Pawn p =(Pawn) AllPiecesCloned.get(i);
                     if(p.canAttack(x, y))
                         return true;
                 }
-                else if(AllPieces.get(i).validateMove(x, y))
+                else if(AllPiecesCloned.get(i).validateMove(x, y))
                     return true;
             }
         }
         return false;
-        
+   }
+   public static boolean isTileThreatenedAI(String AttackedColor, int x, int y, ArrayList<Piece> listCopy) {
+
+        for (int i = 0; i < listCopy.size(); i++) {
+            if (listCopy.get(i).color != AttackedColor && listCopy.get(i).alive) {
+                if (listCopy.get(i).pieceType.equalsIgnoreCase("Pawn")) {
+                    Pawn p = (Pawn) listCopy.get(i);
+                    if (p.canAttack(x, y)) {
+                        return true;
+                    }
+                } else if (listCopy.get(i).validateMoveAI(x, y,listCopy)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
     
     public static String checkCheckmate(ArrayList<Piece> AllPieceCheck){
@@ -1000,6 +1016,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         int WhiteY=0;
         int BlackX=0;
         int BlackY=0;
+        
         for(int i=0;i<AllPieces.size();i++){
             if(AllPieceCheck.get(i).color.equalsIgnoreCase("White") &&AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive)
             {
@@ -1014,21 +1031,22 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
             }
         }
-        for(int i=0;i<AllPieces.size();i++){
+        
+        for(int i=0;i<AllPieceCheck.size();i++){
             if(AllPieceCheck.get(i).color.equalsIgnoreCase("Black") && AllPieceCheck.get(i).alive){
-                if(AllPieceCheck.get(i).validateMove(WhiteX, WhiteY))
+                if(AllPieceCheck.get(i).validateMoveAI(WhiteX, WhiteY,AllPieceCheck))
                 {
                     return "White";
                 }
             }
             else if(AllPieceCheck.get(i).color.equalsIgnoreCase("White") && AllPieceCheck.get(i).alive){
-                if(AllPieceCheck.get(i).validateMove(BlackX, BlackY))
+                if(AllPieceCheck.get(i).validateMoveAI(BlackX, BlackY,AllPieceCheck))
                 {
                     return "Black";
                 }
             }
         }
-        return null;
+        return "NO CHECKMATE";
     }
 
     private void saveGame() {

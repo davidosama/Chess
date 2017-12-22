@@ -84,7 +84,7 @@ public class King extends Piece implements Cloneable,Serializable{
         }
         if(Math.abs(x-this.position.getX())<=1&&(Math.abs(y-this.position.getY()))<=1){
             if(isEmptyAI(x,y,AllPieces)||isEnemyAI(x, y, this.color, AllPieces)){
-                if(GameBoard.isTileThreatened(this.color, x, y))
+                if(GameBoard.isTileThreatenedAI(this.color, x, y,AllPieces))
                     return false;
                 else 
                     return true;
