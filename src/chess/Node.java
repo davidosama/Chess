@@ -136,6 +136,7 @@ public class Node {
                     //loop on x values--> same row
                     for(int x = 0 ; x<8;x++){
                         //kol el amaken eli 3ala el x
+                        listCopy=Node.ClonePieces(node.PiecesState);
                         if(x==node.PiecesState.get(i).position.getX())
                             continue;
                         else if(listCopy.get(i).moveAI(x,y,listCopy)){
@@ -147,11 +148,13 @@ public class Node {
                     //loop on different y values --> same column
                     int x = (int)listCopy.get(i).position.getX();
                     for(y =0 ; y<8;y++){//kol el amaken eli 3ala el x
+                        listCopy=Node.ClonePieces(node.PiecesState);
                         if(y==node.PiecesState.get(i).position.getY())
                             continue;
                         else if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
+                            
                         }
                     }
                 }

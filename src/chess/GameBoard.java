@@ -990,8 +990,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
             for (int i = 0; i <newList.size(); i++) {
                 if(!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY()))
                 {
-                    int x = newList.get(i).position.x;
-                    int y = newList.get(i).position.y;
+                    int x = (int)newList.get(i).position.getX();
+                    int y = (int)newList.get(i).position.getY();
                     if(AllPiecesCloned.get(i).move(x, y))
                     {
                         JOptionPane.showMessageDialog(null, newList.get(i).pieceType+" moved to ("+ x + " , "+y +")");
