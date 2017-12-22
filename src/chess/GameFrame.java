@@ -188,7 +188,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
         this.setVisible(false);
         try {
-            new GameBoard(3,false,new ArrayList<Object>()).setVisible(true);
+            new GameBoard(2,false,new ArrayList<Object>()).setVisible(true);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
