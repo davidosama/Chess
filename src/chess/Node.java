@@ -242,6 +242,7 @@ public class Node {
 
                 }
                 else if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Queen") && node.PiecesState.get(i).color.equalsIgnoreCase(color)) {
+
                     for (int x = 0; x < 8; x++) {//kol el amaken eli 3ala el y (VERTICALLY)
                         if (x == node.PiecesState.get(i).position.getX()) {
                             continue;
@@ -632,6 +633,129 @@ public class Node {
             else
                 Score+=WhiteCount*2;
         }
+        
+        
+        System.out.println("Score is "+Score);
+        return Score;
+    }
+        private static int heuristic3 (Node LeafNode){ //AI is the white set
+        int Score=0;
+        Point WhiteKing= new Point();
+        Point BlackKing= new Point ();
+        int BlackCount=0;
+        int WhiteCount=0;
+        
+        for(int i=0; i < LeafNode.PiecesState.size(); i++){
+            if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("White")){
+                WhiteKing =LeafNode.PiecesState.get(i).position;
+                }
+                else if(LeafNode.PiecesState.get(i).pieceType.equalsIgnoreCase("King") && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")){
+                BlackKing =LeafNode.PiecesState.get(i).position;
+                }
+        }        
+        for(int i=0; i < LeafNode.PiecesState.size(); i++){
+            if(LeafNode.PiecesState.get(i).alive){
+                int pieceValue=0;
+                switch(LeafNode.PiecesState.get(i).pieceType){
+                    case "Pawn":
+                        pieceValue=10;
+                        break;
+                    case "Knight":
+                        pieceValue=30;
+                        break;
+                    case "Bishop":
+                        pieceValue=30;
+                        break;
+                    case "Rook":
+                        pieceValue=50;
+                        break;
+                    case "Queen":
+                        pieceValue=90;
+                        break;
+                    case "King":
+                        pieceValue=2000;
+                        break;    
+                }
+                if(LeafNode.PiecesState.get(i).color.equalsIgnoreCase("white")){
+                    WhiteCount++;
+                    Score+=pieceValue;
+                    int distance = (int) Math.sqrt( Math.pow(BlackKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(BlackKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+                    Score-= distance ;
+                }
+                else {
+                    BlackCount++;
+                    Score-=pieceValue;
+                    int distance = (int) Math.sqrt( Math.pow(WhiteKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(WhiteKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+                    Score+= distance ;                    
+                }
+            }
+            if(BlackCount>WhiteCount){
+                Score-=BlackCount;
+            }
+            else
+                Score+=WhiteCount*2;
+        }
+        //to deffence
+        for (int i = 0; i < LeafNode.PiecesState.size(); i++) {
+            if (LeafNode.PiecesState.get(i).alive && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("White")) {
+                        int posX = (int) LeafNode.PiecesState.get(i).getPosition().getX();
+                        int posY = (int) LeafNode.PiecesState.get(i).getPosition().getY();
+                for (int j = 0; j < LeafNode.PiecesState.size(); j++) {
+                    if (LeafNode.PiecesState.get(j).alive && LeafNode.PiecesState.get(j).color.equalsIgnoreCase("Black")) {
+                        if (LeafNode.PiecesState.get(j).validateMoveAI(posX, posY, LeafNode.PiecesState)) {
+                            switch (LeafNode.PiecesState.get(i).pieceType) {
+                                case "Pawn":
+                                    Score= -10;
+                                case "Knight":
+                                    Score= -30;
+                                case "Bishop":
+                                    Score= -30;
+                                case "Rook":
+                                    Score= -50;
+                                case "Queen":
+                                    Score= -90;
+                                case "King":
+                                    Score= -2000;
+                                default:
+                                    Score= -100 ;
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //to attack
+        for (int i = 0; i < LeafNode.PiecesState.size(); i++) {
+            if (LeafNode.PiecesState.get(i).alive && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")) {
+                        int posX = (int) LeafNode.PiecesState.get(i).getPosition().getX();
+                        int posY = (int) LeafNode.PiecesState.get(i).getPosition().getY();
+                for (int j = 0; j < LeafNode.PiecesState.size(); j++) {
+                    if (LeafNode.PiecesState.get(j).alive && LeafNode.PiecesState.get(j).color.equalsIgnoreCase("White")) {
+                        if (LeafNode.PiecesState.get(j).validateMoveAI(posX, posY, LeafNode.PiecesState)) {
+                            switch (LeafNode.PiecesState.get(i).pieceType) {
+                                case "Pawn":
+                                    Score= 10;
+                                case "Knight":
+                                    Score= 30;
+                                case "Bishop":
+                                    Score= 30;
+                                case "Rook":
+                                    Score= 50;
+                                case "Queen":
+                                    Score= 90;
+                                case "King":
+                                    Score=2000;
+                                default:
+                                    Score= 100 ;
+                                
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
         
         
         System.out.println("Score is "+Score);
