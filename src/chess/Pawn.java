@@ -45,7 +45,7 @@ public class Pawn extends Piece implements Cloneable, Serializable{
                 if (y == 0 || y == 7) {
                     switchPawn(x, y);
                 }
-                if (isEmptyAI(x, y, AllPiece)) {
+                if (!isEmptyAI(x, y, AllPiece)) {
                     attackAI(x, y, AllPiece);
                 }
             }
