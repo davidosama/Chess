@@ -679,14 +679,14 @@ public class Node {
                 if(LeafNode.PiecesState.get(i).color.equalsIgnoreCase("white")){
                     WhiteCount++;
                     Score+=pieceValue;
-                    int distance = (int) Math.sqrt( Math.pow(BlackKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(BlackKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
-                    Score-= distance ;
+//                    int distance = (int) Math.sqrt( Math.pow(BlackKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(BlackKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+//                    Score-= distance ;
                 }
                 else {
                     BlackCount++;
                     Score-=pieceValue;
-                    int distance = (int) Math.sqrt( Math.pow(WhiteKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(WhiteKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
-                    Score+= distance ;                    
+//                    int distance = (int) Math.sqrt( Math.pow(WhiteKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(WhiteKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+//                    Score+= distance ;                    
                 }
             }
             if(BlackCount>WhiteCount){

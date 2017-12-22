@@ -74,6 +74,9 @@ public class Queen extends Piece implements Cloneable,Serializable{
                 for(int i = 0; i < counterDiagonal-1 ; i++){
                     currentPosition.x--;
                     currentPosition.y--;
+                    if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+            }
                 }
                 }
             //}
@@ -81,44 +84,63 @@ public class Queen extends Piece implements Cloneable,Serializable{
                 for(int i = 0; i < counterDiagonal-1 ; i++){
                     currentPosition.x--;
                     currentPosition.y++;
+                    if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+            }
                 }
             }
             else if(x > this.position.getX() && y < this.position.getY()){//top-right
                 for(int i = 0; i < counterDiagonal-1 ; i++){
                     currentPosition.x++;
                     currentPosition.y--;
+                    if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+            }
                 }
             }
             else if (x > this.position.getX() && y > this.position.getY()){//down-right
                 for(int i = 0; i < counterDiagonal-1 ; i++){
                     currentPosition.x++;
                     currentPosition.y++;
+                    if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+            }
                 }
             }
             
             else if(x==this.position.getX()&&y>this.position.getY()){//down
                 for(int i=0;i<counterStraight-1;i++){
                     currentPosition.y++;
+                    if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+            }
                 }
             }
             else if(x>this.position.getX()&&y==this.position.getY()){//right
                 for(int i=0;i<counterStraight-1;i++){
                     currentPosition.x++;
+                    if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+            }
                 }
             }
             else if(x==this.position.getX()&&y<this.position.getY()){//up
                 for(int i=0;i<counterStraight-1;i++){
                     currentPosition.y--;
+                    if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+            }
                 }
             }
             else if(x<this.position.getX()&&y==this.position.getY()){//left
                 for(int i=0;i<counterStraight-1;i++){
                     currentPosition.x--;
+                    if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+            }
                 }
             }
-            if(!GameBoard.isEmpty((int)currentPosition.getX(),(int)currentPosition.getY())){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-                return false;
-            }
+            
         
         return true;
     }
@@ -154,69 +176,82 @@ public class Queen extends Piece implements Cloneable,Serializable{
     }
     
     private boolean isPathClearAI(int x, int y, ArrayList<Piece> AllPieces) {
-        Point currentPosition =  new Point((int)this.position.getX(),(int)this.position.getY());
+        Point currentPosition = new Point((int) this.position.getX(), (int) this.position.getY());
         //int counter = (int) Math.sqrt( Math.pow(x - this.position.getX(),2)+Math.pow(y - this.position.getY(),2)); // change old counters by this one
-        int counterDiagonal =(int) Math.abs(this.position.getX() - x);
-        int counterStraight =(int) Math.abs(this.position.getX() - x)+(int) Math.abs(this.position.getY() - y);
-        System.out.println("Counter of Queen diagonal = "+counterDiagonal);
-        System.out.println("Counter of Queen st = "+counterStraight);
-        if (counterDiagonal==1){
+        int counterDiagonal = (int) Math.abs(this.position.getX() - x);
+        int counterStraight = (int) Math.abs(this.position.getX() - x) + (int) Math.abs(this.position.getY() - y);
+        System.out.println("Counter of Queen diagonal = " + counterDiagonal);
+        System.out.println("Counter of Queen st = " + counterStraight);
+        if (counterDiagonal == 1) {
             System.out.println("Trueeeeeeee");
-            return true ;
-        }
-        else if(counterStraight==1){
-            return true ;
+            return true;
+        } else if (counterStraight == 1) {
+            return true;
         }
         //for(int i = 0; i < counter-1 ; i++){
-            if (x < this.position.getX() && y < this.position.getY()){//top-left
-                for(int i = 0; i < counterDiagonal-1 ; i++){
-                    currentPosition.x--;
-                    currentPosition.y--;
-                }
-                }
-            //}
-            else if(x < this.position.getX() && y > this.position.getY()){//down-left
-                for(int i = 0; i < counterDiagonal-1 ; i++){
-                    currentPosition.x--;
-                    currentPosition.y++;
-                }
-            }
-            else if(x > this.position.getX() && y < this.position.getY()){//top-right
-                for(int i = 0; i < counterDiagonal-1 ; i++){
-                    currentPosition.x++;
-                    currentPosition.y--;
-                }
-            }
-            else if (x > this.position.getX() && y > this.position.getY()){//down-right
-                for(int i = 0; i < counterDiagonal-1 ; i++){
-                    currentPosition.x++;
-                    currentPosition.y++;
-                }
-            }
-            
-            else if(x==this.position.getX()&&y>this.position.getY()){//down
-                for(int i=0;i<counterStraight-1;i++){
-                    currentPosition.y++;
-                }
-            }
-            else if(x>this.position.getX()&&y==this.position.getY()){//right
-                for(int i=0;i<counterStraight-1;i++){
-                    currentPosition.x++;
-                }
-            }
-            else if(x==this.position.getX()&&y<this.position.getY()){//up
-                for(int i=0;i<counterStraight-1;i++){
-                    currentPosition.y--;
-                }
-            }
-            else if(x<this.position.getX()&&y==this.position.getY()){//left
-                for(int i=0;i<counterStraight-1;i++){
-                    currentPosition.x--;
-                }
-            
-            if(!isEmptyAI((int)currentPosition.getX(),(int)currentPosition.getY(), AllPieces)){// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+        if (x < this.position.getX() && y < this.position.getY()) {//top-left
+            for (int i = 0; i < counterDiagonal - 1; i++) {
+                currentPosition.x--;
+                currentPosition.y--;
+                if (!isEmptyAI((int) currentPosition.getX(), (int) currentPosition.getY(), AllPieces)) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
                 return false;
             }
+            }
+        } //}
+        else if (x < this.position.getX() && y > this.position.getY()) {//down-left
+            for (int i = 0; i < counterDiagonal - 1; i++) {
+                currentPosition.x--;
+                currentPosition.y++;
+                if (!isEmptyAI((int) currentPosition.getX(), (int) currentPosition.getY(), AllPieces)) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }
+            }
+        } else if (x > this.position.getX() && y < this.position.getY()) {//top-right
+            for (int i = 0; i < counterDiagonal - 1; i++) {
+                currentPosition.x++;
+                currentPosition.y--;
+                if (!isEmptyAI((int) currentPosition.getX(), (int) currentPosition.getY(), AllPieces)) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }
+            }
+        } else if (x > this.position.getX() && y > this.position.getY()) {//down-right
+            for (int i = 0; i < counterDiagonal - 1; i++) {
+                currentPosition.x++;
+                currentPosition.y++;
+                if (!isEmptyAI((int) currentPosition.getX(), (int) currentPosition.getY(), AllPieces)) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }
+            }
+        } else if (x == this.position.getX() && y > this.position.getY()) {//down
+            for (int i = 0; i < counterStraight - 1; i++) {
+                currentPosition.y++;
+                if (!isEmptyAI((int) currentPosition.getX(), (int) currentPosition.getY(), AllPieces)) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }
+            }
+        } else if (x > this.position.getX() && y == this.position.getY()) {//right
+            for (int i = 0; i < counterStraight - 1; i++) {
+                currentPosition.x++;
+                if (!isEmptyAI((int) currentPosition.getX(), (int) currentPosition.getY(), AllPieces)) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }
+            }
+        } else if (x == this.position.getX() && y < this.position.getY()) {//up
+            for (int i = 0; i < counterStraight - 1; i++) {
+                currentPosition.y--;
+                if (!isEmptyAI((int) currentPosition.getX(), (int) currentPosition.getY(), AllPieces)) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }
+            }
+        } else if (x < this.position.getX() && y == this.position.getY()) {//left
+            for (int i = 0; i < counterStraight - 1; i++) {
+                currentPosition.x--;
+                if (!isEmptyAI((int) currentPosition.getX(), (int) currentPosition.getY(), AllPieces)) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                return false;
+            }
+            }
+
+
         }
         return true;
     }
