@@ -8,6 +8,7 @@ package chess;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,18 +23,25 @@ public class Queen extends Piece implements Cloneable, Serializable {
     @Override
     public boolean move(int x, int y) {
         if (validateMove(x, y)) {
-            if (GameBoard.isKing(x, y, this.color)) {
-                GameBoard.Checkmate(this.color);
-            } else {
-                if (!GameBoard.isEmpty(x, y)) {
-                    GameBoard.attack(x, y);
-                }
-                this.position.setLocation(x, y);
+            int OldX = (int) this.position.getX();
+            int OldY = (int) this.position.getY();
+            this.position.setLocation(x, y);
+            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatened("Black", (int)GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
+                //undo the setLocation 
+                JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
+                this.position.setLocation(OldX, OldY);
+                return false;
             }
+            if (y == 0 || y == 7) {
+                //switchPawn(x, y);
+            }
+            if (!GameBoard.isEmpty(x, y)) {
+                GameBoard.attack(x, y);
+            }
+            this.numOfMoves++;
             return true;
         }
-        return false;
-    }
+        return false;    }
 
     @Override
     public boolean validateMove(int x, int y) {
