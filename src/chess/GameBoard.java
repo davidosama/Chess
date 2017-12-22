@@ -1046,10 +1046,26 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
     }
     
     public static String checkCheckmate(ArrayList<Piece> AllPieceCheck){
-        int WhiteX=(int)King.WhiteKingPosition.getX();
-        int WhiteY=(int)King.WhiteKingPosition.getY();
-        int BlackX=(int)King.BlackKingPosition.getX();
-        int BlackY=(int)King.BlackKingPosition.getY();
+        int WhiteX=0;
+        int WhiteY=0;
+        int BlackX=0;
+        int BlackY=0;
+        
+        for(int i=0;i<AllPieces.size();i++){
+            if(AllPieceCheck.get(i).color.equalsIgnoreCase("White") &&AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive)
+            {
+                 WhiteX = (int) AllPieceCheck.get(i).position.getX();
+                 WhiteY = (int) AllPieceCheck.get(i).position.getY();
+
+            }
+            else if(AllPieceCheck.get(i).color.equalsIgnoreCase("Black") &&AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive)
+            {
+                 BlackX = (int) AllPieceCheck.get(i).position.getX();
+                 BlackY = (int) AllPieceCheck.get(i).position.getY();
+
+            }
+        }
+        
         for(int i=0;i<AllPieceCheck.size();i++){
             if(AllPieceCheck.get(i).color.equalsIgnoreCase("Black") && AllPieceCheck.get(i).alive){
                 if(AllPieceCheck.get(i).validateMoveAI(WhiteX, WhiteY,AllPieceCheck))
