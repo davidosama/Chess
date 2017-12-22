@@ -138,7 +138,7 @@ public class Node {
                         //kol el amaken eli 3ala el x
                         if(x==node.PiecesState.get(i).position.getX())
                             continue;
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                        else if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             System.out.println("Node.Alpha is "+node.alpha+"  Node.Beta is "+node.beta);
                             childrenNodesList.add(n);
@@ -149,7 +149,7 @@ public class Node {
                     for(y =0 ; y<8;y++){//kol el amaken eli 3ala el x
                         if(y==node.PiecesState.get(i).position.getY())
                             continue;
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                        else if(listCopy.get(i).moveAI(x,y,listCopy)){
                             Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                             childrenNodesList.add(n);
                         }
@@ -560,8 +560,6 @@ public class Node {
         return null;
     }
 
-
-
     public static ArrayList<Piece> Play(Node node,int depth ,int a,int b,boolean isMax) throws CloneNotSupportedException{
         for(int i =0;i<node.PiecesState.size();i++){
             System.out.println("{iece type : "+node.PiecesState.get(i).pieceType+"Position "+node.PiecesState.get(i).position);
@@ -573,7 +571,6 @@ public class Node {
         }
         return l;
     }
-    
     
     private static int heuristic2 (Node LeafNode){ //AI is the white set
         int Score=0;
