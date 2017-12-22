@@ -1010,28 +1010,28 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         for (int i = 0; i < whiteBishops.size(); i++) {
             AllPiecesCloned.add(whiteBishops.get(i));
         }
-        AllPiecesCloned.add(blackQueen);
-        AllPiecesCloned.add(whiteQueen);
-        AllPiecesCloned.add(blackKing);
-        AllPiecesCloned.add(whiteKing);
-            Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
-            ArrayList<Piece> newList = Node.Play(n,depth,n.alpha,n.beta,true);
-            WhiteTurn=!WhiteTurn;
-            for (int i = 0; i <newList.size(); i++) {
-                if(!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY()))
-                {
-                    int x = (int)newList.get(i).position.getX();
-                    int y = (int)newList.get(i).position.getY();
-                    if(AllPiecesCloned.get(i).move(x, y))
-                    {
-                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType+" moved to ("+ x + " , "+y +")");
+            AllPiecesCloned.add(blackQueen);
+            AllPiecesCloned.add(whiteQueen);
+            AllPiecesCloned.add(blackKing);
+            AllPiecesCloned.add(whiteKing);
+            String ColorCheckMate = checkCheckmate(AllPiecesCloned);
+            if (ColorCheckMate.equalsIgnoreCase("Black") || ColorCheckMate.equalsIgnoreCase("White")) {
+                JOptionPane.showMessageDialog(null, "CHECKAMTE" + ColorCheckMate);
+            }
+            Node n = new Node(AllPieces, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+            ArrayList<Piece> newList = Node.Play(n, depth, n.alpha, n.beta, true);
+            WhiteTurn = !WhiteTurn;
+            for (int i = 0; i < newList.size(); i++) {
+                if (!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY())) {
+                    int x = (int) newList.get(i).position.getX();
+                    int y = (int) newList.get(i).position.getY();
+                    if (AllPiecesCloned.get(i).move(x, y)) {
+                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType + " moved to (" + x + " , " + y + ")");
+                    } else {
+                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType + " DIDN'T move (" + x + " , " + y + ")");
                     }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType+" DIDN'T move ("+ x + " , "+y +")");
-                    }
-                    
-                    
+
+
                     
                 }
             }
