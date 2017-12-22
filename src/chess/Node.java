@@ -301,6 +301,7 @@ public class Node {
         int y = (int) listCopy.get(i).position.getY();
         //loop on x values--> same row
         for (int x = 0; x < 8; x++) {
+            listCopy = Node.ClonePieces(node.PiecesState);
             //kol el amaken eli 3ala el x
             if (x == node.PiecesState.get(i).position.getX()) {
                 continue;
@@ -314,6 +315,7 @@ public class Node {
         //loop on different y values --> same column
         int x = (int) listCopy.get(i).position.getX();
         for (y = 0; y < 8; y++) {//kol el amaken eli 3ala el x
+            listCopy = Node.ClonePieces(node.PiecesState);
             if (y == node.PiecesState.get(i).position.getY()) {
                 continue;
             }
