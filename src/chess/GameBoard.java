@@ -65,6 +65,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
     boolean WhiteTurn = false;//0 for black 1 for white
     private final JLabel SelectedLbl;
     private final JButton SaveBtn;
+    public static boolean BlackKingCheckMate=false;
+    public static boolean WhiteKingCheckMate=false;
+    
 
     public GameBoard(int dep,boolean load, ArrayList<Object> data) throws CloneNotSupportedException {
         
