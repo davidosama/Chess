@@ -924,6 +924,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
     }
     
     public void AIPlay() throws CloneNotSupportedException
+            
     {
         if(WhiteTurn){
             AllPieces = new ArrayList<Piece>();
@@ -1009,9 +1010,6 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
             }
         }
         setPosions();
-        if(checkCheckmate(AllPiecesCloned)){
-            JOptionPane.showMessageDialog(null, "CHECK MATE");
-        }
     }
     
     public static boolean isTileThreatened(String Color,int x, int y){
@@ -1030,26 +1028,40 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         return false;
     }
     
-    public static boolean checkCheckmate(ArrayList<Piece> AllPieceCheck){
-        int WhiteX=(int)King.WhiteKingPosition.getX();
-        int WhiteY=(int)King.WhiteKingPosition.getY();
-        int BlackX=(int)King.BlackKingPosition.getX();
-        int BlackY=(int)King.BlackKingPosition.getY();
+    public static String checkCheckmate(ArrayList<Piece> AllPieceCheck){
+        int WhiteX=0;
+        int WhiteY=0;
+        int BlackX=0;
+        int BlackY=0;
+        for(int i=0;i<AllPieces.size();i++){
+            if(AllPieceCheck.get(i).color.equalsIgnoreCase("White") &&AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive)
+            {
+                 WhiteX = (int) AllPieceCheck.get(i).position.getX();
+                 WhiteY = (int) AllPieceCheck.get(i).position.getY();
+
+            }
+            else if(AllPieceCheck.get(i).color.equalsIgnoreCase("Black") &&AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive)
+            {
+                 BlackX = (int) AllPieceCheck.get(i).position.getX();
+                 BlackY = (int) AllPieceCheck.get(i).position.getY();
+
+            }
+        }
         for(int i=0;i<AllPieces.size();i++){
             if(AllPieceCheck.get(i).color.equalsIgnoreCase("Black") && AllPieceCheck.get(i).alive){
                 if(AllPieceCheck.get(i).validateMove(WhiteX, WhiteY))
                 {
-                    return true;
+                    return "White";
                 }
             }
             else if(AllPieceCheck.get(i).color.equalsIgnoreCase("White") && AllPieceCheck.get(i).alive){
                 if(AllPieceCheck.get(i).validateMove(BlackX, BlackY))
                 {
-                    return true;
+                    return "Black";
                 }
             }
         }
-        return false;
+        return null;
     }
 
 
