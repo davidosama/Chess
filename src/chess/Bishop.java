@@ -52,6 +52,9 @@ public class Bishop extends Piece implements Cloneable,Serializable{
     
     @Override
     public boolean validateMove(int x, int y) {
+        if(x>7 || x<0 || y>7 || y<0){
+            return false;
+        }
         if (Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y)){
             if(isPathClear(x, y) && (GameBoard.isEnemy(x, y, this.color) || GameBoard.isEmpty(x, y))){
                 return true;

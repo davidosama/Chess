@@ -62,7 +62,7 @@ public class Knight extends Piece implements Cloneable,Serializable{
     @Override
     public boolean validateMove(int x, int y) {
     //    Point currentPosition = this.position;
-        if(x<0||x>7){
+        if(x>7 || x<0 || y>7 || y<0){
             return false;
         }
         if((Math.abs(x-this.position.getX())==2 && Math.abs(y-this.position.getY())==1)||(Math.abs(x-this.position.getX())==1 && Math.abs(y-this.position.getY())==2)){

@@ -32,30 +32,29 @@ public class King extends Piece implements Cloneable,Serializable{
 
     @Override
     public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
-        if(validateMoveAI(x, y, AllPieces)){
-            if (isKingAI(x, y, this.color, AllPieces)){
-                CheckmateAI(this.color, AllPieces);
+        if (validateMoveAI(x, y,AllPieces)) {
+            int OldX = (int) this.position.getX();
+            int OldY = (int) this.position.getY();
+            this.position.setLocation(x, y);
+            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatened("Black", (int) GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
+                //undo the setLocation 
+//                JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
+                this.position.setLocation(OldX, OldY);
+                return false;
             }
-            else{
-               if(!isEmptyAI(x, y, AllPieces)){
-                    attackAI(x, y,AllPieces);
-                }
-               this.position.setLocation(x, y);
-               if(this.color.equalsIgnoreCase("Black")){
-                   BlackKingPosition.x=x;
-                   BlackKingPosition.y=y;
-               }
-               else{
-                   WhiteKingPosition.x=x;
-                   WhiteKingPosition.y=y;
-               }
+            if (!GameBoard.isEmpty(x, y)) {
+                GameBoard.attack(x, y);
             }
+            this.numOfMoves++;
             return true;
         }
         return false;
     }    
     @Override
     public boolean validateMove(int x, int y) {
+        if(x>7 || x<0 || y>7 || y<0){
+            return false;
+        }
         if(Math.abs(x-this.position.getX())<=1&&(Math.abs(y-this.position.getY()))<=1){
             if(GameBoard.isEmpty(x,y)||GameBoard.isEnemy(x, y, this.color)){
                 if(GameBoard.isTileThreatened(this.color, x, y))
@@ -73,6 +72,9 @@ public class King extends Piece implements Cloneable,Serializable{
     public boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces) {
         if( x>7 || x <0 || y>7 || y<0){
             return false;
+        }
+        if(this.position.getX()==3 && this.position.getY()==0 && x==2 &&y==1){
+            int j = 5;
         }
         if(Math.abs(x-this.position.getX())<=1&&(Math.abs(y-this.position.getY()))<=1){
             if(isEmptyAI(x,y,AllPieces)||isEnemyAI(x, y, this.color, AllPieces)){

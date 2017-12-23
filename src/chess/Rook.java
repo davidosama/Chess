@@ -61,6 +61,9 @@ public class Rook extends Piece implements Cloneable,Serializable{
     }
     @Override
     public boolean validateMove(int x, int y) {
+        if(x>7 || x<0 || y>7 || y<0){
+            return false;
+        }
         if((this.position.getX()-x)==0||(this.position.getY()-y)==0){
             if(isPathClear(x, y) && (GameBoard.isEnemy(x, y, this.color) || GameBoard.isEmpty(x, y))){
                 return true;

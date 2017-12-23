@@ -356,6 +356,9 @@ public class Node {
                     ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                     int x = (int)listCopy.get(i).position.getX();
                     int y = (int)listCopy.get(i).position.getY();
+                    if(x==3 && y==0){
+                        int j =5;
+                    }
                     
                     //et7arak 7arrak yemiin
                     if(listCopy.get(i).moveAI(x+1,y,listCopy)){
@@ -388,12 +391,12 @@ public class Node {
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka diagonal ta7t shemal
-                    if(listCopy.get(i).moveAI(x-1,y-1,listCopy)){
+                    if(listCopy.get(i).moveAI(x-1,y+1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka diagonal ta7t yemin
-                    if(listCopy.get(i).moveAI(x+1,y-1,listCopy)){
+                    if(listCopy.get(i).moveAI(x+1,y+1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
