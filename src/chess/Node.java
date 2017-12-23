@@ -78,13 +78,13 @@ public class Node {
             node.heuristic=heuristic3(node);
             System.out.println("Heuristic .  "+node.heuristic);
             return node.heuristic ;
-        }
+        }else {
         System.out.println("after checking leaf nodes");
         ArrayList <Node> childrenNodes = getChildrenAndAssignMax(node,isMax);//fill the above arraylist with possible moves (nodes level)
         if(isMax==true){
             System.out.println("is Maximizer");
             for (int i=0; i<childrenNodes.size(); i++){
-                node.alpha= Integer.max(node.alpha, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,false));
+                node.alpha = Integer.max(node.alpha, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,false));
                 
                 if(node.alpha >= node.beta)
                     break;
@@ -113,7 +113,8 @@ public class Node {
             System.out.println("depth is "+depth);
             return node.beta ;
             
-        }    
+        }
+        }
           
     }
     
@@ -455,11 +456,8 @@ public class Node {
                             if(listCopy.get(i).moveAI(x,y,listCopy)){
                                 Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                                 childrenNodesList.add(n);
-                        }
-                            
-                            
-                        
-                        }
+                            }
+                       }
                         
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                             int y = (int)listCopy.get(i).position.getY()-1;
@@ -594,7 +592,9 @@ public class Node {
             System.out.println("{iece type : "+node.PiecesState.get(i).pieceType+"Position "+node.PiecesState.get(i).position);
         }
         
-        ArrayList <Piece>l = ReturnStateToMove(minimax(node, depth, a, b, isMax));
+        ArrayList <Piece>l = new ArrayList<Piece>();
+        l=ReturnStateToMove(minimax(node, depth, a, b, isMax));
+        System.out.println("SIZE IS"+l.size());
         for(int i =0;i<l.size();i++){
             System.out.println("{iece type : "+l.get(i).pieceType+"Position "+l.get(i).position);
         }
