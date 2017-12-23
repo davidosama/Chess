@@ -52,6 +52,7 @@ public class Pawn extends Piece implements Cloneable, Serializable {
             if (!isEmptyAI(x, y, AllPieces)) {
                 attackAI(x, y, AllPieces);
             }
+            this.numOfMoves++;
             return true;
         }
         return false;
