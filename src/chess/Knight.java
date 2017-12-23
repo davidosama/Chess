@@ -24,7 +24,7 @@ public class Knight extends Piece implements Cloneable,Serializable{
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatened("Black", (int) GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
+            if (this.color.equalsIgnoreCase("Black") && GameBoard.WillItBeThreatened("Black", (int) GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
                 //undo the setLocation 
 //                JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
                 this.position.setLocation(OldX, OldY);
@@ -45,7 +45,7 @@ public class Knight extends Piece implements Cloneable,Serializable{
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            if (this.color.equalsIgnoreCase("White") && GameBoard.isTileThreatenedAI("White", (int)AllPieces.get(31).getPosition().getX(), (int)AllPieces.get(31).getPosition().getY(), AllPieces)) {
+            if (this.color.equalsIgnoreCase("White") && GameBoard.WillItBeThreatenedAI("White", (int)AllPieces.get(31).getPosition().getX(), (int)AllPieces.get(31).getPosition().getY(), AllPieces)) {
                 //undo the setLocation 
 //                JOptionPane.showConfirmDialog(null, "WHITE KING IS THREATENED");
                 this.position.setLocation(OldX, OldY);
@@ -112,5 +112,19 @@ public class Knight extends Piece implements Cloneable,Serializable{
         k.label = null;
        return k;
     }
+    public boolean canAttack(int x, int y) {
+        if((Math.abs(x-this.position.getX())==2 && Math.abs(y-this.position.getY())==1)||(Math.abs(x-this.position.getX())==1 && Math.abs(y-this.position.getY())==2)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean canAttackAI(int x, int y, ArrayList<Piece>AllPieces) {
+        if((Math.abs(x-this.position.getX())==2 && Math.abs(y-this.position.getY())==1)||(Math.abs(x-this.position.getX())==1 && Math.abs(y-this.position.getY())==2)){
+            return true;
+        }
+        return false;
+    }
+
     
 }

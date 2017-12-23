@@ -25,7 +25,7 @@ public class Rook extends Piece implements Cloneable,Serializable{
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatened("Black", (int) GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
+            if (this.color.equalsIgnoreCase("Black") && GameBoard.WillItBeThreatened("Black", (int) GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
                 //undo the setLocation 
 //                JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
                 this.position.setLocation(OldX, OldY);
@@ -46,7 +46,7 @@ public class Rook extends Piece implements Cloneable,Serializable{
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            if (this.color.equalsIgnoreCase("White") && GameBoard.isTileThreatenedAI("White", (int)AllPieces.get(31).getPosition().getX(), (int)AllPieces.get(31).getPosition().getY(), AllPieces)) {
+            if (this.color.equalsIgnoreCase("White") && GameBoard.WillItBeThreatenedAI("White", (int)AllPieces.get(31).getPosition().getX(), (int)AllPieces.get(31).getPosition().getY(), AllPieces)) {
                 //undo the setLocation 
 //                JOptionPane.showConfirmDialog(null, "WHITE KING IS THREATENED");
                 this.position.setLocation(OldX, OldY);
@@ -155,6 +155,24 @@ public class Rook extends Piece implements Cloneable,Serializable{
             }   
         }
         return true ;
+    }
+    
+    public boolean canAttack(int x, int y){
+        if((this.position.getX()-x)==0||(this.position.getY()-y)==0){
+            if(isPathClear(x, y)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean canAttackAI(int x, int y,ArrayList<Piece>AllPieces){
+        if((this.position.getX()-x)==0||(this.position.getY()-y)==0){
+            if(isPathClearAI(x, y,AllPieces)){
+                return true;
+            }
+        }
+        return false;
     }
     
     @Override

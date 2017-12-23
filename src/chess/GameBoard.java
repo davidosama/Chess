@@ -958,13 +958,37 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
     public static boolean isTileThreatenedAI(String AttackedColor, int x, int y, ArrayList<Piece> listCopy) {
 
         for (int i = 0; i < listCopy.size(); i++) {
-            if (listCopy.get(i).color != AttackedColor && listCopy.get(i).alive) {
+            if (!(listCopy.get(i).color.equals(AttackedColor)) && listCopy.get(i).alive){
                 if (listCopy.get(i).pieceType.equalsIgnoreCase("Pawn")) {
                     Pawn p = (Pawn) listCopy.get(i);
                     if (p.canAttack(x, y)) {
                         return true;
                     }
                 } else if (listCopy.get(i).validateMoveAI(x, y, listCopy)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    public static boolean WillItBeThreatened(String AttackedColor, int x, int y) {
+
+        for (int i = 0; i < AllPiecesCloned.size(); i++) {
+            if (!(AllPiecesCloned.get(i).color.equals(AttackedColor)) && AllPiecesCloned.get(i).alive) {
+                
+                if(AllPiecesCloned.get(i).canAttack(x, y))
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean WillItBeThreatenedAI(String AttackedColor, int x, int y, ArrayList<Piece> listCopy) {
+
+        for (int i = 0; i < listCopy.size(); i++) {
+            if (!(listCopy.get(i).color.equals(AttackedColor)) && listCopy.get(i).alive) {
+                if(listCopy.get(i).canAttackAI(x, y,listCopy)){
                     return true;
                 }
             }

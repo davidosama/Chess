@@ -57,6 +57,10 @@ public abstract class Piece implements Cloneable, Serializable{
     public abstract boolean moveAI(int x, int y, ArrayList<Piece> AllPieces);
     
     public abstract boolean validateMoveAI(int x, int y, ArrayList<Piece> AllPieces);
+    //public abstract boolean validateNextMoveAI(int x, int y, ArrayList<Piece> AllPieces);
+    
+    public abstract boolean canAttack(int x, int y);
+    public abstract boolean canAttackAI(int x, int y, ArrayList<Piece>AllPieces);
     
     public void CheckmateAI(String attackingColor, ArrayList<Piece> AllPieces){
         //implement

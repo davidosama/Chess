@@ -8,6 +8,7 @@ package chess;
 import java.awt.Point;
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -371,22 +372,22 @@ public class Node {
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka fo2
-                    if(listCopy.get(i).moveAI(x,y+1,listCopy)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    //et7arak 7araka ta7t
                     if(listCopy.get(i).moveAI(x,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
+                    //et7arak 7araka ta7t
+                    if(listCopy.get(i).moveAI(x,y+1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
                     //et7arak 7arraka diagonal fo2 yemin 
-                    if(listCopy.get(i).moveAI(x+1,y+1,listCopy)){
+                    if(listCopy.get(i).moveAI(x+1,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka diagonal fo2 shemal
-                    if(listCopy.get(i).moveAI(x-1,y+1,listCopy)){
+                    if(listCopy.get(i).moveAI(x-1,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
@@ -597,7 +598,11 @@ public class Node {
         
         ArrayList <Piece>l = new ArrayList<Piece>();
         l=ReturnStateToMove(minimax(node, depth, a, b, isMax));
-        System.out.println("SIZE IS"+l.size());
+        //System.out.println("SIZE IS"+l.size());
+        if(l==null){
+            JOptionPane.showMessageDialog(null, "CONGRATULATIONS SIR, YOU WON THE GAME");
+            System.exit(0);
+        }
         for(int i =0;i<l.size();i++){
             System.out.println("{iece type : "+l.get(i).pieceType+"Position "+l.get(i).position);
         }

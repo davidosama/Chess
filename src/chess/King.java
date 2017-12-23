@@ -36,7 +36,7 @@ public class King extends Piece implements Cloneable,Serializable{
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatened("Black", (int) GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
+            if (this.color.equalsIgnoreCase("White") && GameBoard.WillItBeThreatenedAI("White", (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(31).getPosition().getY(),AllPieces)) {
                 //undo the setLocation 
 //                JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
                 this.position.setLocation(OldX, OldY);
@@ -89,6 +89,26 @@ public class King extends Piece implements Cloneable,Serializable{
         return false;
             
     }
+    
+    public boolean canAttack(int x, int y) {
+//        if ((Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y)) || ((this.position.getX() - x) == 0 || (this.position.getY() - y) == 0)) {
+//            if (isPathClear(x, y)) {
+//                return true;
+//            }
+//        }
+        return false;
+    }
+
+    public boolean canAttackAI(int x, int y, ArrayList<Piece>AllPieces) {
+//        if ((Math.abs(this.position.getX() - x) == Math.abs(this.position.getY() - y)) || ((this.position.getX() - x) == 0 || (this.position.getY() - y) == 0)) {
+//            if (isPathClearAI(x, y,AllPieces)) {
+//                return true;
+//            }
+//        }
+        return false;
+    }
+
+    
     @Override
     public King clone() throws CloneNotSupportedException {
         King k = new King(this.color, new Point((int)this.position.getX(), (int)this.position.getY()));

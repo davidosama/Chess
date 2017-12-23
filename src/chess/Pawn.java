@@ -68,6 +68,21 @@ public class Pawn extends Piece implements Cloneable, Serializable {
         }
 
     }
+    public boolean canAttackAI(int x, int y,ArrayList<Piece>AllPieces) {
+        if (this.color.equals("Black")) {
+            if ((x == this.position.getX() - 1 || x == this.position.getX() + 1) && y == this.position.getY() - 1) {
+                return true;
+            }
+            return false;
+        } else {
+            if ((x == this.position.getX() - 1 || x == this.position.getX() + 1) && y == this.position.getY() + 1) {
+                return true;
+            }
+            return false;
+        }
+
+    }
+    
 
     @Override
     public boolean validateMove(int x, int y) {
