@@ -720,7 +720,7 @@ public class Node {
             if (node.PiecesState.get(29).pieceType.equalsIgnoreCase("Queen") && node.PiecesState.get(29).color.equalsIgnoreCase(color) && node.PiecesState.get(29).alive) {
                     node.isMax = isMax;
                     for (int x = 0; x < 8; x++) {//kol el amaken eli 3ala el y (VERTICALLY)
-                        if (x == node.PiecesState.get(28).position.getX()) {
+                        if (x == node.PiecesState.get(29).position.getX()) {
                             continue;
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
