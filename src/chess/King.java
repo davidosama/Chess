@@ -32,11 +32,14 @@ public class King extends Piece implements Cloneable,Serializable{
 
     @Override
     public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if(x==2 && y==1){
+            int asdasd=4;
+        }
         if (validateMoveAI(x, y,AllPieces)) {
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            if (this.color.equalsIgnoreCase("White") && GameBoard.WillItBeThreatenedAI("White", (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(31).getPosition().getY(),AllPieces)) {
+            if (this.color.equalsIgnoreCase("White") && GameBoard.WillItBeThreatenedAI("White", x, y,AllPieces)) {
                 //undo the setLocation 
 //                JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
                 this.position.setLocation(OldX, OldY);
