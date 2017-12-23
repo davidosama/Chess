@@ -575,6 +575,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 jPanel1.repaint();
                 
                 SelectedLbl.setVisible(false);
+//                if(CheckKingCanMove())
+//                {
                 Thread t2 = new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -586,7 +588,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                             }
                         });
                      t2.start();   
-                    
+//                }
                 
                 }
                 else
@@ -606,7 +608,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
-                     Thread t2 = new Thread(new Runnable() {
+//                     if(CheckKingCanMove())
+//                {
+                Thread t2 = new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -616,7 +620,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                                 }
                             }
                         });
-                     t2.start();
+                     t2.start();   
+//                }
                 }
                 else
                 {
@@ -635,7 +640,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 setPosions();
                 jPanel1.repaint();
                 SelectedLbl.setVisible(false);
-                     Thread t1 = new Thread(new Runnable() {
+//                     if(CheckKingCanMove())
+//                {
+                Thread t2 = new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -645,7 +652,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                                 }
                             }
                         });
-                     t1.start();
+                     t2.start();   
+//                }
                 }
                 else
                 {
@@ -1050,6 +1058,145 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         return "NO CHECKMATE";
     }
 
+        public void win(String winner)
+        {
+         String ObjButtons[] = {"Yes","No"};
+        int PromptResult = JOptionPane.showOptionDialog(null, 
+        (winner + "win "),("Horray "+ winner +" win\n Do you want to play again?"), 
+        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
+        ObjButtons,ObjButtons[0]);
+        if(PromptResult==1)
+        {
+          System.exit(0);          
+        }
+        else if(PromptResult==0)
+        {
+            this.dispose();
+             try {
+                 new GameBoard(depth, false, new ArrayList<Object>());
+             } catch (CloneNotSupportedException ex) {
+                 Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            
+        }
+        }
+        
+        public boolean CheckKingCanMove()
+        {
+            AllPiecesCloned = new ArrayList<Piece>();
+        for (int i = 0; i < blackPawns.size(); i++) {
+            AllPiecesCloned.add(blackPawns.get(i));
+        }
+        for (int i = 0; i < whitePawns.size(); i++) {
+            AllPiecesCloned.add(whitePawns.get(i));
+        }
+        for (int i = 0; i < blackKnights.size(); i++) {
+            AllPiecesCloned.add(blackKnights.get(i));
+        }
+        for (int i = 0; i < whiteKnights.size(); i++) {
+            AllPiecesCloned.add(whiteKnights.get(i));
+        }
+        for (int i = 0; i < whiteRooks.size(); i++) {
+            AllPiecesCloned.add(whiteRooks.get(i));
+        }
+        for (int i = 0; i < blackRooks.size(); i++) {
+            AllPiecesCloned.add(blackRooks.get(i));
+        }
+        for (int i = 0; i < blackBishops.size(); i++) {
+            AllPiecesCloned.add(blackBishops.get(i));
+        }
+        for (int i = 0; i < whiteBishops.size(); i++) {
+            AllPiecesCloned.add(whiteBishops.get(i));
+        }
+        AllPiecesCloned.add(blackQueen);
+        AllPiecesCloned.add(whiteQueen);
+        AllPiecesCloned.add(blackKing);
+        AllPiecesCloned.add(whiteKing);
+            int whitekin = 31;
+            int blackkin = 30;
+        try {
+            ArrayList<Piece> cl = Node.ClonePieces(AllPiecesCloned);
+            if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()+1, (int)cl.get(blackkin).position.getY()+1))
+            {
+                
+                return true;
+            }
+            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX(), (int)cl.get(blackkin).position.getY()+1))
+            {
+                return true;
+            }
+            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()+1, (int)cl.get(blackkin).position.getY()))
+            {
+                return true;
+            }
+            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()-1, (int)cl.get(blackkin).position.getY()-1))
+            {
+                return true;
+            }
+            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()-1, (int)cl.get(blackkin).position.getY()))
+            {
+                return true;
+            }
+            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX(), (int)cl.get(blackkin).position.getY()-1))
+            {
+                return true;
+            }
+            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()-1, (int)cl.get(blackkin).position.getY()+1))
+            {
+                return true;
+            }
+            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()+1, (int)cl.get(blackkin).position.getY()-1))
+            {
+                return true;
+            }
+            else
+            {
+                win("White");
+            }
+            if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()+1, (int)cl.get(whitekin).position.getY()+1))
+            {
+                
+                return true;
+            }
+            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX(), (int)cl.get(whitekin).position.getY()+1))
+            {
+                return true;
+            }
+            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()+1, (int)cl.get(whitekin).position.getY()))
+            {
+                return true;
+            }
+            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()-1, (int)cl.get(whitekin).position.getY()-1))
+            {
+                return true;
+            }
+            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()-1, (int)cl.get(whitekin).position.getY()))
+            {
+                return true;
+            }
+            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX(), (int)cl.get(whitekin).position.getY()-1))
+            {
+                return true;
+            }
+            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()-1, (int)cl.get(whitekin).position.getY()+1))
+            {
+                return true;
+            }
+            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()+1, (int)cl.get(whitekin).position.getY()-1))
+            {
+                return true;
+            }
+            else
+            {
+                win("Blsck");
+            }
+            
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+            
+            return false;
+        }
     private void saveGame() {
         JFileChooser fc = new JFileChooser();
         fc.setAcceptAllFileFilterUsed(false);
@@ -1098,6 +1245,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
               
         }
+        
+        
     }
 
 
