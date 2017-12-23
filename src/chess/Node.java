@@ -75,7 +75,7 @@ public class Node {
         System.out.println("Beginning minimax");
         //coun
         if(depth==0){
-            node.heuristic=heuristic2(node);
+            node.heuristic=heuristic3(node);
             System.out.println("Heuristic .  "+node.heuristic);
             return node.heuristic ;
         }
@@ -448,30 +448,55 @@ public class Node {
                     //kiro   get color > black up  y-1 > true >  
                     // black
                     if(node.PiecesState.get(i).color.equals("Black")){
-                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        int y = (int)listCopy.get(i).position.getY()-1;
-                        int x = (int)listCopy.get(i).position.getX();
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
+                        if(node.PiecesState.get(i).numOfMoves==0){
+                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                            int y = (int)listCopy.get(i).position.getY()-2;
+                            int x = (int)listCopy.get(i).position.getX();
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
                         }
-                        listCopy = Node.ClonePieces(node.PiecesState);
-                         y = (int)listCopy.get(i).position.getY()-1;
-                         x = (int)listCopy.get(i).position.getX()+1;
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
+                            
+                            
+                        
                         }
-                       listCopy = Node.ClonePieces(node.PiecesState);
-                        y = (int)listCopy.get(i).position.getY()-1;
-                        x = (int)listCopy.get(i).position.getX()-1;
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                }
+                        
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                            int y = (int)listCopy.get(i).position.getY()-1;
+                            int x = (int)listCopy.get(i).position.getX();
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                            }
+                        
+                            listCopy = Node.ClonePieces(node.PiecesState);
+                             y = (int)listCopy.get(i).position.getY()-1;
+                             x = (int)listCopy.get(i).position.getX()+1;
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                            }
+                           listCopy = Node.ClonePieces(node.PiecesState);
+                            y = (int)listCopy.get(i).position.getY()-1;
+                            x = (int)listCopy.get(i).position.getX()-1;
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                            }
+                    }
                     if(node.PiecesState.get(i).color.equals("White")){
-                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                       
+                        if(node.PiecesState.get(i).numOfMoves==0){
+                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                            int y = (int)listCopy.get(i).position.getY()+2;
+                            int x = (int)listCopy.get(i).position.getX();
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                        }
+                        }
+                        
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         int y = (int)listCopy.get(i).position.getY()+1;
                         int x = (int)listCopy.get(i).position.getX();
                         if(listCopy.get(i).moveAI(x,y,listCopy)){
@@ -658,44 +683,44 @@ public class Node {
                 int pieceValue=0;
                 switch(LeafNode.PiecesState.get(i).pieceType){
                     case "Pawn":
-                        pieceValue=10;
+                        pieceValue=10*2;
                         break;
                     case "Knight":
-                        pieceValue=30;
+                        pieceValue=30*2;
                         break;
                     case "Bishop":
-                        pieceValue=30;
+                        pieceValue=30*2;
                         break;
                     case "Rook":
-                        pieceValue=50;
+                        pieceValue=50*2;
                         break;
                     case "Queen":
-                        pieceValue=90;
+                        pieceValue=90*2;
                         break;
                     case "King":
-                        pieceValue=2000;
+                        pieceValue=2000*2;
                         break;    
                 }
                 if(LeafNode.PiecesState.get(i).color.equalsIgnoreCase("white")){
                     WhiteCount++;
                     Score+=pieceValue;
-                    int distance = (int) Math.sqrt( Math.pow(BlackKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(BlackKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
-                    Score-= distance ;
+//                    int distance = (int) Math.sqrt( Math.pow(BlackKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(BlackKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+//                    Score-= distance ;
                 }
                 else {
                     BlackCount++;
                     Score-=pieceValue;
-                    int distance = (int) Math.sqrt( Math.pow(WhiteKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(WhiteKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
-                    Score+= distance ;                    
+//                    int distance = (int) Math.sqrt( Math.pow(WhiteKing.getX() - LeafNode.PiecesState.get(i).position.getX(),2)+Math.pow(WhiteKing.getY() - LeafNode.PiecesState.get(i).position.getY(),2))*10;
+//                    Score+= distance ;                    
                 }
             }
             if(BlackCount>WhiteCount){
-                Score-=BlackCount;
+                Score-=BlackCount*10;
             }
             else
-                Score+=WhiteCount*2;
+                Score+=WhiteCount;
         }
-        //to deffence
+//        //to deffence
         for (int i = 0; i < LeafNode.PiecesState.size(); i++) {
             if (LeafNode.PiecesState.get(i).alive && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("White")) {
                         int posX = (int) LeafNode.PiecesState.get(i).getPosition().getX();
@@ -705,19 +730,19 @@ public class Node {
                         if (LeafNode.PiecesState.get(j).validateMoveAI(posX, posY, LeafNode.PiecesState)) {
                             switch (LeafNode.PiecesState.get(i).pieceType) {
                                 case "Pawn":
-                                    Score= -10;
+                                    Score-= 10;
                                 case "Knight":
-                                    Score= -30;
+                                    Score-= 30;
                                 case "Bishop":
-                                    Score= -30;
+                                    Score-= 30;
                                 case "Rook":
-                                    Score= -50;
+                                    Score-= 50;
                                 case "Queen":
-                                    Score= -90;
+                                    Score-= 90;
                                 case "King":
-                                    Score= -2000;
+                                    Score-= 2000;
                                 default:
-                                    Score= -100 ;
+                                    Score-= 100 ;
                                 
                             }
                         }
@@ -725,36 +750,36 @@ public class Node {
                 }
             }
         }
-        //to attack
-        for (int i = 0; i < LeafNode.PiecesState.size(); i++) {
-            if (LeafNode.PiecesState.get(i).alive && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")) {
-                        int posX = (int) LeafNode.PiecesState.get(i).getPosition().getX();
-                        int posY = (int) LeafNode.PiecesState.get(i).getPosition().getY();
-                for (int j = 0; j < LeafNode.PiecesState.size(); j++) {
-                    if (LeafNode.PiecesState.get(j).alive && LeafNode.PiecesState.get(j).color.equalsIgnoreCase("White")) {
-                        if (LeafNode.PiecesState.get(j).validateMoveAI(posX, posY, LeafNode.PiecesState)) {
-                            switch (LeafNode.PiecesState.get(i).pieceType) {
-                                case "Pawn":
-                                    Score= 10;
-                                case "Knight":
-                                    Score= 30;
-                                case "Bishop":
-                                    Score= 30;
-                                case "Rook":
-                                    Score= 50;
-                                case "Queen":
-                                    Score= 90;
-                                case "King":
-                                    Score=2000;
-                                default:
-                                    Score= 100 ;
-                                
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    //    to attack
+//        for (int i = 0; i < LeafNode.PiecesState.size(); i++) {
+//            if (LeafNode.PiecesState.get(i).alive && LeafNode.PiecesState.get(i).color.equalsIgnoreCase("Black")) {
+//                        int posX = (int) LeafNode.PiecesState.get(i).getPosition().getX();
+//                        int posY = (int) LeafNode.PiecesState.get(i).getPosition().getY();
+//                for (int j = 0; j < LeafNode.PiecesState.size(); j++) {
+//                    if (LeafNode.PiecesState.get(j).alive && LeafNode.PiecesState.get(j).color.equalsIgnoreCase("White")) {
+//                        if (LeafNode.PiecesState.get(j).validateMoveAI(posX, posY, LeafNode.PiecesState)) {
+//                            switch (LeafNode.PiecesState.get(i).pieceType) {
+//                                case "Pawn":
+//                                    Score+= 10;
+//                                case "Knight":
+//                                    Score+= 30;
+//                                case "Bishop":
+//                                    Score+= 30;
+//                                case "Rook":
+//                                    Score+= 50;
+//                                case "Queen":
+//                                    Score+= 90;
+//                                case "King":
+//                                    Score+=2000;
+//                                default:
+//                                    Score+= 100 ;
+//                                
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
         
         
         
