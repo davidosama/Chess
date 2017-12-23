@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author ToniGeorge
  */
-public class Node {
+public class Node implements Cloneable{
     
     ArrayList<Piece> PiecesState;
     int heuristic;
@@ -76,7 +76,7 @@ public class Node {
         //coun
         if(depth==0){
             node.heuristic=heuristic2(node);
-            System.out.println("Heuristic :"+node.heuristic);
+            System.out.println("LEAF NODES :"+node.heuristic);
             return node.heuristic ;
         }
         System.out.println("after checking leaf nodes");
@@ -84,7 +84,8 @@ public class Node {
         if(isMax==true){
             System.out.println("is Maximizer");
             for (int i=0; i<childrenNodes.size(); i++){
-                node.alpha= Integer.max(node.alpha, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,false));
+                Node n = (Node)childrenNodes.get(i).clone();
+                node.alpha= Integer.max(node.alpha, minimax(n,depth-1,node.alpha,node.beta,false));
                 
                 if(node.alpha >= node.beta){
                     System.out.println("Alphaa IS "+node.alpha+"Beta is "+node.beta);
@@ -104,7 +105,8 @@ public class Node {
         else{ 
             System.out.println("is Minimizer");
             for (int i=0; i<childrenNodes.size(); i++){
-                node.beta = Integer.min(node.beta, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,true));
+                Node n = (Node)childrenNodes.get(i).clone();
+                node.beta = Integer.min(node.beta, minimax(n,depth-1,node.alpha,node.beta,true));
                 
                 if(node.alpha >= node.beta)
                    break;
@@ -572,8 +574,8 @@ public class Node {
         for(int i =0;i<node.PiecesState.size();i++){
             System.out.println("{iece type : "+node.PiecesState.get(i).pieceType+"Position "+node.PiecesState.get(i).position);
         }
-        
-        ArrayList <Piece>l = ReturnStateToMove(minimax(node, depth, a, b, isMax));
+        Node n = (Node)node.clone();
+        ArrayList <Piece>l = ReturnStateToMove(minimax(n, depth, a, b, isMax));
         System.out.println("SIZE"+l.size());
         for(int i =0;i<l.size();i++){
             System.out.println("{iece type : "+l.get(i).pieceType+"Position "+l.get(i).position);
@@ -766,7 +768,20 @@ public class Node {
         System.out.println("Score is "+Score);
         return Score;
     }
-
+        
+        @Override
+        public Object clone() {
+        
+            Node node = null;
+        try {
+            node = (Node) super.clone();
+        } catch (CloneNotSupportedException e) {
+            // This should never happen
+        }
+        //coloredCircle.color = (Color) color.clone();
+        return node;
+    }
+        
 }
 
 
