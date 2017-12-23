@@ -76,7 +76,7 @@ public class Node {
         //coun
         if(depth==0){
             node.heuristic=heuristic2(node);
-            System.out.println("Heuristic .  "+node.heuristic);
+            System.out.println("Heuristic :"+node.heuristic);
             return node.heuristic ;
         }
         System.out.println("after checking leaf nodes");
@@ -86,18 +86,22 @@ public class Node {
             for (int i=0; i<childrenNodes.size(); i++){
                 node.alpha= Integer.max(node.alpha, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,false));
                 
-                if(node.alpha >= node.beta)
+                if(node.alpha >= node.beta){
+                    System.out.println("Alphaa IS "+node.alpha+"Beta is "+node.beta);
                     break;
+
+                }
             }
-            node.heuristic=node.alpha;
+            System.out.println("Alphaa IS "+node.alpha+"Beta is "+node.beta);
+            node.heuristic=node.beta;
             if(depth == RootDepth){
                 SecondNodesToChoose=childrenNodes;
             }
             System.out.println("Alpha IS "+node.alpha);
             System.out.println("depth is "+depth);
-            return node.alpha ;
+            return node.alpha;
         }
-        else{
+        else{ 
             System.out.println("is Minimizer");
             for (int i=0; i<childrenNodes.size(); i++){
                 node.beta = Integer.min(node.beta, minimax(childrenNodes.get(i),depth-1,node.alpha,node.beta,true));
@@ -105,7 +109,7 @@ public class Node {
                 if(node.alpha >= node.beta)
                    break;
             }
-            node.heuristic =node.beta;
+            node.heuristic =node.alpha;
             if(depth == RootDepth){
                 SecondNodesToChoose=childrenNodes;
             }
@@ -570,6 +574,7 @@ public class Node {
         }
         
         ArrayList <Piece>l = ReturnStateToMove(minimax(node, depth, a, b, isMax));
+        System.out.println("SIZE"+l.size());
         for(int i =0;i<l.size();i++){
             System.out.println("{iece type : "+l.get(i).pieceType+"Position "+l.get(i).position);
         }

@@ -45,7 +45,7 @@ public class Pawn extends Piece implements Cloneable, Serializable{
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatenedAI("White", (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), AllPiece)) {
+            if (this.color.equalsIgnoreCase("White") && GameBoard.isTileThreatenedAI("White", (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), AllPiece)) {
                 //undo the setLocation 
                 //JOptionPane.showConfirmDialog(null, "WHITE KING IS THREATENED");
                 this.position.setLocation(OldX, OldY);

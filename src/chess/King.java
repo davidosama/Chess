@@ -3,6 +3,7 @@ package chess;
 import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class King extends Piece implements Cloneable,Serializable{
 
@@ -38,11 +39,14 @@ public class King extends Piece implements Cloneable,Serializable{
 
     @Override
     public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
+//        if(x==2 && y ==1)
+//            JOptionPane.showMessageDialog(null, "x==2 and y==1");
+//        
         if (validateMoveAI(x, y, AllPieces)) {
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
             this.position.setLocation(x, y);
-            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatenedAI("White", (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), AllPieces)) {
+            if (this.color.equalsIgnoreCase("White") && GameBoard.isTileThreatenedAI("White", (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(31).getPosition().getX(), AllPieces)) {
                 //undo the setLocation 
                 //JOptionPane.showConfirmDialog(null, "WHITE KING IS THREATENED");
                 this.position.setLocation(OldX, OldY);
