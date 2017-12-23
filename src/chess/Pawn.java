@@ -108,7 +108,7 @@ public class Pawn extends Piece implements Cloneable, Serializable {
             if (GameBoard.isEmpty(x, y)) {//if there is no piece and the return of the previous function is null/false
                 if (x == this.position.getX() && y == this.position.getY() + 1) {
                     return true;
-                } else if (this.numOfMoves == 0 && x == this.position.getX() && y == this.position.getY() + 2) {
+                } else if (this.numOfMoves == 0 && x == this.position.getX() && y == this.position.getY() + 2 && GameBoard.isEmpty(x, y+1)) {
                     return true;
                 }
             } else if (GameBoard.isEnemy(x, y, this.color)) {//if there is a piece and it's the of the opposite color so it's attacking that piece
@@ -141,7 +141,7 @@ public class Pawn extends Piece implements Cloneable, Serializable {
             if (isEmptyAI(x, y, AllPieces)) {//if there is no piece and the return of the previous function is null/false
                 if (x == this.position.getX() && y == this.position.getY() + 1) {
                     return true;
-                } else if (this.numOfMoves == 0 && x == this.position.getX() && y == this.position.getY() + 2) {
+                } else if (this.numOfMoves == 0 && x == this.position.getX() && y == (this.position.getY() + 2) && isEmptyAI(x, (int)this.position.getY()+1,AllPieces)) {
                     return true;
                 }
             } else if (isEnemyAI(x, y, this.color, AllPieces)) {//if there is a piece and it's the of the opposite color so it's attacking that piece
