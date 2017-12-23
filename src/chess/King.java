@@ -14,48 +14,35 @@ public class King extends Piece implements Cloneable,Serializable{
     
     @Override
     public boolean move(int x, int y) {
-        if(validateMove(x, y)){
-            if (GameBoard.isKing(x, y, this.color)){
+        if (validateMove(x, y)) {
+            if (GameBoard.isKing(x, y, this.color)) {
                 GameBoard.Checkmate(this.color);
-            }
-            else{
-               if(!GameBoard.isEmpty(x, y)){
+            } else {
+                if (!GameBoard.isEmpty(x, y)) {
                     GameBoard.attack(x, y);
                 }
-               this.position.setLocation(x, y);
-               if(this.color.equalsIgnoreCase("Black")){
-                   BlackKingPosition.x=x;
-                   BlackKingPosition.y=y;
-               }
-               else{
-                   WhiteKingPosition.x=x;
-                   WhiteKingPosition.y=y;
-               }
             }
+            this.position.setLocation(x, y);
+            this.numOfMoves++;
+            
             return true;
         }
         return false;
     }
 
-    @Override
     public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
-        if(validateMoveAI(x, y, AllPieces)){
-            if (isKingAI(x, y, this.color, AllPieces)){
-                CheckmateAI(this.color, AllPieces);
+        if (validateMoveAI(x, y, AllPieces)) {
+            int OldX = (int) this.position.getX();
+            int OldY = (int) this.position.getY();
+            this.position.setLocation(x, y);
+            if (this.color.equalsIgnoreCase("White") && GameBoard.isTileThreatenedAI("White", (int)AllPieces.get(31).getPosition().getX(), (int)AllPieces.get(31).getPosition().getX(), AllPieces)) {
+                //undo the setLocation 
+//                JOptionPane.showConfirmDialog(null, "WHITE KING IS THREATENED");
+                this.position.setLocation(OldX, OldY);
+                return false;
             }
-            else{
-               if(!isEmptyAI(x, y, AllPieces)){
-                    attackAI(x, y,AllPieces);
-                }
-               this.position.setLocation(x, y);
-               if(this.color.equalsIgnoreCase("Black")){
-                   BlackKingPosition.x=x;
-                   BlackKingPosition.y=y;
-               }
-               else{
-                   WhiteKingPosition.x=x;
-                   WhiteKingPosition.y=y;
-               }
+            if (!isEmptyAI(x, y, AllPieces)) {
+                attackAI(x, y, AllPieces);
             }
             return true;
         }

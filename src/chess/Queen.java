@@ -19,16 +19,40 @@ public class Queen extends Piece implements Cloneable, Serializable {
         super(color, position);
     }
 
-    @Override
     public boolean move(int x, int y) {
         if (validateMove(x, y)) {
-            if (GameBoard.isKing(x, y, this.color)) {
-                GameBoard.Checkmate(this.color);
-            } else {
-                if (!GameBoard.isEmpty(x, y)) {
-                    GameBoard.attack(x, y);
-                }
-                this.position.setLocation(x, y);
+            int OldX = (int) this.position.getX();
+            int OldY = (int) this.position.getY();
+            this.position.setLocation(x, y);
+            if (this.color.equalsIgnoreCase("Black") && GameBoard.isTileThreatened("Black", (int) GameBoard.AllPiecesCloned.get(30).getPosition().getX(), (int) GameBoard.AllPiecesCloned.get(30).getPosition().getY())) {
+                //undo the setLocation 
+//                JOptionPane.showConfirmDialog(null, "CAN'T ! Black King will be threatened");
+                this.position.setLocation(OldX, OldY);
+                return false;
+            }
+            if (!GameBoard.isEmpty(x, y)) {
+                GameBoard.attack(x, y);
+            }
+            this.numOfMoves++;
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if (validateMoveAI(x, y, AllPieces)) {
+            int OldX = (int) this.position.getX();
+            int OldY = (int) this.position.getY();
+            this.position.setLocation(x, y);
+            if (this.color.equalsIgnoreCase("White") && GameBoard.isTileThreatenedAI("White", (int)AllPieces.get(31).getPosition().getX(), (int)AllPieces.get(31).getPosition().getX(), AllPieces)) {
+                //undo the setLocation 
+//                JOptionPane.showConfirmDialog(null, "WHITE KING IS THREATENED");
+                this.position.setLocation(OldX, OldY);
+                return false;
+            }
+            if (!isEmptyAI(x, y, AllPieces)) {
+                attackAI(x, y, AllPieces);
             }
             return true;
         }
@@ -72,85 +96,68 @@ public class Queen extends Piece implements Cloneable, Serializable {
             for (int i = 0; i < counterDiagonal - 1; i++) {
                 currentPosition.x--;
                 currentPosition.y--;
-                        if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-            return false;
-        }
-                
+                if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+                }
+
             }
         } //}
         else if (x < this.position.getX() && y > this.position.getY()) {//down-left
             for (int i = 0; i < counterDiagonal - 1; i++) {
                 currentPosition.x--;
                 currentPosition.y++;
-                        if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-            return false;
-        }
+                if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+                }
             }
         } else if (x > this.position.getX() && y < this.position.getY()) {//top-right
             for (int i = 0; i < counterDiagonal - 1; i++) {
                 currentPosition.x++;
                 currentPosition.y--;
-                        if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-            return false;
-        }
+                if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+                }
             }
         } else if (x > this.position.getX() && y > this.position.getY()) {//down-right
             for (int i = 0; i < counterDiagonal - 1; i++) {
                 currentPosition.x++;
                 currentPosition.y++;
-                        if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-            return false;
-        }
+                if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+                }
             }
         } else if (x == this.position.getX() && y > this.position.getY()) {//down
             for (int i = 0; i < counterStraight - 1; i++) {
                 currentPosition.y++;
-                        if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-            return false;
-        }
+                if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+                }
             }
         } else if (x > this.position.getX() && y == this.position.getY()) {//right
             for (int i = 0; i < counterStraight - 1; i++) {
                 currentPosition.x++;
-                        if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-            return false;
-        }
+                if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+                }
             }
         } else if (x == this.position.getX() && y < this.position.getY()) {//up
             for (int i = 0; i < counterStraight - 1; i++) {
                 currentPosition.y--;
-                        if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-            return false;
-        }
+                if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+                }
             }
         } else if (x < this.position.getX() && y == this.position.getY()) {//left
             for (int i = 0; i < counterStraight - 1; i++) {
                 currentPosition.x--;
-                        if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
-            return false;
-        }
+                if (!GameBoard.isEmpty((int) currentPosition.getX(), (int) currentPosition.getY())) {// current position a missing function here implemented in gameboard that checks if there is a piece in (x,y) if true returns that object
+                    return false;
+                }
             }
-            
-        }
 
+        }
 
         return true;
-    }
-
-    @Override
-    public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
-        if (validateMoveAI(x, y, AllPieces)) {
-            if (isKingAI(x, y, this.color, AllPieces)) {
-                CheckmateAI(this.color, AllPieces);
-            } else {
-                if (!isEmptyAI(x, y, AllPieces)) {
-                    attackAI(x, y, AllPieces);
-                }
-                this.position.setLocation(x, y);
-            }
-            return true;
-        }
-        return false;
     }
 
     @Override
