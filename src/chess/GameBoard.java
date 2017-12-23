@@ -31,6 +31,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
 
     public static int WhiteTurns = 0;
     public static int BlackTurns = 0;
+    public static int Heur = 0;
     public ArrayList<Pawn> blackPawns;
     public ArrayList<Pawn> whitePawns;
 
@@ -64,9 +65,10 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
     boolean WhiteTurn = false;//0 for black 1 for white
     private final JLabel SelectedLbl;
 
-    public GameBoard(int dep, boolean load, ArrayList<Object> data) throws CloneNotSupportedException {
+    public GameBoard(int dep, boolean load, ArrayList<Object> data,int heuristic) throws CloneNotSupportedException {
 
         this.depth = dep;
+        this.Heur = heuristic;
         initComponents();
         pm = new PointMapper();
 
@@ -124,6 +126,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
             whiteQueen = (Queen) data.get(11);
             blackKing = (King) data.get(12);
             whiteKing = (King) data.get(13);
+            this.Heur = (int)data.get(15);
+            King.WhiteKingPosition = (Point)data.get(16);
+            King.BlackKingPosition = (Point)data.get(17);
 
             //4- point mapper tile array
             pm.BoardTilesArray = (Tile[][]) data.get(14);
@@ -984,11 +989,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
             System.exit(0);
         } else if (PromptResult == 0) {
             this.dispose();
-            try {
-                new GameBoard(depth, false, new ArrayList<Object>());
-            } catch (CloneNotSupportedException ex) {
-                Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-            }
+                new GameFrame().setVisible(true);
+            
 
         }
     }
@@ -1101,6 +1103,9 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
                     data.add(blackKing);
                     data.add(whiteKing);
                     data.add(PointMapper.BoardTilesArray);
+                    data.add(Heur);
+                    data.add(King.WhiteKingPosition);
+                    data.add(King.BlackKingPosition);
                     FileOutputStream fileOut = new FileOutputStream(filename);
                     out = new ObjectOutputStream(fileOut);
                     out.writeObject(data);
