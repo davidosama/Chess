@@ -118,49 +118,147 @@ public class Node {
     }
     
     private static ArrayList<Node> getChildrenAndAssignMax(Node node,boolean isMax) throws CloneNotSupportedException {
-        
+
         ArrayList<Node> childrenNodesList = new ArrayList();
         String color;
-        if(isMax)
-            color="White";
-        else
-            color="Black";
-        //parent node which contains a game state ( pieces with their positions ) 
-        for(int i = 0 ; i<node.PiecesState.size();i++){
-            node.isMax=isMax;
-            if(node.PiecesState.get(i).alive){
-                //rook
-                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+        if (isMax) {
+            color = "White";
+        } else {
+            color = "Black";
+        }
+
+        if (color == "Black") {
+            for (int i = 0; i <= 7; i++) {
+                node.isMax = isMax;
+                if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawn") && node.PiecesState.get(i).color.equalsIgnoreCase(color) && node.PiecesState.get(i).alive) {
+                    if (node.PiecesState.get(i).numOfMoves == 0) {
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        int y = (int) listCopy.get(i).position.getY() - 2;
+                        int x = (int) listCopy.get(i).position.getX();
+                        if (listCopy.get(i).moveAI(x, y, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+
+                    }
+
                     ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                    int y = (int)listCopy.get(i).position.getY();
+                    int y = (int) listCopy.get(i).position.getY() - 1;
+                    int x = (int) listCopy.get(i).position.getX();
+                    if (listCopy.get(i).moveAI(x, y, listCopy)) {
+                        Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                        childrenNodesList.add(n);
+                    }
+
+                    listCopy = Node.ClonePieces(node.PiecesState);
+                    y = (int) listCopy.get(i).position.getY() - 1;
+                    x = (int) listCopy.get(i).position.getX() + 1;
+                    if (listCopy.get(i).moveAI(x, y, listCopy)) {
+                        Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                        childrenNodesList.add(n);
+                    }
+                    listCopy = Node.ClonePieces(node.PiecesState);
+                    y = (int) listCopy.get(i).position.getY() - 1;
+                    x = (int) listCopy.get(i).position.getX() - 1;
+                    if (listCopy.get(i).moveAI(x, y, listCopy)) {
+                        Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                        childrenNodesList.add(n);
+                    }
+
+                }
+
+            }
+            for (int i = 16; i <= 17; i++) {
+                node.isMax = isMax;
+                if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Knight") && node.PiecesState.get(i).color.equalsIgnoreCase(color) && node.PiecesState.get(i).alive) {
+
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                    int x = (int) listCopy.get(i).position.getX();
+                    int y = (int) listCopy.get(i).position.getY();
+                    if (x + 1 >= 0 && x + 1 <= 7 && y + 2 >= 0 && y + 2 <= 7) {
+                        if (listCopy.get(i).moveAI(x + 1, y + 2, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x - 1 >= 0 && x - 1 <= 7 && y + 2 >= 0 && y + 2 <= 7) {
+                        if (listCopy.get(i).moveAI(x - 1, y + 2, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x + 1 >= 0 && x + 1 <= 7 && y - 2 >= 0 && y - 2 <= 7) {
+                        if (listCopy.get(i).moveAI(x + 1, y - 2, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x - 1 >= 0 && x - 1 <= 7 && y - 2 >= 0 && y - 2 <= 7) {
+                        if (listCopy.get(i).moveAI(x - 1, y - 2, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x + 2 >= 0 && x + 2 <= 7 && y + 1 >= 0 && y + 1 <= 7) {
+                        if (listCopy.get(i).moveAI(x + 2, y + 1, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x + 2 >= 0 && x + 2 <= 7 && y - 1 >= 0 && y - 1 <= 7) {
+                        if (listCopy.get(i).moveAI(x + 2, y - 1, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x - 2 >= 0 && x - 2 <= 7 && y + 1 >= 0 && y + 1 <= 7) {
+                        if (listCopy.get(i).moveAI(x - 2, y + 1, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x - 2 >= 0 && x - 2 <= 7 && y - 1 >= 0 && y - 1 <= 7) {
+                        if (listCopy.get(i).moveAI(x - 2, y - 1, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+
+                }
+            }
+
+            for (int i = 22; i <= 23; i++) {
+                if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook") && node.PiecesState.get(i).color.equalsIgnoreCase(color)&& node.PiecesState.get(i).alive) {
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                    int y = (int) listCopy.get(i).position.getY();
                     //loop on x values--> same row
-                    for(int x = 0 ; x<8;x++){
+                    for (int x = 0; x < 8; x++) {
                         //kol el amaken eli 3ala el x
-                        listCopy=Node.ClonePieces(node.PiecesState);
-                        if(x==node.PiecesState.get(i).position.getX())
+                        listCopy = Node.ClonePieces(node.PiecesState);
+                        if (x == node.PiecesState.get(i).position.getX()) {
                             continue;
-                        else if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            System.out.println("Node.Alpha is "+node.alpha+"  Node.Beta is "+node.beta);
+                        } else if (listCopy.get(i).moveAI(x, y, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            System.out.println("Node.Alpha is " + node.alpha + "  Node.Beta is " + node.beta);
                             childrenNodesList.add(n);
                         }
                     }
                     //loop on different y values --> same column
-                    int x = (int)listCopy.get(i).position.getX();
-                    for(y =0 ; y<8;y++){//kol el amaken eli 3ala el x
-                        listCopy=Node.ClonePieces(node.PiecesState);
-                        if(y==node.PiecesState.get(i).position.getY())
+                    int x = (int) listCopy.get(i).position.getX();
+                    for (y = 0; y < 8; y++) {//kol el amaken eli 3ala el x
+                        listCopy = Node.ClonePieces(node.PiecesState);
+                        if (y == node.PiecesState.get(i).position.getY()) {
                             continue;
-                        else if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        } else if (listCopy.get(i).moveAI(x, y, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
                             childrenNodesList.add(n);
-                            
+
                         }
                     }
                 }
-                
-                
-                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Bishop")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+            }
+            for(int i=24;i<=25;i++){
+                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Bishop")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)&& node.PiecesState.get(i).alive){
                     ////// This is for fooo2 shemaaal
                     int y = (int) node.PiecesState.get(i).position.getY() - 1;
                     for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
@@ -241,26 +339,28 @@ public class Node {
                     }
 
                 }
-                else if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Queen") && node.PiecesState.get(i).color.equalsIgnoreCase(color)) {
+            
+            }
+            if (node.PiecesState.get(28).pieceType.equalsIgnoreCase("Queen") && node.PiecesState.get(28).color.equalsIgnoreCase(color) && node.PiecesState.get(28).alive) {
 
                     for (int x = 0; x < 8; x++) {//kol el amaken eli 3ala el y (VERTICALLY)
-                        if (x == node.PiecesState.get(i).position.getX()) {
+                        if (x == node.PiecesState.get(28).position.getX()) {
                             continue;
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        int y = (int) listCopy.get(i).position.getY();
-                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
+                        int y = (int) listCopy.get(28).position.getY();
+                        if (listCopy.get(28).moveAI(x, y,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         }
                     }
                     for (int y = 0; y < 8; y++) {//kol el amaken eli 3ala el x (HORIZONTALLY)
-                        if (y == node.PiecesState.get(i).position.getY()) {
+                        if (y == node.PiecesState.get(28).position.getY()) {
                             continue;
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        int x = (int) listCopy.get(i).position.getX();
-                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
+                        int x = (int) listCopy.get(28).position.getX();
+                        if (listCopy.get(28).moveAI(x, y,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         }
@@ -268,6 +368,269 @@ public class Node {
                     
               ///////////////////// DIAGONAL ////////////////////
                     
+                    ////// This is for fooo2 shemaaal
+                    int y = (int) node.PiecesState.get(28).position.getY() - 1;
+                    for (int x = (int) node.PiecesState.get(28).position.getX() - 1; x >= 0; x--) {
+//                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
+                        if (y < 0) {
+                            break;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        //int y = (int)listCopy.get(i).position.getY();
+                        if (listCopy.get(28).moveAI(x, y,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y--;
+                        if (y < 0) {
+                            break;
+                        }
+                    }
+
+                    //////This if or ta7t yemeeeen
+                    int y2 = (int) node.PiecesState.get(28).position.getY() + 1;
+                    for (int x = (int) node.PiecesState.get(28).position.getX() + 1; x < 8; x++) {
+                        if (y2 >= 8) {
+                            break;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        //int y = (int)listCopy.get(i).position.getY();
+                        if (listCopy.get(28).moveAI(x, y2,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y2++;
+                        if (y2 >= 8) {
+                            break;
+                        }
+                    }
+                    
+                    //Thiss is for fooo2 yemeeeen 
+                    int y3 = (int) node.PiecesState.get(28).position.getY() - 1;
+                    for (int x = (int) node.PiecesState.get(28).position.getX() + 1; x < 8; x++) {
+                         if (y < 0) {
+                            break;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        if (listCopy.get(28).moveAI(x, y3,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y3--;
+                        if (y3 <0 ) {
+                            break;
+                        }
+                    }
+                    
+                    /////// This is for ta7tt shemaaaalll
+                    int y4 = (int) node.PiecesState.get(28).position.getY() + 1;
+                    for (int x = (int) node.PiecesState.get(28).position.getX() - 1; x >= 0; x--) {
+                         if (y4 >= 8) {
+                            break;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        if (listCopy.get(28).moveAI(x, y4,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y4++;
+                        if (y4 >= 8) {
+                            break;
+                        }
+                    }
+                }
+            if(node.PiecesState.get(30).pieceType.equalsIgnoreCase("King")&&node.PiecesState.get(30).color.equalsIgnoreCase(color)&& node.PiecesState.get(30).alive){
+                    
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                    int x = (int)listCopy.get(30).position.getX();
+                    int y = (int)listCopy.get(30).position.getY();
+                    
+                    //et7arak 7arrak yemiin
+                    if(listCopy.get(30).moveAI(x+1,y,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arraka shemal
+                    if(listCopy.get(30).moveAI(x-1,y,listCopy)){
+                       Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arrakka fo2
+                    if(listCopy.get(30).moveAI(x,y-1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7araka ta7t
+                    if(listCopy.get(30).moveAI(x,y+1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arraka diagonal fo2 yemin 
+                    if(listCopy.get(30).moveAI(x+1,y-1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arrakka diagonal fo2 shemal
+                    if(listCopy.get(30).moveAI(x-1,y-1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arrakka diagonal ta7t shemal
+                    if(listCopy.get(30).moveAI(x-1,y+1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                    //et7arak 7arrakka diagonal ta7t yemin
+                    if(listCopy.get(30).moveAI(x+1,y+1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
+                }
+            
+
+        } else {
+             for (int i = 8; i <= 15; i++) {
+                node.isMax = isMax;
+                if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawn") && node.PiecesState.get(i).color.equalsIgnoreCase(color) && node.PiecesState.get(i).alive) {
+                        if(node.PiecesState.get(i).numOfMoves==0){
+                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                            int y = (int)listCopy.get(i).position.getY()+2;
+                            int x = (int)listCopy.get(i).position.getX();
+                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                                childrenNodesList.add(n);
+                        }
+                        }
+                        
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        int y = (int)listCopy.get(i).position.getY()+1;
+                        int x = (int)listCopy.get(i).position.getX();
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                        listCopy = Node.ClonePieces(node.PiecesState);
+                         y = (int)listCopy.get(i).position.getY()+1;
+                         x = (int)listCopy.get(i).position.getX()+1;
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                       listCopy = Node.ClonePieces(node.PiecesState);
+                        y = (int)listCopy.get(i).position.getY()+1;
+                        x = (int)listCopy.get(i).position.getX()-1;
+                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+
+  
+
+   
+
+
+                }
+
+            }
+            for (int i = 18; i <= 19; i++) {
+                node.isMax = isMax;
+                if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Knight") && node.PiecesState.get(i).color.equalsIgnoreCase(color) && node.PiecesState.get(i).alive) {
+
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                    int x = (int) listCopy.get(i).position.getX();
+                    int y = (int) listCopy.get(i).position.getY();
+                    if (x + 1 >= 0 && x + 1 <= 7 && y + 2 >= 0 && y + 2 <= 7) {
+                        if (listCopy.get(i).moveAI(x + 1, y + 2, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x - 1 >= 0 && x - 1 <= 7 && y + 2 >= 0 && y + 2 <= 7) {
+                        if (listCopy.get(i).moveAI(x - 1, y + 2, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x + 1 >= 0 && x + 1 <= 7 && y - 2 >= 0 && y - 2 <= 7) {
+                        if (listCopy.get(i).moveAI(x + 1, y - 2, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x - 1 >= 0 && x - 1 <= 7 && y - 2 >= 0 && y - 2 <= 7) {
+                        if (listCopy.get(i).moveAI(x - 1, y - 2, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x + 2 >= 0 && x + 2 <= 7 && y + 1 >= 0 && y + 1 <= 7) {
+                        if (listCopy.get(i).moveAI(x + 2, y + 1, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x + 2 >= 0 && x + 2 <= 7 && y - 1 >= 0 && y - 1 <= 7) {
+                        if (listCopy.get(i).moveAI(x + 2, y - 1, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x - 2 >= 0 && x - 2 <= 7 && y + 1 >= 0 && y + 1 <= 7) {
+                        if (listCopy.get(i).moveAI(x - 2, y + 1, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    if (x - 2 >= 0 && x - 2 <= 7 && y - 1 >= 0 && y - 1 <= 7) {
+                        if (listCopy.get(i).moveAI(x - 2, y - 1, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+
+                }
+            }
+
+            for (int i = 20; i <= 21; i++) {
+                if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook") && node.PiecesState.get(i).color.equalsIgnoreCase(color)&& node.PiecesState.get(i).alive) {
+                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                    int y = (int) listCopy.get(i).position.getY();
+                    //loop on x values--> same row
+                    for (int x = 0; x < 8; x++) {
+                        //kol el amaken eli 3ala el x
+                        listCopy = Node.ClonePieces(node.PiecesState);
+                        if (x == node.PiecesState.get(i).position.getX()) {
+                            continue;
+                        } else if (listCopy.get(i).moveAI(x, y, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            System.out.println("Node.Alpha is " + node.alpha + "  Node.Beta is " + node.beta);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    //loop on different y values --> same column
+                    int x = (int) listCopy.get(i).position.getX();
+                    for (y = 0; y < 8; y++) {//kol el amaken eli 3ala el x
+                        listCopy = Node.ClonePieces(node.PiecesState);
+                        if (y == node.PiecesState.get(i).position.getY()) {
+                            continue;
+                        } else if (listCopy.get(i).moveAI(x, y, listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta, isMax);
+                            childrenNodesList.add(n);
+
+                        }
+                    }
+                }
+            }
+            for(int i=26;i<=27;i++){
+                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Bishop")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)&& node.PiecesState.get(i).alive){
                     ////// This is for fooo2 shemaaal
                     int y = (int) node.PiecesState.get(i).position.getY() - 1;
                     for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
@@ -277,7 +640,7 @@ public class Node {
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         //int y = (int)listCopy.get(i).position.getY();
-                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
+                        if (listCopy.get(i).moveAI(x,y,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         } else {
@@ -297,7 +660,7 @@ public class Node {
                         }
                         ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
                         //int y = (int)listCopy.get(i).position.getY();
-                        if (listCopy.get(i).moveAI(x, y2,listCopy)) {
+                        if (listCopy.get(i).moveAI(x,y2,listCopy)) {
                             Node n = new Node(listCopy, node.alpha, node.beta,isMax);
                             childrenNodesList.add(n);
                         } else {
@@ -346,184 +709,687 @@ public class Node {
                             break;
                         }
                     }
+
                 }
-                
-                
-                
-                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("King")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+            
+            }
+            if (node.PiecesState.get(29).pieceType.equalsIgnoreCase("Queen") && node.PiecesState.get(29).color.equalsIgnoreCase(color) && node.PiecesState.get(29).alive) {
+
+                    for (int x = 0; x < 8; x++) {//kol el amaken eli 3ala el y (VERTICALLY)
+                        if (x == node.PiecesState.get(28).position.getX()) {
+                            continue;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        int y = (int) listCopy.get(28).position.getY();
+                        if (listCopy.get(28).moveAI(x, y,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    for (int y = 0; y < 8; y++) {//kol el amaken eli 3ala el x (HORIZONTALLY)
+                        if (y == node.PiecesState.get(28).position.getY()) {
+                            continue;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        int x = (int) listCopy.get(28).position.getX();
+                        if (listCopy.get(28).moveAI(x, y,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        }
+                    }
+                    
+              ///////////////////// DIAGONAL ////////////////////
+                    
+                    ////// This is for fooo2 shemaaal
+                    int y = (int) node.PiecesState.get(28).position.getY() - 1;
+                    for (int x = (int) node.PiecesState.get(28).position.getX() - 1; x >= 0; x--) {
+//                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
+                        if (y < 0) {
+                            break;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        //int y = (int)listCopy.get(i).position.getY();
+                        if (listCopy.get(28).moveAI(x, y,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y--;
+                        if (y < 0) {
+                            break;
+                        }
+                    }
+
+                    //////This if or ta7t yemeeeen
+                    int y2 = (int) node.PiecesState.get(28).position.getY() + 1;
+                    for (int x = (int) node.PiecesState.get(28).position.getX() + 1; x < 8; x++) {
+                        if (y2 >= 8) {
+                            break;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        //int y = (int)listCopy.get(i).position.getY();
+                        if (listCopy.get(28).moveAI(x, y2,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y2++;
+                        if (y2 >= 8) {
+                            break;
+                        }
+                    }
+                    
+                    //Thiss is for fooo2 yemeeeen 
+                    int y3 = (int) node.PiecesState.get(28).position.getY() - 1;
+                    for (int x = (int) node.PiecesState.get(28).position.getX() + 1; x < 8; x++) {
+                         if (y < 0) {
+                            break;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        if (listCopy.get(28).moveAI(x, y3,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y3--;
+                        if (y3 <0 ) {
+                            break;
+                        }
+                    }
+                    
+                    /////// This is for ta7tt shemaaaalll
+                    int y4 = (int) node.PiecesState.get(28).position.getY() + 1;
+                    for (int x = (int) node.PiecesState.get(28).position.getX() - 1; x >= 0; x--) {
+                         if (y4 >= 8) {
+                            break;
+                        }
+                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+                        if (listCopy.get(28).moveAI(x, y4,listCopy)) {
+                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+                            childrenNodesList.add(n);
+                        } else {
+                            break;
+                        }
+                        y4++;
+                        if (y4 >= 8) {
+                            break;
+                        }
+                    }
+                }
+            if(node.PiecesState.get(31).pieceType.equalsIgnoreCase("King")&&node.PiecesState.get(31).color.equalsIgnoreCase(color)&& node.PiecesState.get(31).alive){
                     
                     ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                    int x = (int)listCopy.get(i).position.getX();
-                    int y = (int)listCopy.get(i).position.getY();
+                    int x = (int)listCopy.get(30).position.getX();
+                    int y = (int)listCopy.get(30).position.getY();
                     
                     //et7arak 7arrak yemiin
-                    if(listCopy.get(i).moveAI(x+1,y,listCopy)){
+                    if(listCopy.get(30).moveAI(x+1,y,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arraka shemal
-                    if(listCopy.get(i).moveAI(x-1,y,listCopy)){
+                    if(listCopy.get(30).moveAI(x-1,y,listCopy)){
                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka fo2
-                    if(listCopy.get(i).moveAI(x,y-1,listCopy)){
+                    if(listCopy.get(30).moveAI(x,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7araka ta7t
-                    if(listCopy.get(i).moveAI(x,y+1,listCopy)){
+                    if(listCopy.get(30).moveAI(x,y+1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arraka diagonal fo2 yemin 
-                    if(listCopy.get(i).moveAI(x+1,y-1,listCopy)){
+                    if(listCopy.get(30).moveAI(x+1,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka diagonal fo2 shemal
-                    if(listCopy.get(i).moveAI(x-1,y-1,listCopy)){
+                    if(listCopy.get(30).moveAI(x-1,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka diagonal ta7t shemal
-                    if(listCopy.get(i).moveAI(x-1,y+1,listCopy)){
+                    if(listCopy.get(30).moveAI(x-1,y+1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka diagonal ta7t yemin
-                    if(listCopy.get(i).moveAI(x+1,y+1,listCopy)){
+                    if(listCopy.get(30).moveAI(x+1,y+1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
-                }
-                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Knight")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    
-                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                    int x = (int)listCopy.get(i).position.getX();
-                    int y = (int)listCopy.get(i).position.getY();
-                    if(x+1>=0&&x+1<=7&&y+2>=0&&y+2<=7)
-                        if(listCopy.get(i).moveAI(x+1, y+2,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    if(x-1>=0&&x-1<=7&&y+2>=0&&y+2<=7)
-                        if(listCopy.get(i).moveAI(x-1, y+2,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    if(x+1>=0&&x+1<=7&&y-2>=0&&y-2<=7)
-                        if(listCopy.get(i).moveAI(x+1, y-2,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    if(x-1>=0&&x-1<=7&&y-2>=0&&y-2<=7)
-                        if(listCopy.get(i).moveAI(x-1, y-2,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    if(x+2>=0&&x+2<=7&&y+1>=0&&y+1<=7)
-                        if(listCopy.get(i).moveAI(x+2, y+1,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    if(x+2>=0&&x+2<=7&&y-1>=0&&y-1<=7)
-                        if(listCopy.get(i).moveAI(x+2, y-1,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    if(x-2>=0&&x-2<=7&&y+1>=0&&y+1<=7)
-                        if(listCopy.get(i).moveAI(x-2, y+1,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    if(x-2>=0&&x-2<=7&&y-1>=0&&y-1<=7)
-                        if(listCopy.get(i).moveAI(x-2, y-1,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    
-                }
-                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawn")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
-                    //kiro   get color > black up  y-1 > true >  
-                    // black
-                    if(node.PiecesState.get(i).color.equals("Black")){
-                        if(node.PiecesState.get(i).numOfMoves==0){
-                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                            int y = (int)listCopy.get(i).position.getY()-2;
-                            int x = (int)listCopy.get(i).position.getX();
-                            if(listCopy.get(i).moveAI(x,y,listCopy)){
-                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                                childrenNodesList.add(n);
-                        }
-                            
-                            
-                        
-                        }
-                        
-                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                            int y = (int)listCopy.get(i).position.getY()-1;
-                            int x = (int)listCopy.get(i).position.getX();
-                            if(listCopy.get(i).moveAI(x,y,listCopy)){
-                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                                childrenNodesList.add(n);
-                            }
-                        
-                            listCopy = Node.ClonePieces(node.PiecesState);
-                             y = (int)listCopy.get(i).position.getY()-1;
-                             x = (int)listCopy.get(i).position.getX()+1;
-                            if(listCopy.get(i).moveAI(x,y,listCopy)){
-                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                                childrenNodesList.add(n);
-                            }
-                           listCopy = Node.ClonePieces(node.PiecesState);
-                            y = (int)listCopy.get(i).position.getY()-1;
-                            x = (int)listCopy.get(i).position.getX()-1;
-                            if(listCopy.get(i).moveAI(x,y,listCopy)){
-                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                                childrenNodesList.add(n);
-                            }
-                    }
-                    if(node.PiecesState.get(i).color.equals("White")){
-                       
-                        if(node.PiecesState.get(i).numOfMoves==0){
-                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                            int y = (int)listCopy.get(i).position.getY()+2;
-                            int x = (int)listCopy.get(i).position.getX();
-                            if(listCopy.get(i).moveAI(x,y,listCopy)){
-                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                                childrenNodesList.add(n);
-                        }
-                        }
-                        
-                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
-                        int y = (int)listCopy.get(i).position.getY()+1;
-                        int x = (int)listCopy.get(i).position.getX();
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                        listCopy = Node.ClonePieces(node.PiecesState);
-                         y = (int)listCopy.get(i).position.getY()+1;
-                         x = (int)listCopy.get(i).position.getX()+1;
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                       listCopy = Node.ClonePieces(node.PiecesState);
-                        y = (int)listCopy.get(i).position.getY()+1;
-                        x = (int)listCopy.get(i).position.getX()-1;
-                        if(listCopy.get(i).moveAI(x,y,listCopy)){
-                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                            childrenNodesList.add(n);
-                        }
-                    }
-                }
-            }
+                }           
+
         }
-        //assign with isMax//assign with isMax
-        return childrenNodesList;
+                return childrenNodesList;
     }
+        
+        
+        
+        
+        
+        
+        
+        
+        //parent node which contains a game state ( pieces with their positions ) 
+//        for(int i=20;i<=23;i++){
+//            node.isMax=isMax;
+//            if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color) && node.PiecesState.get(i).alive){
+//                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                    int y = (int)listCopy.get(i).position.getY();
+//                    //loop on x values--> same row
+//                    for(int x = 0 ; x<8;x++){
+//                        //kol el amaken eli 3ala el x
+//                        listCopy=Node.ClonePieces(node.PiecesState);
+//                        if(x==node.PiecesState.get(i).position.getX())
+//                            continue;
+//                        else if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            System.out.println("Node.Alpha is "+node.alpha+"  Node.Beta is "+node.beta);
+//                            childrenNodesList.add(n);
+//                        }
+//                    }
+//                    //loop on different y values --> same column
+//                    int x = (int)listCopy.get(i).position.getX();
+//                    for(y =0 ; y<8;y++){//kol el amaken eli 3ala el x
+//                        listCopy=Node.ClonePieces(node.PiecesState);
+//                        if(y==node.PiecesState.get(i).position.getY())
+//                            continue;
+//                        else if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                            
+//                        }
+//                    }
+//                
+//            }
+//        }
+//        for(int i=24 ;i<=27;i++){
+//            node.isMax=isMax;
+//        
+//        }
+        
+            
+//        for(int i = 0 ; i<node.PiecesState.size();i++){
+//            node.isMax=isMax;
+//            if(node.PiecesState.get(i).alive){
+//                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawn")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+//                    //kiro   get color > black up  y-1 > true >  
+//                    // black
+//                    if(node.PiecesState.get(i).color.equals("Black")){
+//                        if(node.PiecesState.get(i).numOfMoves==0){
+//                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                            int y = (int)listCopy.get(i).position.getY()-2;
+//                            int x = (int)listCopy.get(i).position.getX();
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                        }
+//                            
+//                            
+//                        
+//                        }
+//                        
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                            int y = (int)listCopy.get(i).position.getY()-1;
+//                            int x = (int)listCopy.get(i).position.getX();
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                            }
+//                        
+//                            listCopy = Node.ClonePieces(node.PiecesState);
+//                             y = (int)listCopy.get(i).position.getY()-1;
+//                             x = (int)listCopy.get(i).position.getX()+1;
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                            }
+//                           listCopy = Node.ClonePieces(node.PiecesState);
+//                            y = (int)listCopy.get(i).position.getY()-1;
+//                            x = (int)listCopy.get(i).position.getX()-1;
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                            }
+//                    }
+//                    if(node.PiecesState.get(i).color.equals("White")){
+//                       
+//                        if(node.PiecesState.get(i).numOfMoves==0){
+//                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                            int y = (int)listCopy.get(i).position.getY()+2;
+//                            int x = (int)listCopy.get(i).position.getX();
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                        }
+//                        }
+//                        
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        int y = (int)listCopy.get(i).position.getY()+1;
+//                        int x = (int)listCopy.get(i).position.getX();
+//                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                        listCopy = Node.ClonePieces(node.PiecesState);
+//                         y = (int)listCopy.get(i).position.getY()+1;
+//                         x = (int)listCopy.get(i).position.getX()+1;
+//                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                       listCopy = Node.ClonePieces(node.PiecesState);
+//                        y = (int)listCopy.get(i).position.getY()+1;
+//                        x = (int)listCopy.get(i).position.getX()-1;
+//                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    }
+//                }
+//                //rook
+//                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Rook")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+//                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                    int y = (int)listCopy.get(i).position.getY();
+//                    //loop on x values--> same row
+//                    for(int x = 0 ; x<8;x++){
+//                        //kol el amaken eli 3ala el x
+//                        listCopy=Node.ClonePieces(node.PiecesState);
+//                        if(x==node.PiecesState.get(i).position.getX())
+//                            continue;
+//                        else if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            System.out.println("Node.Alpha is "+node.alpha+"  Node.Beta is "+node.beta);
+//                            childrenNodesList.add(n);
+//                        }
+//                    }
+//                    //loop on different y values --> same column
+//                    int x = (int)listCopy.get(i).position.getX();
+//                    for(y =0 ; y<8;y++){//kol el amaken eli 3ala el x
+//                        listCopy=Node.ClonePieces(node.PiecesState);
+//                        if(y==node.PiecesState.get(i).position.getY())
+//                            continue;
+//                        else if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                            
+//                        }
+//                    }
+//                }
+//                
+//                
+//                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Bishop")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+//                    ////// This is for fooo2 shemaaal
+//                    int y = (int) node.PiecesState.get(i).position.getY() - 1;
+//                    for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
+////                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
+//                        if (y < 0) {
+//                            break;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        //int y = (int)listCopy.get(i).position.getY();
+//                        if (listCopy.get(i).moveAI(x,y,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        } else {
+//                            break;
+//                        }
+//                        y--;
+//                        if (y < 0) {
+//                            break;
+//                        }
+//                    }
+//
+//                    //////This if or ta7t yemeeeen
+//                    int y2 = (int) node.PiecesState.get(i).position.getY() + 1;
+//                    for (int x = (int) node.PiecesState.get(i).position.getX() + 1; x < 8; x++) {
+//                        if (y2 >= 8) {
+//                            break;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        //int y = (int)listCopy.get(i).position.getY();
+//                        if (listCopy.get(i).moveAI(x,y2,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        } else {
+//                            break;
+//                        }
+//                        y2++;
+//                        if (y2 >= 8) {
+//                            break;
+//                        }
+//                    }
+//                    
+//                    //Thiss is for fooo2 yemeeeen 
+//                    int y3 = (int) node.PiecesState.get(i).position.getY() - 1;
+//                    for (int x = (int) node.PiecesState.get(i).position.getX() + 1; x < 8; x++) {
+//                         if (y < 0) {
+//                            break;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        if (listCopy.get(i).moveAI(x, y3,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        } else {
+//                            break;
+//                        }
+//                        y3--;
+//                        if (y3 <0 ) {
+//                            break;
+//                        }
+//                    }
+//                    
+//                    /////// This is for ta7tt shemaaaalll
+//                    int y4 = (int) node.PiecesState.get(i).position.getY() + 1;
+//                    for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
+//                         if (y4 >= 8) {
+//                            break;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        if (listCopy.get(i).moveAI(x, y4,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        } else {
+//                            break;
+//                        }
+//                        y4++;
+//                        if (y4 >= 8) {
+//                            break;
+//                        }
+//                    }
+//
+//                }
+//                else if (node.PiecesState.get(i).pieceType.equalsIgnoreCase("Queen") && node.PiecesState.get(i).color.equalsIgnoreCase(color)) {
+//
+//                    for (int x = 0; x < 8; x++) {//kol el amaken eli 3ala el y (VERTICALLY)
+//                        if (x == node.PiecesState.get(i).position.getX()) {
+//                            continue;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        int y = (int) listCopy.get(i).position.getY();
+//                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    }
+//                    for (int y = 0; y < 8; y++) {//kol el amaken eli 3ala el x (HORIZONTALLY)
+//                        if (y == node.PiecesState.get(i).position.getY()) {
+//                            continue;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        int x = (int) listCopy.get(i).position.getX();
+//                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    }
+//                    
+//              ///////////////////// DIAGONAL ////////////////////
+//                    
+//                    ////// This is for fooo2 shemaaal
+//                    int y = (int) node.PiecesState.get(i).position.getY() - 1;
+//                    for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
+////                        for(int y=(int) node.PiecesState.get(i).position.getY()-1;y>0; y--)
+//                        if (y < 0) {
+//                            break;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        //int y = (int)listCopy.get(i).position.getY();
+//                        if (listCopy.get(i).moveAI(x, y,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        } else {
+//                            break;
+//                        }
+//                        y--;
+//                        if (y < 0) {
+//                            break;
+//                        }
+//                    }
+//
+//                    //////This if or ta7t yemeeeen
+//                    int y2 = (int) node.PiecesState.get(i).position.getY() + 1;
+//                    for (int x = (int) node.PiecesState.get(i).position.getX() + 1; x < 8; x++) {
+//                        if (y2 >= 8) {
+//                            break;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        //int y = (int)listCopy.get(i).position.getY();
+//                        if (listCopy.get(i).moveAI(x, y2,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        } else {
+//                            break;
+//                        }
+//                        y2++;
+//                        if (y2 >= 8) {
+//                            break;
+//                        }
+//                    }
+//                    
+//                    //Thiss is for fooo2 yemeeeen 
+//                    int y3 = (int) node.PiecesState.get(i).position.getY() - 1;
+//                    for (int x = (int) node.PiecesState.get(i).position.getX() + 1; x < 8; x++) {
+//                         if (y < 0) {
+//                            break;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        if (listCopy.get(i).moveAI(x, y3,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        } else {
+//                            break;
+//                        }
+//                        y3--;
+//                        if (y3 <0 ) {
+//                            break;
+//                        }
+//                    }
+//                    
+//                    /////// This is for ta7tt shemaaaalll
+//                    int y4 = (int) node.PiecesState.get(i).position.getY() + 1;
+//                    for (int x = (int) node.PiecesState.get(i).position.getX() - 1; x >= 0; x--) {
+//                         if (y4 >= 8) {
+//                            break;
+//                        }
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        if (listCopy.get(i).moveAI(x, y4,listCopy)) {
+//                            Node n = new Node(listCopy, node.alpha, node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        } else {
+//                            break;
+//                        }
+//                        y4++;
+//                        if (y4 >= 8) {
+//                            break;
+//                        }
+//                    }
+//                }
+//                
+//                
+//                
+//                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("King")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+//                    
+//                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                    int x = (int)listCopy.get(i).position.getX();
+//                    int y = (int)listCopy.get(i).position.getY();
+//                    
+//                    //et7arak 7arrak yemiin
+//                    if(listCopy.get(i).moveAI(x+1,y,listCopy)){
+//                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                        childrenNodesList.add(n);
+//                    }
+//                    //et7arak 7arraka shemal
+//                    if(listCopy.get(i).moveAI(x-1,y,listCopy)){
+//                       Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                        childrenNodesList.add(n);
+//                    }
+//                    //et7arak 7arrakka fo2
+//                    if(listCopy.get(i).moveAI(x,y-1,listCopy)){
+//                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                        childrenNodesList.add(n);
+//                    }
+//                    //et7arak 7araka ta7t
+//                    if(listCopy.get(i).moveAI(x,y+1,listCopy)){
+//                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                        childrenNodesList.add(n);
+//                    }
+//                    //et7arak 7arraka diagonal fo2 yemin 
+//                    if(listCopy.get(i).moveAI(x+1,y-1,listCopy)){
+//                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                        childrenNodesList.add(n);
+//                    }
+//                    //et7arak 7arrakka diagonal fo2 shemal
+//                    if(listCopy.get(i).moveAI(x-1,y-1,listCopy)){
+//                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                        childrenNodesList.add(n);
+//                    }
+//                    //et7arak 7arrakka diagonal ta7t shemal
+//                    if(listCopy.get(i).moveAI(x-1,y+1,listCopy)){
+//                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                        childrenNodesList.add(n);
+//                    }
+//                    //et7arak 7arrakka diagonal ta7t yemin
+//                    if(listCopy.get(i).moveAI(x+1,y+1,listCopy)){
+//                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                        childrenNodesList.add(n);
+//                    }
+//                }
+//                if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Knight")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+//                    
+//                    ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                    int x = (int)listCopy.get(i).position.getX();
+//                    int y = (int)listCopy.get(i).position.getY();
+//                    if(x+1>=0&&x+1<=7&&y+2>=0&&y+2<=7)
+//                        if(listCopy.get(i).moveAI(x+1, y+2,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    if(x-1>=0&&x-1<=7&&y+2>=0&&y+2<=7)
+//                        if(listCopy.get(i).moveAI(x-1, y+2,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    if(x+1>=0&&x+1<=7&&y-2>=0&&y-2<=7)
+//                        if(listCopy.get(i).moveAI(x+1, y-2,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    if(x-1>=0&&x-1<=7&&y-2>=0&&y-2<=7)
+//                        if(listCopy.get(i).moveAI(x-1, y-2,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    if(x+2>=0&&x+2<=7&&y+1>=0&&y+1<=7)
+//                        if(listCopy.get(i).moveAI(x+2, y+1,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    if(x+2>=0&&x+2<=7&&y-1>=0&&y-1<=7)
+//                        if(listCopy.get(i).moveAI(x+2, y-1,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    if(x-2>=0&&x-2<=7&&y+1>=0&&y+1<=7)
+//                        if(listCopy.get(i).moveAI(x-2, y+1,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    if(x-2>=0&&x-2<=7&&y-1>=0&&y-1<=7)
+//                        if(listCopy.get(i).moveAI(x-2, y-1,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    
+//                }
+//                else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawn")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
+//                    //kiro   get color > black up  y-1 > true >  
+//                    // black
+//                    if(node.PiecesState.get(i).color.equals("Black")){
+//                        if(node.PiecesState.get(i).numOfMoves==0){
+//                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                            int y = (int)listCopy.get(i).position.getY()-2;
+//                            int x = (int)listCopy.get(i).position.getX();
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                        }
+//                            
+//                            
+//                        
+//                        }
+//                        
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                            int y = (int)listCopy.get(i).position.getY()-1;
+//                            int x = (int)listCopy.get(i).position.getX();
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                            }
+//                        
+//                            listCopy = Node.ClonePieces(node.PiecesState);
+//                             y = (int)listCopy.get(i).position.getY()-1;
+//                             x = (int)listCopy.get(i).position.getX()+1;
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                            }
+//                           listCopy = Node.ClonePieces(node.PiecesState);
+//                            y = (int)listCopy.get(i).position.getY()-1;
+//                            x = (int)listCopy.get(i).position.getX()-1;
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                            }
+//                    }
+//                    if(node.PiecesState.get(i).color.equals("White")){
+//                       
+//                        if(node.PiecesState.get(i).numOfMoves==0){
+//                            ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                            int y = (int)listCopy.get(i).position.getY()+2;
+//                            int x = (int)listCopy.get(i).position.getX();
+//                            if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                                Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                                childrenNodesList.add(n);
+//                        }
+//                        }
+//                        
+//                        ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);
+//                        int y = (int)listCopy.get(i).position.getY()+1;
+//                        int x = (int)listCopy.get(i).position.getX();
+//                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                        listCopy = Node.ClonePieces(node.PiecesState);
+//                         y = (int)listCopy.get(i).position.getY()+1;
+//                         x = (int)listCopy.get(i).position.getX()+1;
+//                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                       listCopy = Node.ClonePieces(node.PiecesState);
+//                        y = (int)listCopy.get(i).position.getY()+1;
+//                        x = (int)listCopy.get(i).position.getX()-1;
+//                        if(listCopy.get(i).moveAI(x,y,listCopy)){
+//                            Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+//                            childrenNodesList.add(n);
+//                        }
+//                    }
+//                }
+//            }
+//        }
+        //assign with isMax//assign with isMax
+//        return childrenNodesList;
+//    }
     private static int heuristic (Node LeafNode){ //AI is the white set
         int Score=0;
         Point WhiteKing= new Point(),BlackKing= new Point () ;
