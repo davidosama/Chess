@@ -6,11 +6,17 @@
 package chess;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -49,6 +55,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Main Menu");
         setMinimumSize(new java.awt.Dimension(619, 350));
         setPreferredSize(new java.awt.Dimension(600, 419));
         setResizable(false);
@@ -63,7 +70,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(EasyBtn);
-        EasyBtn.setBounds(50, 60, 100, 32);
+        EasyBtn.setBounds(50, 60, 100, 26);
         EasyBtn.setVisible(false);
 
         BackBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -74,7 +81,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(BackBtn);
-        BackBtn.setBounds(50, 210, 100, 32);
+        BackBtn.setBounds(50, 210, 100, 26);
         BackBtn.setVisible(false);
 
         NormalBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -85,7 +92,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(NormalBtn);
-        NormalBtn.setBounds(50, 110, 100, 32);
+        NormalBtn.setBounds(50, 110, 100, 26);
         NormalBtn.setVisible(false);
 
         HardBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -96,7 +103,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(HardBtn);
-        HardBtn.setBounds(50, 160, 100, 32);
+        HardBtn.setBounds(50, 160, 100, 26);
         HardBtn.setVisible(false);
 
         NewGameBtn.setBackground(new java.awt.Color(153, 153, 153));
@@ -107,17 +114,27 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(NewGameBtn);
-        NewGameBtn.setBounds(50, 110, 100, 32);
+        NewGameBtn.setBounds(50, 110, 100, 26);
 
         CreditsBtn.setBackground(new java.awt.Color(153, 153, 153));
         CreditsBtn.setText("Credits");
+        CreditsBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CreditsBtnActionPerformed(evt);
+            }
+        });
         getContentPane().add(CreditsBtn);
-        CreditsBtn.setBounds(50, 160, 100, 32);
+        CreditsBtn.setBounds(50, 160, 100, 26);
 
         HowToPlayBtn.setBackground(new java.awt.Color(153, 153, 153));
         HowToPlayBtn.setText("How To Play");
+        HowToPlayBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HowToPlayBtnActionPerformed(evt);
+            }
+        });
         getContentPane().add(HowToPlayBtn);
-        HowToPlayBtn.setBounds(50, 210, 100, 32);
+        HowToPlayBtn.setBounds(50, 210, 100, 26);
 
         ExitBtn.setBackground(new java.awt.Color(153, 153, 153));
         ExitBtn.setText("Exit");
@@ -127,7 +144,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(ExitBtn);
-        ExitBtn.setBounds(50, 260, 103, 32);
+        ExitBtn.setBounds(50, 260, 103, 26);
 
         LoadBtn.setBackground(new java.awt.Color(153, 153, 153));
         LoadBtn.setText("Load Game");
@@ -137,7 +154,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
             }
         });
         getContentPane().add(LoadBtn);
-        LoadBtn.setBounds(500, 40, 100, 32);
+        LoadBtn.setBounds(500, 40, 100, 26);
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/chess/imgs/chess-king.jpg"))); // NOI18N
         Background.setName(""); // NOI18N
@@ -199,7 +216,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
         this.setVisible(false);
         try {
-            new GameBoard(1,false,new ArrayList<Object>()).setVisible(true);
+            new GameBoard(3,false,new ArrayList<Object>()).setVisible(true);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -236,6 +253,16 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
 //            System.out.println(selectedFile.getAbsolutePath());
 //        }
     }//GEN-LAST:event_LoadBtnActionPerformed
+
+    private void CreditsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CreditsBtnActionPerformed
+        // TODO add your handling code here:
+        new Credits().setVisible(true);
+    }//GEN-LAST:event_CreditsBtnActionPerformed
+
+    private void HowToPlayBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HowToPlayBtnActionPerformed
+        // TODO add your handling code here:
+        new HowToPlay().setVisible(true);
+    }//GEN-LAST:event_HowToPlayBtnActionPerformed
 
     /**
      * @param args the command line arguments

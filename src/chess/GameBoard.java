@@ -402,6 +402,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
+        setTitle("Willson AI");
         setPreferredSize(new java.awt.Dimension(705, 728));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
