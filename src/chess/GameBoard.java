@@ -989,7 +989,11 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
         for (int i = 0; i < listCopy.size(); i++) {
             if (!(listCopy.get(i).color.equals(AttackedColor)) && listCopy.get(i).alive) {
                 if(listCopy.get(i).canAttackAI(x, y,listCopy)){
-                    return true;
+                    if(listCopy.get(i).position.getX()==x && listCopy.get(i).position.getY()==y){
+                        return false;
+                    }
+                    else
+                        return true;
                 }
             }
         }
