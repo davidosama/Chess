@@ -195,7 +195,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
         this.setVisible(false);
         try {
-            new GameBoard(1,false,new ArrayList<Object>()).setVisible(true);
+            new GameBoard(2,false,new ArrayList<Object>(),2).setVisible(true);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -205,7 +205,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
         this.setVisible(false);
         try {
-            new GameBoard(2,false,new ArrayList<Object>()).setVisible(true);
+            new GameBoard(2,false,new ArrayList<Object>(),3).setVisible(true);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -216,7 +216,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
         // TODO add your handling code here:
         this.setVisible(false);
         try {
-            new GameBoard(3,false,new ArrayList<Object>()).setVisible(true);
+            new GameBoard(3,false,new ArrayList<Object>(),3).setVisible(true);
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(GameFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -241,7 +241,7 @@ public class GameFrame extends javax.swing.JFrame implements Serializable{
                     in.close();
                     fileIn.close();
                     
-                    new GameBoard((int)data.get(0),true,data ).setVisible(true);
+                    new GameBoard((int)data.get(0),true,data ,(int)data.get(15)).setVisible(true);
                     this.setVisible(false);
                     
                 } catch (Exception e) {

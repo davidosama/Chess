@@ -75,7 +75,13 @@ public class Node {
         System.out.println("Beginning minimax");
         //coun
         if(depth==0){
-            node.heuristic=heuristic3(node);
+            if(GameBoard.Heur==1)
+            {node.heuristic=heuristic(node);}
+            else if(GameBoard.Heur==2)
+                {node.heuristic=heuristic2(node);}
+            else if(GameBoard.Heur==3)
+                {node.heuristic=heuristic3(node);}
+            
             System.out.println("Heuristic .  "+node.heuristic);
             return node.heuristic ;
         }
