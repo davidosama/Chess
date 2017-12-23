@@ -367,32 +367,32 @@ public class Node {
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka fo2
-                    if(listCopy.get(i).moveAI(x,y+1,listCopy)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    //et7arak 7araka ta7t
                     if(listCopy.get(i).moveAI(x,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
+                    //et7arak 7araka ta7t
+                    if(listCopy.get(i).moveAI(x,y+1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
                     //et7arak 7arraka diagonal fo2 yemin 
-                    if(listCopy.get(i).moveAI(x+1,y+1,listCopy)){
+                    if(listCopy.get(i).moveAI(x+1,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
                     //et7arak 7arrakka diagonal fo2 shemal
-                    if(listCopy.get(i).moveAI(x-1,y+1,listCopy)){
-                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
-                        childrenNodesList.add(n);
-                    }
-                    //et7arak 7arrakka diagonal ta7t shemal
                     if(listCopy.get(i).moveAI(x-1,y-1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
+                    //et7arak 7arrakka diagonal ta7t shemal
+                    if(listCopy.get(i).moveAI(x-1,y+1,listCopy)){
+                        Node n= new Node(listCopy,node.alpha,node.beta,isMax);
+                        childrenNodesList.add(n);
+                    }
                     //et7arak 7arrakka diagonal ta7t yemin
-                    if(listCopy.get(i).moveAI(x+1,y-1,listCopy)){
+                    if(listCopy.get(i).moveAI(x+1,y+1,listCopy)){
                         Node n= new Node(listCopy,node.alpha,node.beta,isMax);
                         childrenNodesList.add(n);
                     }
