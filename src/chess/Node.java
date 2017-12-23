@@ -452,6 +452,7 @@ public class Node {
                 else if(node.PiecesState.get(i).pieceType.equalsIgnoreCase("Pawn")&&node.PiecesState.get(i).color.equalsIgnoreCase(color)){
                     //kiro   get color > black up  y-1 > true >  
                     // black
+                    
                     if(node.PiecesState.get(i).color.equals("Black")){
                         if(node.PiecesState.get(i).numOfMoves==0){
                             ArrayList<Piece> listCopy = Node.ClonePieces(node.PiecesState);

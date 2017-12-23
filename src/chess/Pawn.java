@@ -36,6 +36,9 @@ public class Pawn extends Piece implements Cloneable, Serializable {
 
     @Override
     public boolean moveAI(int x, int y, ArrayList<Piece> AllPieces) {
+        if(x==7 && y==3){
+            int as=4;
+        }
         if (validateMoveAI(x, y, AllPieces)) {
             int OldX = (int) this.position.getX();
             int OldY = (int) this.position.getY();
