@@ -127,6 +127,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
             blackKing = (King) data.get(12);
             whiteKing = (King) data.get(13);
             this.Heur = (int)data.get(15);
+            King.WhiteKingPosition = (Point)data.get(16);
+            King.BlackKingPosition = (Point)data.get(17);
 
             //4- point mapper tile array
             pm.BoardTilesArray = (Tile[][]) data.get(14);
@@ -1102,6 +1104,8 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener, Seri
                     data.add(whiteKing);
                     data.add(PointMapper.BoardTilesArray);
                     data.add(Heur);
+                    data.add(King.WhiteKingPosition);
+                    data.add(King.BlackKingPosition);
                     FileOutputStream fileOut = new FileOutputStream(filename);
                     out = new ObjectOutputStream(fileOut);
                     out.writeObject(data);
