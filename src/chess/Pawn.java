@@ -95,7 +95,7 @@ public class Pawn extends Piece implements Cloneable, Serializable{
                 if( x == this.position.getX() && y == this.position.getY()+1){
                     return true;
                 }
-                else if( this.numOfMoves == 0  &&  x == this.position.getX() && y == this.position.getY()+2){
+                else if( this.numOfMoves == 0  &&  x == this.position.getX() && y == this.position.getY()+2&& GameBoard.isEmpty(x, (int)this.position.getY()+1)){
                     return true;
                 }
             }
@@ -133,7 +133,7 @@ public class Pawn extends Piece implements Cloneable, Serializable{
                 if( x == this.position.getX() && y == this.position.getY()+1){
                     return true;
                 }
-                else if( this.numOfMoves == 0  &&  x == this.position.getX() && y == this.position.getY()+2){
+                else if( this.numOfMoves == 0  &&  x == this.position.getX() && y == this.position.getY()+2&& isEmptyAI(x, (int)this.position.getY()+1,AllPieces)){
                     return true;
                 }
             }
