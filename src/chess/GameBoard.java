@@ -27,7 +27,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  *
  * @author Kero
  */
-public class GameBoard extends javax.swing.JFrame implements MouseListener ,Serializable{
+public class GameBoard extends javax.swing.JFrame implements MouseListener, Serializable {
 
     public static int WhiteTurns = 0;
     public static int BlackTurns = 0;
@@ -45,32 +45,30 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
     public Queen blackQueen;
     public Queen whiteQueen;
-    
+
     public King blackKing;
     public King whiteKing;
-    
+
     public static int depth = 0;
-    
 
     public static ArrayList<Piece> AllPieces;
     public static ArrayList<Piece> AllPiecesCloned;
-    
+
     boolean PlayerSelected = false;
     static PointMapper pm;
     int x = 0;
     int y = 0;
     Tile[][] GameBoardTile;
     private boolean First = true;
-    Point FirstSelectedPoint= null;
+    Point FirstSelectedPoint = null;
     boolean WhiteTurn = false;//0 for black 1 for white
     private final JLabel SelectedLbl;
-    
-    public GameBoard(int dep,boolean load, ArrayList<Object> data) throws CloneNotSupportedException {
-        
+
+    public GameBoard(int dep, boolean load, ArrayList<Object> data) throws CloneNotSupportedException {
+
         this.depth = dep;
         initComponents();
         pm = new PointMapper();
-      
 
         SelectedLbl = new javax.swing.JLabel();
 
@@ -87,18 +85,16 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         SelectedLbl.setVisible(false);
 
         jPanel1.setLayout(null);
-        
+
         this.setLocationRelativeTo(null);
-        
+
         this.addMouseListener(this);
-        if(load == false)
-        {
-        initializePiecesPositions();
-        }
-        else{
+        if (load == false) {
+            initializePiecesPositions();
+        } else {
             //1- depth
             // used in Gameframe when makin new gameBoard
-            
+
             //2- whiteTurn
             this.WhiteTurn = (boolean) data.get(1);
             //3- array lists with order
@@ -115,94 +111,76 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
             public Queen whiteQueen;
             public King blackKing;
             public King whiteKing;
-        */
+             */
             blackPawns = (ArrayList<Pawn>) data.get(2);
             whitePawns = (ArrayList<Pawn>) data.get(3);
-              blackKnights = (ArrayList<Knight>) data.get(4);
-              whiteKnights = (ArrayList<Knight>) data.get(5);
-              whiteRooks = (ArrayList<Rook>) data.get(6);
-              blackRooks = (ArrayList<Rook>) data.get(7);
-              blackBishops = (ArrayList<Bishop>) data.get(8);
-              whiteBishops = (ArrayList<Bishop>) data.get(9);
-              blackQueen = (Queen) data.get(10);
-              whiteQueen = (Queen) data.get(11);
-              blackKing = (King) data.get(12);
-              whiteKing= (King) data.get(13);
-              
-              //4- point mapper tile array
-              pm.BoardTilesArray = (Tile[][]) data.get(14);
-              
-              // paint
-              for (int i = 0; i < 8; i++) {
+            blackKnights = (ArrayList<Knight>) data.get(4);
+            whiteKnights = (ArrayList<Knight>) data.get(5);
+            whiteRooks = (ArrayList<Rook>) data.get(6);
+            blackRooks = (ArrayList<Rook>) data.get(7);
+            blackBishops = (ArrayList<Bishop>) data.get(8);
+            whiteBishops = (ArrayList<Bishop>) data.get(9);
+            blackQueen = (Queen) data.get(10);
+            whiteQueen = (Queen) data.get(11);
+            blackKing = (King) data.get(12);
+            whiteKing = (King) data.get(13);
 
-            
-            
-            jPanel1.add(blackPawns.get(i).label);
+            //4- point mapper tile array
+            pm.BoardTilesArray = (Tile[][]) data.get(14);
+
+            // paint
+            for (int i = 0; i < 8; i++) {
+
+                jPanel1.add(blackPawns.get(i).label);
 //            blackPawn.label.setVisible(true);
-        }
-        //white Pawns
+            }
+            //white Pawns
 
-        for (int i = 0; i < 8; i++) {
-            
-            
-            jPanel1.add(whitePawns.get(i).label);
-        }
-        //black blackKnights
-       
-        jPanel1.add(blackKnights.get(0).label);
+            for (int i = 0; i < 8; i++) {
 
-        //PointMapper.BoardTilesArray[1][7].piece.position = new Point(1,2);
-        
-        jPanel1.add(blackKnights.get(1).label);
+                jPanel1.add(whitePawns.get(i).label);
+            }
+            //black blackKnights
 
-        //white blackKnights
-        
-        jPanel1.add(whiteKnights.get(0).label);
+            jPanel1.add(blackKnights.get(0).label);
 
-        
-        jPanel1.add(whiteKnights.get(1).label);
+            //PointMapper.BoardTilesArray[1][7].piece.position = new Point(1,2);
+            jPanel1.add(blackKnights.get(1).label);
 
-        //black Rooks
-        
-        jPanel1.add(blackRooks.get(0).label);
+            //white blackKnights
+            jPanel1.add(whiteKnights.get(0).label);
 
+            jPanel1.add(whiteKnights.get(1).label);
 
-        jPanel1.add(blackRooks.get(1).label);
+            //black Rooks
+            jPanel1.add(blackRooks.get(0).label);
 
-        
-        jPanel1.add(whiteRooks.get(0).label);
+            jPanel1.add(blackRooks.get(1).label);
 
-        
-        jPanel1.add(whiteRooks.get(1).label);
+            jPanel1.add(whiteRooks.get(0).label);
 
-        //black bishops
-        
-        jPanel1.add(blackBishops.get(0).label);
+            jPanel1.add(whiteRooks.get(1).label);
 
-        
-        jPanel1.add(blackBishops.get(1).label);
+            //black bishops
+            jPanel1.add(blackBishops.get(0).label);
 
-        //white bishops
-        
-        jPanel1.add(whiteBishops.get(0).label);
+            jPanel1.add(blackBishops.get(1).label);
 
-        
-        jPanel1.add(whiteBishops.get(1).label);
+            //white bishops
+            jPanel1.add(whiteBishops.get(0).label);
 
-        //black Queen
-        
-        jPanel1.add(blackQueen.label);
+            jPanel1.add(whiteBishops.get(1).label);
 
-        //white Queen
-        
-        jPanel1.add(whiteQueen.label);
-        
-        
-        jPanel1.add(whiteKing.label);
-        
-        
-        jPanel1.add(blackKing.label);
-              
+            //black Queen
+            jPanel1.add(blackQueen.label);
+
+            //white Queen
+            jPanel1.add(whiteQueen.label);
+
+            jPanel1.add(whiteKing.label);
+
+            jPanel1.add(blackKing.label);
+
 //        for (int i = 0; i < 8; i++) {
 //
 //
@@ -327,34 +305,24 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
     public Queen blackQueen;
     public Queen whiteQueen;
          */
-        
-        
-        
-        
 //        //AllPiecesCloned = (ArrayList<Piece>) AllPieces.clone();
 //            for (int i = 0; i < AllPieces.size(); i++) {
 //                AllPiecesCloned.add(AllPieces.get(i).clone());
 //    
 //            
 //            }
-        
-        
-        
-        
         setPosions();
 
     }
 
-    
-    
     public static boolean isKing(int x, int y, String attackingColor) {
-       if(!PointMapper.BoardTilesArray[x][y].isEmpty()){
-           if(!PointMapper.BoardTilesArray[x][y].piece.color.equalsIgnoreCase(attackingColor)){
-               if(PointMapper.BoardTilesArray[x][y].piece.pieceType.equalsIgnoreCase("King") && PointMapper.BoardTilesArray[x][y].piece.alive == true){
-                   return true;
-               }
-           }
-       }
+        if (!PointMapper.BoardTilesArray[x][y].isEmpty()) {
+            if (!PointMapper.BoardTilesArray[x][y].piece.color.equalsIgnoreCase(attackingColor)) {
+                if (PointMapper.BoardTilesArray[x][y].piece.pieceType.equalsIgnoreCase("King") && PointMapper.BoardTilesArray[x][y].piece.alive == true) {
+                    return true;
+                }
+            }
+        }
         return false;
     }
 
@@ -373,8 +341,7 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                     return true;
                 }
             }
-        }
-        else if (attackingColor.equalsIgnoreCase("Black")) {
+        } else if (attackingColor.equalsIgnoreCase("Black")) {
             if (!PointMapper.BoardTilesArray[x][y].isEmpty()) {
                 if (PointMapper.BoardTilesArray[x][y].piece.color.equalsIgnoreCase("White")) {
                     return true;
@@ -386,14 +353,16 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
     public static boolean isEmpty(int x, int y) {
 //        System.out.println("x : "+x+"y : "+y);
-        if(x<0||x>7||y<0||y>7){
+        if (x < 0 || x > 7 || y < 0 || y > 7) {
             return false;
         }
         return PointMapper.BoardTilesArray[x][y].isEmpty();
     }
 
     /**
-     * This method is called from within the constructor to initialize the form. WARNING: Do NOT modify this code. The content of this method is always regenerated by the Form Editor.
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -432,21 +401,18 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-         String ObjButtons[] = {"Yes","No","Cancel"};
-        int PromptResult = JOptionPane.showOptionDialog(null, 
-        "Save Game", "Do you want to save the game?", 
-        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
-        ObjButtons,ObjButtons[0]);
-        if(PromptResult==1)
-        {
-          System.exit(0);          
-        }
-        else if(PromptResult==0)
-        {
+        String ObjButtons[] = {"Yes", "No", "Cancel"};
+        int PromptResult = JOptionPane.showOptionDialog(null,
+                "Save Game", "Do you want to save the game?",
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                ObjButtons, ObjButtons[0]);
+        if (PromptResult == 1) {
+            System.exit(0);
+        } else if (PromptResult == 0) {
             saveGame();
             System.exit(0);
         }
-        
+
     }//GEN-LAST:event_formWindowClosing
 
     /**
@@ -509,75 +475,59 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if(WhiteTurn== false){
-        // first select
-        if(First == true)
-        {
-            // if tile empty
-            if(!(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()))
-            {
-                //your turn >> save point
-                if(WhiteTurn && "White".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color))
-                {
-                    FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
-                    First = false;
-                    SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
-                    SelectedLbl.setVisible(true);
-                }
-                else if(WhiteTurn == false && "Black".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color)) // show error message to select piece
-                {
-                    FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
-                    First = false;
-                    SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
-                    SelectedLbl.setVisible(true);
-                }
-                else
-                {
-                    if(WhiteTurn)
-                        JOptionPane.showMessageDialog(null, "Please select your piece it is the white turn");
-                    else
-                        JOptionPane.showMessageDialog(null, "Please select your piece it is the Black turn");
+        if (WhiteTurn == false) {
+            // first select
+            if (First == true) {
+                // if tile empty
+                if (!(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
+                    //your turn >> save point
+                    if (WhiteTurn && "White".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color)) {
+                        FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                        First = false;
+                        SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                        SelectedLbl.setVisible(true);
+                    } else if (WhiteTurn == false && "Black".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color)) // show error message to select piece
+                    {
+                        FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                        First = false;
+                        SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                        SelectedLbl.setVisible(true);
+                    } else {
+                        if (WhiteTurn) {
+                            JOptionPane.showMessageDialog(null, "Please select your piece it is the white turn");
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Please select your piece it is the Black turn");
+                        }
+                        First = true;
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please select a piece");
                     First = true;
                 }
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Please select a piece");
-                First = true;
-            }
-        }
-        else if (First == false)
-        {
-            // tile not empty & saved point & your color
-            if(((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=null) && WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White"))
-            {
-                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
-                SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+            } else if (First == false) {
+                // tile not empty & saved point & your color
+                if (((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (FirstSelectedPoint != null) && WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color == "White")) {
+                    FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                    SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
                     SelectedLbl.setVisible(true);
-            }
-            else if(((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())&& (FirstSelectedPoint!=null) && !WhiteTurn && "Black".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color)))
-            {
-                FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
-                SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
+                } else if (((!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (FirstSelectedPoint != null) && !WhiteTurn && "Black".equals(PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color))) {
+                    FirstSelectedPoint = new Point(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()));
+                    SelectedLbl.setLocation(PointMapper.getTileCoordinate(e.getX(), e.getY()));
                     SelectedLbl.setVisible(true);
-            }
-            
-            // already saved & empty tile & can move 
-            else if((FirstSelectedPoint!=null)  && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()))
-            {
-                //move 
-                if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
-                {
-                WhiteTurn = !WhiteTurn;
-                FirstSelectedPoint = null;     
-                First = true;
-                setPosions();
-                jPanel1.repaint();
-                
-                SelectedLbl.setVisible(false);
+                } // already saved & empty tile & can move 
+                else if ((FirstSelectedPoint != null) && (PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty())) {
+                    //move 
+                    if (PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()))) {
+                        WhiteTurn = !WhiteTurn;
+                        FirstSelectedPoint = null;
+                        First = true;
+                        setPosions();
+                        jPanel1.repaint();
+
+                        SelectedLbl.setVisible(false);
 //                if(CheckKingCanMove())
 //                {
-                Thread t2 = new Thread(new Runnable() {
+                        Thread t2 = new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -587,30 +537,25 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                                 }
                             }
                         });
-                     t2.start();   
+                        t2.start();
 //                }
-                
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "ERROR move");
-                }
-            }
-            // already saved point & not empty & not your color & can move >> attack and move
-            else if((FirstSelectedPoint!=null) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("Black")) )
-            {
-                //atack and move 
-                if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
-                {
-                WhiteTurn = !WhiteTurn;
-                FirstSelectedPoint = null;
-                First = true;
-                setPosions();
-                jPanel1.repaint();
-                SelectedLbl.setVisible(false);
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "ERROR move");
+                    }
+                } // already saved point & not empty & not your color & can move >> attack and move
+                else if ((FirstSelectedPoint != null) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("Black"))) {
+                    //atack and move 
+                    if (PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()))) {
+                        WhiteTurn = !WhiteTurn;
+                        FirstSelectedPoint = null;
+                        First = true;
+                        setPosions();
+                        jPanel1.repaint();
+                        SelectedLbl.setVisible(false);
 //                     if(CheckKingCanMove())
 //                {
-                Thread t2 = new Thread(new Runnable() {
+                        Thread t2 = new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -620,29 +565,24 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                                 }
                             }
                         });
-                     t2.start();   
+                        t2.start();
 //                }
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "ERROR move");
-                }
-            }
-            //can move
-            else if((FirstSelectedPoint!=null) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (!WhiteTurn&&PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("White")) )
-            {
-                //atack and move 
-                if(PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY())))
-                {
-                WhiteTurn = !WhiteTurn;
-                FirstSelectedPoint = null;
-                First = true;
-                setPosions();
-                jPanel1.repaint();
-                SelectedLbl.setVisible(false);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "ERROR move");
+                    }
+                } //can move
+                else if ((FirstSelectedPoint != null) && (!PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].isEmpty()) && (!WhiteTurn && PointMapper.BoardTilesArray[PointMapper.getTileRangeX(e.getX())][PointMapper.getTileRangeY(e.getY())].piece.color.equals("White"))) {
+                    //atack and move 
+                    if (PointMapper.BoardTilesArray[FirstSelectedPoint.x][FirstSelectedPoint.y].piece.move(PointMapper.getTileRangeX(e.getX()), PointMapper.getTileRangeY(e.getY()))) {
+                        WhiteTurn = !WhiteTurn;
+                        FirstSelectedPoint = null;
+                        First = true;
+                        setPosions();
+                        jPanel1.repaint();
+                        SelectedLbl.setVisible(false);
 //                     if(CheckKingCanMove())
 //                {
-                Thread t2 = new Thread(new Runnable() {
+                        Thread t2 = new Thread(new Runnable() {
                             @Override
                             public void run() {
                                 try {
@@ -652,29 +592,23 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                                 }
                             }
                         });
-                     t2.start();   
+                        t2.start();
 //                }
-                }
-                else
-                {
-                    JOptionPane.showMessageDialog(null, "ERROR move");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "ERROR move");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "ERROR Can't move");
+                    First = false;
                 }
             }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "ERROR Can't move");
-                First= false;
-            }
-        }
- 
-        }
-        else
-        {
+
+        } else {
             JOptionPane.showMessageDialog(null, "it is white turn");
         }
         setPosions();
     }
-    
+
     @Override
     public void mouseReleased(MouseEvent e) {
 
@@ -825,20 +759,20 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         PointMapper.BoardTilesArray[4][0].piece = whiteQueen;
         PointMapper.BoardTilesArray[4][0].setEmpty(false);
         jPanel1.add(whiteQueen.label);
-        
-        p=PointMapper.points[3][0];
-        King.WhiteKingPosition=new Point(3,0);
-        whiteKing=new King("White", new Point(3,0));
+
+        p = PointMapper.points[3][0];
+        King.WhiteKingPosition = new Point(3, 0);
+        whiteKing = new King("White", new Point(3, 0));
         whiteKing.label.setBounds(p.x, p.y, 60, 60);
-        PointMapper.BoardTilesArray[3][0].piece=whiteKing;
+        PointMapper.BoardTilesArray[3][0].piece = whiteKing;
         PointMapper.BoardTilesArray[3][0].setEmpty(false);
         jPanel1.add(whiteKing.label);
-        
-        p=PointMapper.points[3][7];
-        King.BlackKingPosition=new Point(3,7);
-        blackKing=new King("Black", new Point(3,7));
+
+        p = PointMapper.points[3][7];
+        King.BlackKingPosition = new Point(3, 7);
+        blackKing = new King("Black", new Point(3, 7));
         blackKing.label.setBounds(p.x, p.y, 60, 60);
-        PointMapper.BoardTilesArray[3][7].piece=blackKing;
+        PointMapper.BoardTilesArray[3][7].piece = blackKing;
         PointMapper.BoardTilesArray[3][7].setEmpty(false);
         jPanel1.add(blackKing.label);
 
@@ -851,159 +785,147 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                 if (PointMapper.BoardTilesArray[i][j].isEmpty() == false) {
                     //Piece p = t.getPiece();
 
-                    if (!PointMapper.BoardTilesArray[i][j].getPiece().alive )
-                    {
+                    if (!PointMapper.BoardTilesArray[i][j].getPiece().alive) {
                         PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(900, 900);
                     }
+                }
             }
-        }
         }
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 //Tile t = PointMapper.BoardTilesArray[i][j];
-                
-                
+
                 if (PointMapper.BoardTilesArray[i][j].isEmpty() == false) {
                     //Piece p = t.getPiece();
 
-                    if (PointMapper.BoardTilesArray[i][j].getPiece().alive ) {
-                        if(!(PointMapper.BoardTilesArray[i][j].getPiece().position.equals(PointMapper.getTileNumber(PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().x, PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().y))))
-                        {
-                        PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(PointMapper.points[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y]);
-                        PointMapper.BoardTilesArray[i][j].setEmpty(true);
-                        
-                        PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].setEmpty(false);
-                        PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].piece = PointMapper.BoardTilesArray[i][j].getPiece();
-                    
+                    if (PointMapper.BoardTilesArray[i][j].getPiece().alive) {
+                        if (!(PointMapper.BoardTilesArray[i][j].getPiece().position.equals(PointMapper.getTileNumber(PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().x, PointMapper.BoardTilesArray[i][j].getPiece().label.getLocation().y)))) {
+                            PointMapper.BoardTilesArray[i][j].getPiece().label.setLocation(PointMapper.points[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y]);
+                            PointMapper.BoardTilesArray[i][j].setEmpty(true);
+
+                            PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].setEmpty(false);
+                            PointMapper.BoardTilesArray[PointMapper.BoardTilesArray[i][j].getPiece().position.x][PointMapper.BoardTilesArray[i][j].getPiece().position.y].piece = PointMapper.BoardTilesArray[i][j].getPiece();
+
                         }
                     }
-                    
-                   
-                    
+
                 }
             }
         }
-        
-        
-    
+
         System.out.println("done ");
-    
-    
-    
-    
-    
-    
+
     }
-    
-    public void AIPlay() throws CloneNotSupportedException
-            
-    {
-        if(WhiteTurn){
+
+    public void AIPlay() throws CloneNotSupportedException {
+        if (WhiteTurn) {
             AllPieces = new ArrayList<Piece>();
-        for (int i = 0; i < blackPawns.size(); i++) {
-            AllPieces.add(blackPawns.get(i).clone());
-        }
-        for (int i = 0; i < whitePawns.size(); i++) {
-            AllPieces.add(whitePawns.get(i).clone());
-        }
-        for (int i = 0; i < blackKnights.size(); i++) {
-            AllPieces.add(blackKnights.get(i).clone());
-        }
-        for (int i = 0; i < whiteKnights.size(); i++) {
-            AllPieces.add(whiteKnights.get(i).clone());
-        }
-        for (int i = 0; i < whiteRooks.size(); i++) {
-            AllPieces.add(whiteRooks.get(i).clone());
-        }
-        for (int i = 0; i < blackRooks.size(); i++) {
-            AllPieces.add(blackRooks.get(i).clone());
-        }
-        for (int i = 0; i < blackBishops.size(); i++) {
-            AllPieces.add(blackBishops.get(i).clone());
-        }
-        for (int i = 0; i < whiteBishops.size(); i++) {
-            AllPieces.add(whiteBishops.get(i).clone());
-        }
-        AllPieces.add(blackQueen.clone());
-        AllPieces.add(whiteQueen.clone());
-        AllPieces.add(blackKing.clone());
-        AllPieces.add(whiteKing.clone());
+            for (int i = 0; i < blackPawns.size(); i++) {
+                AllPieces.add(blackPawns.get(i).clone());
+            }
+            for (int i = 0; i < whitePawns.size(); i++) {
+                AllPieces.add(whitePawns.get(i).clone());
+            }
+            for (int i = 0; i < blackKnights.size(); i++) {
+                AllPieces.add(blackKnights.get(i).clone());
+            }
+            for (int i = 0; i < whiteKnights.size(); i++) {
+                AllPieces.add(whiteKnights.get(i).clone());
+            }
+            for (int i = 0; i < whiteRooks.size(); i++) {
+                AllPieces.add(whiteRooks.get(i).clone());
+            }
+            for (int i = 0; i < blackRooks.size(); i++) {
+                AllPieces.add(blackRooks.get(i).clone());
+            }
+            for (int i = 0; i < blackBishops.size(); i++) {
+                AllPieces.add(blackBishops.get(i).clone());
+            }
+            for (int i = 0; i < whiteBishops.size(); i++) {
+                AllPieces.add(whiteBishops.get(i).clone());
+            }
+            AllPieces.add(blackQueen.clone());
+            AllPieces.add(whiteQueen.clone());
+            AllPieces.add(blackKing.clone());
+            AllPieces.add(whiteKing.clone());
             //AI Plays
 //            System.out.println("All Pieces"+AllPieces);
             AllPiecesCloned = new ArrayList<Piece>();
-        for (int i = 0; i < blackPawns.size(); i++) {
-            AllPiecesCloned.add(blackPawns.get(i));
-        }
-        for (int i = 0; i < whitePawns.size(); i++) {
-            AllPiecesCloned.add(whitePawns.get(i));
-        }
-        for (int i = 0; i < blackKnights.size(); i++) {
-            AllPiecesCloned.add(blackKnights.get(i));
-        }
-        for (int i = 0; i < whiteKnights.size(); i++) {
-            AllPiecesCloned.add(whiteKnights.get(i));
-        }
-        for (int i = 0; i < whiteRooks.size(); i++) {
-            AllPiecesCloned.add(whiteRooks.get(i));
-        }
-        for (int i = 0; i < blackRooks.size(); i++) {
-            AllPiecesCloned.add(blackRooks.get(i));
-        }
-        for (int i = 0; i < blackBishops.size(); i++) {
-            AllPiecesCloned.add(blackBishops.get(i));
-        }
-        for (int i = 0; i < whiteBishops.size(); i++) {
-            AllPiecesCloned.add(whiteBishops.get(i));
-        }
-        AllPiecesCloned.add(blackQueen);
-        AllPiecesCloned.add(whiteQueen);
-        AllPiecesCloned.add(blackKing);
-        AllPiecesCloned.add(whiteKing);
-            Node n = new Node(AllPieces,Integer.MIN_VALUE,Integer.MAX_VALUE,true);
-            ArrayList<Piece> newList = Node.Play(n,depth,n.alpha,n.beta,true);
-            WhiteTurn=!WhiteTurn;
-            for (int i = 0; i <newList.size(); i++) {
-                if(!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY()))
-                {
-                    int x = (int)newList.get(i).position.getX();
-                    int y = (int)newList.get(i).position.getY();
-                    if(AllPiecesCloned.get(i).move(x, y))
-                    {
-                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType+" moved to ("+ x + " , "+y +")");
+            for (int i = 0; i < blackPawns.size(); i++) {
+                AllPiecesCloned.add(blackPawns.get(i));
+            }
+            for (int i = 0; i < whitePawns.size(); i++) {
+                AllPiecesCloned.add(whitePawns.get(i));
+            }
+            for (int i = 0; i < blackKnights.size(); i++) {
+                AllPiecesCloned.add(blackKnights.get(i));
+            }
+            for (int i = 0; i < whiteKnights.size(); i++) {
+                AllPiecesCloned.add(whiteKnights.get(i));
+            }
+            for (int i = 0; i < whiteRooks.size(); i++) {
+                AllPiecesCloned.add(whiteRooks.get(i));
+            }
+            for (int i = 0; i < blackRooks.size(); i++) {
+                AllPiecesCloned.add(blackRooks.get(i));
+            }
+            for (int i = 0; i < blackBishops.size(); i++) {
+                AllPiecesCloned.add(blackBishops.get(i));
+            }
+            for (int i = 0; i < whiteBishops.size(); i++) {
+                AllPiecesCloned.add(whiteBishops.get(i));
+            }
+            AllPiecesCloned.add(blackQueen);
+            AllPiecesCloned.add(whiteQueen);
+            AllPiecesCloned.add(blackKing);
+            AllPiecesCloned.add(whiteKing);
+            
+            String ColorCheckMate = checkCheckmate(AllPiecesCloned);
+            if (ColorCheckMate.equalsIgnoreCase("Black") || ColorCheckMate.equalsIgnoreCase("White")) {
+                JOptionPane.showMessageDialog(null, "CHECKAMTE" + ColorCheckMate);
+            }
+            
+            Node n = new Node(AllPieces, Integer.MIN_VALUE, Integer.MAX_VALUE, true);
+            ArrayList<Piece> newList = Node.Play(n, depth, n.alpha, n.beta, true);
+            WhiteTurn = !WhiteTurn;
+            for (int i = 0; i < newList.size(); i++) {
+                if (!(newList.get(i).position.getX() == AllPiecesCloned.get(i).position.getX() && newList.get(i).position.getY() == AllPiecesCloned.get(i).position.getY())) {
+                    int x = (int) newList.get(i).position.getX();
+                    int y = (int) newList.get(i).position.getY();
+                    if (AllPiecesCloned.get(i).move(x, y)) {
+                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType + " moved to (" + x + " , " + y + ")");
+                    } else {
+                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType + " DIDN'T move (" + x + " , " + y + ")");
                     }
-                    else
-                    {
-                        JOptionPane.showMessageDialog(null, newList.get(i).pieceType+" DIDN'T move ("+ x + " , "+y +")");
-                    }
-                    
-                    
-                    
+
                 }
             }
         }
         setPosions();
-        String ColorCheckMate=checkCheckmate(AllPiecesCloned);
-        if(ColorCheckMate.equalsIgnoreCase("Black")||ColorCheckMate.equalsIgnoreCase("White")){
-            JOptionPane.showMessageDialog(null, "CHECKAMTE"+ColorCheckMate);
+        String ColorCheckMate = checkCheckmate(AllPiecesCloned);
+        if (ColorCheckMate.equalsIgnoreCase("Black") || ColorCheckMate.equalsIgnoreCase("White")) {
+            JOptionPane.showMessageDialog(null, "CHECKAMTE" + ColorCheckMate);
         }
     }
-    
-   public static boolean isTileThreatened(String Color,int x, int y){
-        
-        for(int i =0 ; i<AllPiecesCloned.size();i++){
-            if(!(AllPiecesCloned.get(i).color.equals(Color)) &&AllPiecesCloned.get(i).alive){
-                if(AllPiecesCloned.get(i).pieceType.equalsIgnoreCase("Pawn")){
-                    Pawn p =(Pawn) AllPiecesCloned.get(i);
-                    if(p.canAttack(x, y))
+
+    public static boolean isTileThreatened(String Color, int x, int y) {
+
+        for (int i = 0; i < AllPiecesCloned.size(); i++) {
+            if (!(AllPiecesCloned.get(i).color.equals(Color)) && AllPiecesCloned.get(i).alive) {
+                if (AllPiecesCloned.get(i).pieceType.equalsIgnoreCase("Pawn")) {
+                    Pawn p = (Pawn) AllPiecesCloned.get(i);
+                    if (p.canAttack(x, y)) {
                         return true;
-                }
-                else if(AllPiecesCloned.get(i).validateMove(x, y))
+                    }
+                } else if (AllPiecesCloned.get(i).validateMove(x, y)) {
                     return true;
+                }
             }
         }
         return false;
-   }
-   public static boolean isTileThreatenedAI(String AttackedColor, int x, int y, ArrayList<Piece> listCopy) {
+    }
+
+    public static boolean isTileThreatenedAI(String AttackedColor, int x, int y, ArrayList<Piece> listCopy) {
 
         for (int i = 0; i < listCopy.size(); i++) {
             if (listCopy.get(i).color != AttackedColor && listCopy.get(i).alive) {
@@ -1012,45 +934,39 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
                     if (p.canAttack(x, y)) {
                         return true;
                     }
-                } else if (listCopy.get(i).validateMoveAI(x, y,listCopy)) {
+                } else if (listCopy.get(i).validateMoveAI(x, y, listCopy)) {
                     return true;
                 }
             }
         }
         return false;
     }
-    
-    public static String checkCheckmate(ArrayList<Piece> AllPieceCheck){
-        int WhiteX=0;
-        int WhiteY=0;
-        int BlackX=0;
-        int BlackY=0;
-        
-        for(int i=0;i<AllPieces.size();i++){
-            if(AllPieceCheck.get(i).color.equalsIgnoreCase("White") &&AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive)
-            {
-                 WhiteX = (int) AllPieceCheck.get(i).position.getX();
-                 WhiteY = (int) AllPieceCheck.get(i).position.getY();
 
-            }
-            else if(AllPieceCheck.get(i).color.equalsIgnoreCase("Black") &&AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive)
-            {
-                 BlackX = (int) AllPieceCheck.get(i).position.getX();
-                 BlackY = (int) AllPieceCheck.get(i).position.getY();
+    public static String checkCheckmate(ArrayList<Piece> AllPieceCheck) {
+        int WhiteX = 0;
+        int WhiteY = 0;
+        int BlackX = 0;
+        int BlackY = 0;
+
+        for (int i = 0; i < AllPieces.size(); i++) {
+            if (AllPieceCheck.get(i).color.equalsIgnoreCase("White") && AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive) {
+                WhiteX = (int) AllPieceCheck.get(i).position.getX();
+                WhiteY = (int) AllPieceCheck.get(i).position.getY();
+
+            } else if (AllPieceCheck.get(i).color.equalsIgnoreCase("Black") && AllPieceCheck.get(i).pieceType.equalsIgnoreCase("King") && AllPieceCheck.get(i).alive) {
+                BlackX = (int) AllPieceCheck.get(i).position.getX();
+                BlackY = (int) AllPieceCheck.get(i).position.getY();
 
             }
         }
-        
-        for(int i=0;i<AllPieceCheck.size();i++){
-            if(AllPieceCheck.get(i).color.equalsIgnoreCase("Black") && AllPieceCheck.get(i).alive){
-                if(AllPieceCheck.get(i).validateMoveAI(WhiteX, WhiteY,AllPieceCheck))
-                {
+
+        for (int i = 0; i < AllPieceCheck.size(); i++) {
+            if (AllPieceCheck.get(i).color.equalsIgnoreCase("Black") && AllPieceCheck.get(i).alive) {
+                if (AllPieceCheck.get(i).validateMoveAI(WhiteX, WhiteY, AllPieceCheck)) {
                     return "White";
                 }
-            }
-            else if(AllPieceCheck.get(i).color.equalsIgnoreCase("White") && AllPieceCheck.get(i).alive){
-                if(AllPieceCheck.get(i).validateMoveAI(BlackX, BlackY,AllPieceCheck))
-                {
+            } else if (AllPieceCheck.get(i).color.equalsIgnoreCase("White") && AllPieceCheck.get(i).alive) {
+                if (AllPieceCheck.get(i).validateMoveAI(BlackX, BlackY, AllPieceCheck)) {
                     return "Black";
                 }
             }
@@ -1058,32 +974,27 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         return "NO CHECKMATE";
     }
 
-        public void win(String winner)
-        {
-         String ObjButtons[] = {"Yes","No"};
-        int PromptResult = JOptionPane.showOptionDialog(null, 
-        (winner + "win "),("Horray "+ winner +" win\n Do you want to play again?"), 
-        JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, 
-        ObjButtons,ObjButtons[0]);
-        if(PromptResult==1)
-        {
-          System.exit(0);          
-        }
-        else if(PromptResult==0)
-        {
+    public void win(String winner) {
+        String ObjButtons[] = {"Yes", "No"};
+        int PromptResult = JOptionPane.showOptionDialog(null,
+                (winner + "win "), ("Horray " + winner + " win\n Do you want to play again?"),
+                JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
+                ObjButtons, ObjButtons[0]);
+        if (PromptResult == 1) {
+            System.exit(0);
+        } else if (PromptResult == 0) {
             this.dispose();
-             try {
-                 new GameBoard(depth, false, new ArrayList<Object>());
-             } catch (CloneNotSupportedException ex) {
-                 Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-             }
-            
+            try {
+                new GameBoard(depth, false, new ArrayList<Object>());
+            } catch (CloneNotSupportedException ex) {
+                Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
         }
-        }
-        
-        public boolean CheckKingCanMove()
-        {
-            AllPiecesCloned = new ArrayList<Piece>();
+    }
+
+    public boolean CheckKingCanMove() {
+        AllPiecesCloned = new ArrayList<Piece>();
         for (int i = 0; i < blackPawns.size(); i++) {
             AllPiecesCloned.add(blackPawns.get(i));
         }
@@ -1112,145 +1023,103 @@ public class GameBoard extends javax.swing.JFrame implements MouseListener ,Seri
         AllPiecesCloned.add(whiteQueen);
         AllPiecesCloned.add(blackKing);
         AllPiecesCloned.add(whiteKing);
-            int whitekin = 31;
-            int blackkin = 30;
+        int whitekin = 31;
+        int blackkin = 30;
         try {
             ArrayList<Piece> cl = Node.ClonePieces(AllPiecesCloned);
-            if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()+1, (int)cl.get(blackkin).position.getY()+1))
-            {
-                
+            if (cl.get(blackkin).move((int) cl.get(blackkin).position.getX() + 1, (int) cl.get(blackkin).position.getY() + 1)) {
+
                 return true;
-            }
-            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX(), (int)cl.get(blackkin).position.getY()+1))
-            {
+            } else if (cl.get(blackkin).move((int) cl.get(blackkin).position.getX(), (int) cl.get(blackkin).position.getY() + 1)) {
                 return true;
-            }
-            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()+1, (int)cl.get(blackkin).position.getY()))
-            {
+            } else if (cl.get(blackkin).move((int) cl.get(blackkin).position.getX() + 1, (int) cl.get(blackkin).position.getY())) {
                 return true;
-            }
-            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()-1, (int)cl.get(blackkin).position.getY()-1))
-            {
+            } else if (cl.get(blackkin).move((int) cl.get(blackkin).position.getX() - 1, (int) cl.get(blackkin).position.getY() - 1)) {
                 return true;
-            }
-            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()-1, (int)cl.get(blackkin).position.getY()))
-            {
+            } else if (cl.get(blackkin).move((int) cl.get(blackkin).position.getX() - 1, (int) cl.get(blackkin).position.getY())) {
                 return true;
-            }
-            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX(), (int)cl.get(blackkin).position.getY()-1))
-            {
+            } else if (cl.get(blackkin).move((int) cl.get(blackkin).position.getX(), (int) cl.get(blackkin).position.getY() - 1)) {
                 return true;
-            }
-            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()-1, (int)cl.get(blackkin).position.getY()+1))
-            {
+            } else if (cl.get(blackkin).move((int) cl.get(blackkin).position.getX() - 1, (int) cl.get(blackkin).position.getY() + 1)) {
                 return true;
-            }
-            else if(cl.get(blackkin).move((int)cl.get(blackkin).position.getX()+1, (int)cl.get(blackkin).position.getY()-1))
-            {
+            } else if (cl.get(blackkin).move((int) cl.get(blackkin).position.getX() + 1, (int) cl.get(blackkin).position.getY() - 1)) {
                 return true;
-            }
-            else
-            {
+            } else {
                 win("White");
             }
-            if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()+1, (int)cl.get(whitekin).position.getY()+1))
-            {
-                
+            if (cl.get(whitekin).move((int) cl.get(whitekin).position.getX() + 1, (int) cl.get(whitekin).position.getY() + 1)) {
+
                 return true;
-            }
-            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX(), (int)cl.get(whitekin).position.getY()+1))
-            {
+            } else if (cl.get(whitekin).move((int) cl.get(whitekin).position.getX(), (int) cl.get(whitekin).position.getY() + 1)) {
                 return true;
-            }
-            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()+1, (int)cl.get(whitekin).position.getY()))
-            {
+            } else if (cl.get(whitekin).move((int) cl.get(whitekin).position.getX() + 1, (int) cl.get(whitekin).position.getY())) {
                 return true;
-            }
-            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()-1, (int)cl.get(whitekin).position.getY()-1))
-            {
+            } else if (cl.get(whitekin).move((int) cl.get(whitekin).position.getX() - 1, (int) cl.get(whitekin).position.getY() - 1)) {
                 return true;
-            }
-            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()-1, (int)cl.get(whitekin).position.getY()))
-            {
+            } else if (cl.get(whitekin).move((int) cl.get(whitekin).position.getX() - 1, (int) cl.get(whitekin).position.getY())) {
                 return true;
-            }
-            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX(), (int)cl.get(whitekin).position.getY()-1))
-            {
+            } else if (cl.get(whitekin).move((int) cl.get(whitekin).position.getX(), (int) cl.get(whitekin).position.getY() - 1)) {
                 return true;
-            }
-            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()-1, (int)cl.get(whitekin).position.getY()+1))
-            {
+            } else if (cl.get(whitekin).move((int) cl.get(whitekin).position.getX() - 1, (int) cl.get(whitekin).position.getY() + 1)) {
                 return true;
-            }
-            else if(cl.get(whitekin).move((int)cl.get(whitekin).position.getX()+1, (int)cl.get(whitekin).position.getY()-1))
-            {
+            } else if (cl.get(whitekin).move((int) cl.get(whitekin).position.getX() + 1, (int) cl.get(whitekin).position.getY() - 1)) {
                 return true;
-            }
-            else
-            {
+            } else {
                 win("Blsck");
             }
-            
+
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
         }
-            
-            return false;
-        }
+
+        return false;
+    }
+
     private void saveGame() {
         JFileChooser fc = new JFileChooser();
         fc.setAcceptAllFileFilterUsed(false);
         fc.addChoosableFileFilter(new FileNameExtensionFilter("Willson", "willson"));
-        if(fc.showSaveDialog(this) == fc.APPROVE_OPTION)
-        {
-           String filename = fc.getSelectedFile().getAbsolutePath();
-           if (!filename .endsWith(".willson")){
-               ObjectOutputStream out = null;
-               try {
-                   filename += ".willson";
-                   ArrayList<Object> data = new ArrayList<Object>();
-                   data.add(depth);
-                   data.add(WhiteTurn);
-                   data.add(blackPawns);
-                   data.add(whitePawns);
-                   data.add(blackKnights);
-                   data.add(whiteKnights);
-                   data.add(whiteRooks);
-                   data.add(blackRooks);
-                   data.add(blackBishops);
-                   data.add(whiteBishops);
-                   data.add(whiteQueen);
-                   data.add(blackQueen);
-                   data.add(blackKing);
-                   data.add(whiteKing);
-                   data.add(PointMapper.BoardTilesArray);
-                   FileOutputStream fileOut = new FileOutputStream(filename);
-                   out = new ObjectOutputStream(fileOut);
-                   out.writeObject(data);
-                   out.close();
-                   fileOut.close();
-               } catch (IOException ex) {
-                   Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-               } finally {
-                   try {
-                       out.close();
-                   } catch (IOException ex) {
-                       Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
-                   }
-               }
-        
-        
+        if (fc.showSaveDialog(this) == fc.APPROVE_OPTION) {
+            String filename = fc.getSelectedFile().getAbsolutePath();
+            if (!filename.endsWith(".willson")) {
+                ObjectOutputStream out = null;
+                try {
+                    filename += ".willson";
+                    ArrayList<Object> data = new ArrayList<Object>();
+                    data.add(depth);
+                    data.add(WhiteTurn);
+                    data.add(blackPawns);
+                    data.add(whitePawns);
+                    data.add(blackKnights);
+                    data.add(whiteKnights);
+                    data.add(whiteRooks);
+                    data.add(blackRooks);
+                    data.add(blackBishops);
+                    data.add(whiteBishops);
+                    data.add(whiteQueen);
+                    data.add(blackQueen);
+                    data.add(blackKing);
+                    data.add(whiteKing);
+                    data.add(PointMapper.BoardTilesArray);
+                    FileOutputStream fileOut = new FileOutputStream(filename);
+                    out = new ObjectOutputStream(fileOut);
+                    out.writeObject(data);
+                    out.close();
+                    fileOut.close();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                } finally {
+                    try {
+                        out.close();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GameBoard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
 
-         }
+            }
 
-              
         }
-        
-        
+
     }
-
-
-    
-    
 
 }
